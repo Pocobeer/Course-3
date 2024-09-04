@@ -1,0 +1,6 @@
+(defun count(lst)
+ (cond ((null lst) 0)
+       ((atom (car lst)) (+ 1 (count (cdr lst)) ))
+       (t  (count (cdr lst)) ) 
+   )
+)

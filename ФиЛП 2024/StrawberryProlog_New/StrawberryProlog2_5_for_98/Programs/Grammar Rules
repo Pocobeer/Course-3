@@ -1,0 +1,78 @@
+makeList(S, [H|T], Pos):- 
+  H is split(S, " ", Pos), !, 
+  Pos2 is Pos + 1, 
+  makeList(S, T, Pos2). 
+makeList(S, [], Pos). 
+
+add_rules :-
+  (X --> Y,Z,Q,U,V,W),
+  assert(X(X(T1,T2,T3,T4,T5,T6),A,G):-Y(T1,A,B),Z(T2,B,C),Q(T3,C,D),U(T4,D,E),V(T5,E,F),W(T6,F,G)),
+  fail.
+add_rules :-
+  (X --> Y,Z,U,V,W),
+  assert(X(X(T1,T2,T3,T4,T5),A,F):-Y(T1,A,B),Z(T2,B,C),U(T3,C,D),V(T4,D,E),W(T5,E,F)),
+  fail.
+add_rules :-
+  (X --> Y,Z,V,W),
+  assert(X(X(T1,T2,T3,T4),A,E):-Y(T1,A,B),Z(T2,B,C),V(T3,C,D),W(T4,D,E)),
+  fail.
+add_rules :-
+  (X --> Y,Z,W),
+  assert(X(X(T1,T2,T3),A,D):-Y(T1,A,B),Z(T2,B,C),W(T3,C,D)),
+  fail.
+add_rules :-
+  (X --> Y,Z),
+  assert(X(X(T1,T2),A,C):-Y(T1,A,B),Z(T2,B,C)),
+  fail.
+add_rules :-
+  (X --> Y),
+  not(Y=[_]),
+  assert(X(X(T),A,B):-Y(T,A,B)),
+  fail.
+add_rules :-
+  (X --> [Y]),
+  assert(X(X(Y),[Y|C],C)),
+  fail.
+add_rules:-
+  G_Red is font_mask(_,rgb(255,0,0),_,_,_,bold,_,_).
+add_rules. % this line you need only in the Light edition
+
+phrase(P,T,L):-P(T,L,[]).
+
+pretty_print(T):-
+  pretty_print(T, [], s).
+
+pretty_print(T(|L), Sp, Ch):-
+  write_spaces(Sp),
+  write(T), nl,
+  pretty_print_list(L, [Ch|Sp]).
+
+pretty_print(S, Sp, _):-
+  string(S),
+  write_spaces(Sp),
+  write(S,G_Red), nl.
+
+pretty_print_list([H], Sp):-
+  pretty_print(H, Sp, s).
+pretty_print_list([H|T], Sp):-
+  pretty_print(H, Sp, l),
+  pretty_print_list(T, Sp).
+
+
+write_spaces(Sp):-
+  last_element(Sp, Sp2, s),
+  write("  "),
+  write_spaces(Sp2).
+write_spaces(Sp):-
+  last_element(Sp, Sp2, l),
+  write("| "),
+  write_spaces(Sp2).
+write_spaces([]).
+
+last_element([H], [], H).
+last_element([H|T], [H|T2], L):-
+ last_element(T, T2, L).
+
+  
+
+

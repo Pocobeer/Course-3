@@ -1,0 +1,35 @@
+%1 ex
+parent(Sergey, Vladimir).
+parent(Sergey,Alex).
+parent(Helen,Vladimir).
+parent(Helen,Alex).
+man(Sergey).
+man(Alex).
+man(Vladimir).
+woman(Helen).
+married(Sergey, Helen).
+
+%2 ex
+or_(0,0,0).
+or_(0,1,1).
+or_(1,0,1).
+or_(1,1,1).
+
+no(1,0).
+no(0,1).
+
+or_no(X,Y,Z):-or_(X,Y,W), no(W,Z).
+
+rs_async(S, R, Q, Not_Q):- or_no(S,Q,Not_Q), or_no(R, Not_Q, Q).
+
+%?-read(S), read(R), rs_async(S,R,Q,Not_Q), write(Q), write(Not_Q).
+
+?- write("S R Q Not_Q"), nl.
+
+?- rs_async(0, 0, Q, Not_Q), write("0 0 "), write(Q), write(" "), write(Not_Q), nl.
+
+?- rs_async(0, 1, Q, Not_Q), write("0 1 "), write(Q), write(" "), write(Not_Q), nl.
+
+?- rs_async(1, 0, Q, Not_Q), write("1 0 "), write(Q), write(" "), write(Not_Q), nl.
+
+?- rs_async(1, 1, Q, Not_Q), write("1 1 "), write(Q), write(" "), write(Not_Q), nl.

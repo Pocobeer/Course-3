@@ -1,0 +1,14 @@
+member(El,[El_]).
+     
+member(El,[H|T]):-member(El,T).
+
+%?-member(a,[w,a,e]).
+
+
+%cnt(_,[],0).
+cnt(V,[V|T],1).
+cnt(V,[_|T],C):- cnt(V,T,CN), C is CN+1.
+
+
+
+?-cnt(3,[3,3,2,4,3,2,4],X), write(X).

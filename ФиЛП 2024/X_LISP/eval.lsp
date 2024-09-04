@@ -1,0 +1,5 @@
+ (print '$)
+ (setq e (read))
+ (setq v (eval e))
+ (print v)
+ (print '$)
