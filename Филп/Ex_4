@@ -1,0 +1,5 @@
+index_lenght([X|Y], Count) :-
+	A is Count + 1,
+	index_lenght(Y, A).
+
+?- index_lenght([1,2,3,4,5,6], Count), write(Count).

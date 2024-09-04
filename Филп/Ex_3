@@ -1,0 +1,6 @@
+ploshyad(N, R, X) :- 
+T is sin(2*3.14/N),
+C is R**2,
+X is N/2 * C * T.
+
+?- read(N), read(R), ploshyad(N, R, X), write(X), nl.
