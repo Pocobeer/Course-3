@@ -1,14 +1,33 @@
 %1 ex
-parent(Sergey, Vladimir).
-parent(Sergey,Alex).
-parent(Helen,Vladimir).
-parent(Helen,Alex).
-man(Sergey).
-man(Alex).
-man(Vladimir).
-woman(Helen).
-married(Sergey, Helen).
+parent("Sergey", "Vladimir").
+parent("Sergey","Alex").
+parent("Helen","Vladimir").
+parent("Helen","Alex").
+man("Sergey").
+man("Alex").
+man("Vladimir").
+woman("Helen").
+married("Sergey", "Helen").
+father(X,Y):-
+parent(X,Y),man(X), write(X).
 
+mother(X,Y):-
+parent(X,Y),woman(X),write(X).
+
+brother(X,Y):-
+parent(A,X), parent(A,Y), X\=Y,man(X),write(X).
+
+son(X,Y):-
+parent(X,Y), man(Y),write(Y).
+
+?-father(X, "Vladimir"), nl.
+?-mother(X, "Alex"), nl.
+?-brother("Alex", "Vladimir"), nl.
+?-son("Helen", X), nl.
+?-parent(X, "Vladimir"), write(X), nl.
+?-parent(X, "Alex"), write(X), nl.
+?-married(X, "Helen"), write(X), nl.
+?-married("Sergey", X), write(X), nl.
 %2 ex
 or_(0,0,0).
 or_(0,1,1).
