@@ -1,0 +1,17 @@
+word(pig,"?????????") .
+word(dog,"??????").
+word(cat,"?????").
+
+translate_1:- read(X), word(X,Y),
+                       write(Y), nl.
+translate_2:- read(Y), word(X,Y),
+                       write(X), nl.
+
+inp(X):- X=1, translate_1.
+inp(X):- X=2, translate_2.
+inp(X):- X=3, read(Engl,"English"), 
+                        read(Russ,"Russian"),
+                        asserta_in(word(Engl,Russ)),
+                        write(Engl), write(" = "), write(Russ), nl.
+
+?-read(Word),inp(Word).

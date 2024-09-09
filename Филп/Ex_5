@@ -1,0 +1,14 @@
+maybe(tiger,tiger).
+maybe(princess,tiger).
+maybe(tiger,princess).
+
+room_1(X,Y):-X=princess, Y=tiger.
+room_2(X,Y):-X=princess, Y=tiger;
+                        X=tiger, Y=princess.
+
+who_where(X,Y):-maybe(X,Y), 
+                               room_1(X,Y),
+                               room_2(X,Y).
+
+?-who_where(X,Y), write("In first room - "), write(X), nl, 
+                                 write("In second room - "), write(Y).

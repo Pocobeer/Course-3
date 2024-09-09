@@ -1,5 +1,17 @@
-index_lenght([X|Y], Count) :-
-	A is Count + 1,
-	index_lenght(Y, A).
+%0-white ball
+%1-black ball
 
-?- index_lenght([1,2,3,4,5,6], Count), write(Count).
+swap([X,Y|T],[Y,X|T]):-
+X>Y,!.
+
+swap([X|T],[X|T1]):-
+swap(T,T1).
+
+bubble_sort(L,L1):-
+swap(L,LL),
+!,
+bubble_sort(LL,L1).
+
+bubble_sort(L,L).
+
+?- bubble_sort([1,1,1,0,1,0],Result), write(Result).

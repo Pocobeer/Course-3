@@ -1,83 +1,62 @@
-.game {
-    /* ширина игровой области */
-    width: 600px;
-    /* высота игровой области */
-    height: 200px;
-    /* рамка серого цвета и отступы вокруг неё */
-    border: 1px solid rgb(122, 122, 122);
-    /* автоматические отступы */
-    margin: auto;
-  }
-
-  #dino {
-    /* ширина и высота динозаврика */
-    width: 50px;
-    height: 50px;
-    /* путь к изображению динозаврика */
-    background-image: url(./trex.png);
-    /* ширина и высота подложки */
-    background-size: 50px 50px;
-    /* относительное позиционирование */
-    position: relative;
-    /* отступ сверху */
-    top: 150px;
-  }
- /* класс анимации прыжка */
-.jump {
-  animation: jump 0.3s linear;
+/* center the game and remove margin */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
-/* 5 ключевых кадров для анимации прыжка */
-@keyframes jump {
+/* displaying the game with full screen with and bottom border as the ground */
+.game {
+  width: 100vw;
+  border-bottom: 1px solid black;
+  position: relative;
+}
+
+/* sticking the dino and the cactus to the floor */
+.dino, .cactus {
+  position: absolute;
+  bottom: 0;
+}
+
+.dino {
+  left: 50px;
+}
+
+.cactus {
+  right: 0;
+  height: 50px;
+}
+
+.move {
+  animation: cactus-move 3s infinite;
+}
+
+@keyframes cactus-move {
   0% {
-    /* начальная позиция */
-    top: 150px;
-  }
-
-  30% {
-    /* начало прыжка */
-    top: 130px;
-  }
-
-  50% {
-    /* самая высокая точка прыжка */
-    top: 80px;
-  }
-
-  80% {
-    /* начало спуска */
-    top: 130px;
+      right: 0;
   }
 
   100% {
-    /* возврат в начальную позицию */
-    top: 150px;
+      right: 100%;
   }
 }
 
-  #cactus {
-    /* ширина и высота кактуса */
-    width: 20px;
-    height: 40px;
-    /* относительное позиционирование */
-    position: relative;
-    /* начальное положение кактуса */
-    top: 110px;
-    left: 580px;
-    /* путь к изображению кактуса*/
-    background-image: url("./cactus_1.png");
-    /* ширина и высота подложки */
-    background-size: 20px 40px;
-    /* анимация перемещения кактуса */
-    animation: block 2s infinite linear;
+.jump {
+  animation: dino-jump 1s;
+}
+
+@keyframes dino-jump {
+  0% {
+      margin-bottom: 0;
   }
-  @keyframes block {
-    /* начальная позиция кактуса (справа) */
-    0% {
-      left: 580px;
-    }
-    /* конечная позиция кактуса (слева, за пределами экрана) */
-    100% {
-      left: -20px;
-    }
+
+  50% {
+      margin-bottom: 80px;
   }
+
+  100% {
+      margin-bottom: 0;
+  }
+}
+
