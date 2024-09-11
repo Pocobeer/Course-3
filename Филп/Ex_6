@@ -1,17 +1,5 @@
-word(pig,"?????????") .
-word(dog,"??????").
-word(cat,"?????").
-
-translate_1:- read(X), word(X,Y),
-                       write(Y), nl.
-translate_2:- read(Y), word(X,Y),
-                       write(X), nl.
-
-inp(X):- X=1, translate_1.
-inp(X):- X=2, translate_2.
-inp(X):- X=3, read(Engl,"English"), 
-                        read(Russ,"Russian"),
-                        asserta_in(word(Engl,Russ)),
-                        write(Engl), write(" = "), write(Russ), nl.
-
-?-read(Word),inp(Word).
+%rab(FIO, birth year, sex, education, rank, date of starting work, shtraf).
+rab("Kozh Kir Yur", 2004, male, hight, "captain", date(2012,05,12), 0).
+rab("Me Me Me", 1912, male, mid,  "general", date(1955, 01, 56), 125).
+rab("Pu Pu Pu", 1986, male, mid, "general", date(2004, 04, 23),12).
+rab("Ma Ma Ma", 2000, male,hight, "sergeant", date( 

@@ -1,0 +1,20 @@
+﻿  ConsoleApplication1.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(29,27): warning C4305: аргумент: усечение из "double" в "GLclampf"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(29,21): warning C4305: аргумент: усечение из "double" в "GLclampf"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(29,15): warning C4305: аргумент: усечение из "double" в "GLclampf"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(64,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutInitWindowPosition в функции main.
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutInitWindowSize в функции main.
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutInitDisplayMode в функции main.
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutMainLoop в функции main.
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutPostRedisplay в функции "void __cdecl simulation(int)" (?simulation@@YAXH@Z).
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutSwapBuffers в функции "void __cdecl display(void)" (?display@@YAXXZ).
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutTimerFunc в функции "void __cdecl simulation(int)" (?simulation@@YAXH@Z).
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutKeyboardFunc в функции main.
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutReshapeFunc в функции main.
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutDisplayFunc в функции main.
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutWireTeapot в функции "void __cdecl display(void)" (?display@@YAXXZ).
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp___glutInitWithExit в функции glutInit_ATEXIT_HACK.
+ConsoleApplication1.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp___glutCreateWindowWithExit в функции glutCreateWindow_ATEXIT_HACK.
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\\freeglut\lib\freeglut.lib : warning LNK4272: тип компьютера библиотеки "x86" конфликтует с типом целевого компьютера "x64"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\x64\Debug\ConsoleApplication1.exe : fatal error LNK1120: неразрешенных внешних элементов: 13
