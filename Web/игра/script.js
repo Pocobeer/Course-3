@@ -1,4 +1,5 @@
 const dino = document.getElementById("dino");
+const dinoimg = document.getElementById("dinoImg");
 const cactus = document.getElementById("cactus");
 const scoreElement = document.getElementById("score");
 const bestScoreElement = document.getElementById("bestScore");
@@ -42,5 +43,26 @@ let isAlive = setInterval(function () {
 }, 10);
 
 document.addEventListener("keydown", function (event) {
-    jump();
+    if(event.code == "Space"){
+        dinoimg.src = "images/dino.png";
+        dinoimg.style.height = "50px";
+        dino.style.top = "150px";
+        jump();
+    }
+});
+
+document.addEventListener("keydown", function (event) {
+    if (event.code == "ArrowDown"){
+        dinoimg.src = "images/dino_down.png";
+        dinoimg.style.height = "30px";
+        dino.style.top = "170px";
+    }
+});
+
+document.addEventListener("keyup", function (event) {
+    if (event.code == "ArrowDown"){
+        dinoimg.src = "images/dino.png";
+        dinoimg.style.height = "50px";
+        dino.style.top = "150px";
+    }
 });
