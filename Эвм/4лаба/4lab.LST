@@ -1,0 +1,82 @@
+Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 1
+4lab.asm
+
+
+
+      1	0000			     _STACK  segment para stack
+      2	0000  0400*(??)			     db	     1024 dup(?)
+      3	0400			     _STACK  ends
+      4
+      5
+      6
+      7	0000			     data    segment
+      8
+      9	0000  05 71 77 65 72 74		     S db 5, 'qwert'
+     10	0006  00 FF*(24)		     Res   db	   0, 255 dup('$')
+     11
+     12	0106  41			     Ch1     db	     'A'
+     13	0107  0A			     Len1    db	     10
+     14
+     15	0108			     data    ends
+     16
+     17	0000			     code    segment byte public
+     18					     assume  cs:code, ds:data, ss:_STACK
+     19
+     20					     extrn   PadCh:far
+     21
+     22	0000			     main:
+     23					     ;инициализация сегментного	регистра данных
+     24	0000  B8 0000s			     mov     ax,     data
+     25	0003  8E D8			     mov     ds,     ax
+     26
+     27	0005  1E			     push ds
+     28	0006  B8 0006r			     mov ax, offset Res
+     29	0009  50			     push ax
+     30	000A  1E			     push ds
+     31	000B  B8 0000r			     mov ax, offset S
+     32	000E  50			     push ax
+     33	000F  A0 0106r			     mov al, Ch1
+     34	0012  50			     push ax
+     35	0013  A0 0107r			     mov al, [Len1]
+     36	0016  50			     push ax
+     37	0017  0E E8 0000e		     call PadCh
+     38	001B  BA 0007r			     mov dx, offset Res+1
+     39	001E  B4 09			     mov ah, 9
+     40	0020  CD 21			     int 21h
+     41
+     42					     ;завершение программы
+     43	0022  B8 4C00			     mov     ax,     4C00h
+     44	0025  CD 21			     int     21h
+     45
+     46	0027			     code    ends
+     47
+     48					     end     main
+Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??date				  Text	 "09-12-24"
+??filename			  Text	 "4lab	  "
+??time				  Text	 "21:13:53"
+??version			  Number 0500
+@Cpu				  Text	 0101H
+@FileName			  Text	 4lab
+@WordSize			  Text	 2
+@curseg				  Text	 code
+Ch1				  Byte	 data:0106
+Len1				  Byte	 data:0107
+PadCh				  Far16	 code:---- Extern
+Res				  Byte	 data:0006
+S				  Byte	 data:0000
+main				  Near16 code:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+_STACK				  16  0400 Para	  Stack
+code				  16  0027 Byte	  Public
+data				  16  0108 Para	  none
+

@@ -1,0 +1,97 @@
+Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 1
+4_kab_d.asm
+
+
+
+      1					 .386		       ; Указываем, что	используем 32-битный режим
+      2	00000000			 .model	flat, stdcall  ; Плоская модель	памяти,	стандартный вызов
+      3					 option	casemap:none
+      4
+      5	00000000			 .data
+      6	00000000  FF*(00)		 Res db	255 dup(0)     ; Резервируем место для результата (макс. длина 255)
+      7
+      8	000000FF			 .code
+      9	00000000			 PadCh proc S: DWORD, C: BYTE, Len: BYTE
+     10					     ; Получаем	длину строки S
+1    11	00000000  C8 0000 00			 ENTERD	 00000h,0
+1    12	00000004  8B 45	08		     mov eax, [S]	   ; Получаем адрес строки S
+     13	00000007  0F B6	08		     movzx ecx,	byte ptr [eax] ; Получаем длину	строки S (первый байт)
+     14	0000000A  88 0D	00000000r	     mov [Res],	cl	   ; Сохраняем длину в Res
+     15
+     16	00000010  3A 4D	10		     cmp cl, Len	   ; Сравниваем	длину S	с Len
+     17	00000013  73 17	90 90 90 90	     jae StoreLen	   ; Если S >= Len, переходим к	StoreLen
+     18
+     19					     ; Заполняем строку	символами C
+     20	00000019  BF 00000001r		     lea edi, [Res + 1]	   ; Указатель на начало результата (после длины)
+     21	0000001E  8D 70	01		     lea esi, [eax + 1]	   ; Указатель на первый символ	строки S (пропускаем длину)
+     22	00000021  8B 55	10		     mov edx, Len	   ; Длина, которую нужно заполнить
+**Error** 4_kab_d.asm(21) Operand types	do not match
+     23	00000024  2B D1			     sub edx, cl	   ; Остаток для заполнения
+**Error** 4_kab_d.asm(22) Operand types	do not match
+     24
+     25					     ; Заполнение остатка символами C
+     26	00000026			 FillLoop:
+     27	00000026  88 2F			     mov [edi],	C	   ; Заполняем символом	C
+**Error** 4_kab_d.asm(26) Illegal memory reference
+     28	00000028  47			     inc edi		   ; Переходим к следующему символу
+     29	00000029  4A			     dec edx		   ; Уменьшаем счетчик
+     30	0000002A  75 FA			     jnz FillLoop	   ; Повторяем,	пока есть символы для заполнения
+     31
+     32	0000002C			 StoreLen:
+     33					     ; Копируем	строку S в результат
+     34	0000002C  8D 70	01		     lea esi, [eax + 1]	   ; Указатель на первый символ	строки S (пропускаем длину)
+     35	0000002F  8B 4D	08		     mov ecx, [S]	   ; Получаем длину строки S
+     36	00000032  F3> A4		     rep movsb		   ; Копируем строку S в результат
+     37
+1    38	00000034  C9				 LEAVED
+1    39	00000035  C2 000C			 RET	 0000Ch
+     40	00000038			 PadCh endp
+     41
+     42					 end
+Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??date				  Text	 "09-12-24"
+??filename			  Text	 "4_kab_d "
+??time				  Text	 "21:13:53"
+??version			  Number 0500
+@32Bit				  Text	 1
+@CodeSize			  Text	 0
+@Cpu				  Text	 0F0FH
+@DataSize			  Text	 0
+@FileName			  Text	 4_kab_d
+@Interface			  Text	 003h
+@Model				  Text	 1
+@WordSize			  Text	 4
+@code				  Text	 FLAT
+@curseg				  Text	 _TEXT
+@data				  Text	 FLAT
+@stack				  Text	 FLAT
+C				  Number [FLAT:EBP+000C]
+FillLoop			  Near32 FLAT:0026
+Len				  Number [FLAT:EBP+0010]
+PadCh				  Near32 FLAT:0000
+Res				  Byte	 FLAT:0000
+S				  Number [FLAT:EBP+0008]
+StoreLen			  Near32 FLAT:002C
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  32  00FF Dword  Public  DATA
+FLAT				  Group
+_TEXT				  32  0038 Dword  Public  CODE
+Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 3
+Error Summary
+
+
+
+**Error** 4_kab_d.asm(21) Operand types	do not match
+**Error** 4_kab_d.asm(22) Operand types	do not match
+**Error** 4_kab_d.asm(26) Illegal memory reference
+
