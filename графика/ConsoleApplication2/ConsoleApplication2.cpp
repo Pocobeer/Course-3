@@ -6,19 +6,26 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "GL/freeglut.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 
 // используем пространство имен стандартной библиотеки
 using namespace std;
+using namespace glm;
 
-vector<vector<GLfloat>> colors{
-	{1.0, 1.0, 1.0},
-	{0.0,1.0,0.0},
-	{1.0,0.0,0.0},
-	{0.5,0.5,0.0},
-	{0.5,0.0,0.5}
+vector<vec3> colors{
+	{1.0f, 1.0f, 1.0f},
+	{0.0f, 0.0f, 1.0f},
+	{1.0f, 0.0f, 0.0f}, 
+	{1.0f, 1.0f, 0.0f}, 
+	{0.5f, 0.0f, 0.5f}  
 };
+
 int index = 0;
 int size = 5;
+int timePassed = 0;
 
 // функция, вызываемая при изменении размеров окна
 void reshape(int w, int h)
@@ -49,7 +56,7 @@ void display(void)
 	gluLookAt(5, 5, 7.5, 0, 0, 0, 0, 1, 0);
 
 	// выводим объект - красный (1,0,0) чайник
-	glColor3f(colors[index][0], colors[index][1], colors[index][2]);
+	glColor3f(colors[index].r,colors[index].g, colors[index].b);
 	glutWireTeapot(1.0);
 
 	// смена переднего и заднего буферов
@@ -59,6 +66,15 @@ void display(void)
 // функция вызывается каждые 20 мс
 void simulation(int value)
 {
+	timePassed += 20;
+
+	if (timePassed == 1000) {
+		index += 1;
+		timePassed = 0;
+		if (index == 5) index = 0;
+		cout << "Index of current color: " << index << endl;
+	}
+
 	// устанавливаем признак того, что окно нуждается в перерисовке
 	glutPostRedisplay();
 	// эта же функция будет вызвана еще раз через 20 мс
@@ -68,10 +84,10 @@ void simulation(int value)
 // Функция обработки нажатия клавиш
 void keyboardFunc(unsigned char key, int x, int y)
 {
-	if (key == 32) {
+	/*if (key == 32) {
 		index += 1;
 		if (index == 5) index = 0;
-	}
+	}*/
 	printf("Key code is %i\n", key);
 };
 
