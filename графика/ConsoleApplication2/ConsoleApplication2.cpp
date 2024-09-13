@@ -15,6 +15,7 @@
 using namespace std;
 using namespace glm;
 
+//вектор цветов
 vector<vec3> colors{
 	{1.0f, 1.0f, 1.0f},
 	{0.0f, 0.0f, 1.0f},
@@ -23,6 +24,7 @@ vector<vec3> colors{
 	{0.5f, 0.0f, 0.5f}  
 };
 
+//переменные индекса, размера вектора цветов и счетчика времени
 int index = 0;
 int size = 5;
 int timePassed = 0;
@@ -56,6 +58,7 @@ void display(void)
 	gluLookAt(5, 5, 7.5, 0, 0, 0, 0, 1, 0);
 
 	// выводим объект - красный (1,0,0) чайник
+	//цвета используюся по индексу вектора цветов colors
 	glColor3f(colors[index].r,colors[index].g, colors[index].b);
 	glutWireTeapot(1.0);
 
@@ -66,11 +69,14 @@ void display(void)
 // функция вызывается каждые 20 мс
 void simulation(int value)
 {
+	//при вызове функции увеличиваем счетчик
 	timePassed += 20;
-
+	//при достижении 1000 мс сбрасываем счетчик и изменяем цвет
 	if (timePassed == 1000) {
 		index += 1;
+		//обнуляем счетчик
 		timePassed = 0;
+		//если дошди до конца вектора сбрасываем индекс
 		if (index == 5) index = 0;
 		cout << "Index of current color: " << index << endl;
 	}
@@ -106,7 +112,7 @@ void main(int argc, char** argv)
 	// 2. устанавливаем размер окна
 	glutInitWindowSize(800, 600);
 	// 3. создаем окно
-	glutCreateWindow("Laba_01");
+	glutCreateWindow("Laba_02");
 
 	// УСТАНОВКА ФУНКЦИЙ ОБРАТНОГО ВЫЗОВА
 	// устанавливаем функцию, которая будет вызываться для перерисовки окна

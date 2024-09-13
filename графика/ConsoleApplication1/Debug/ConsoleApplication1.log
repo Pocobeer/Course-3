@@ -1,6 +1,7 @@
 ﻿  ConsoleApplication1.cpp
-C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(40,27): warning C4305: аргумент: усечение из "double" в "GLclampf"
-C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(40,21): warning C4305: аргумент: усечение из "double" в "GLclampf"
-C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(40,15): warning C4305: аргумент: усечение из "double" в "GLclampf"
-C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(79,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-  ConsoleApplication1.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\Debug\ConsoleApplication1.exe
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(41,27): warning C4305: аргумент: усечение из "double" в "GLclampf"
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(41,21): warning C4305: аргумент: усечение из "double" в "GLclampf"
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(41,15): warning C4305: аргумент: усечение из "double" в "GLclampf"
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(83,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  LINK : не найден или не выполнена сборка C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\Debug\ConsoleApplication1.exe при последней инкрементной компоновке; выполняется полная компоновка
+  ConsoleApplication1.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\Debug\ConsoleApplication1.exe
