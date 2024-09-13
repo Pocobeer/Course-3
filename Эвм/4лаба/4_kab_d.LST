@@ -1,54 +1,79 @@
-Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 1
+Turbo Assembler	 Version 5.0	    09-13-24 09:18:05	    Page 1
 4_kab_d.asm
 
 
 
-      1					 .386		       ; ”Í‡Á˚‚‡ÂÏ, ˜ÚÓ	ËÒÔÓÎ¸ÁÛÂÏ 32-·ËÚÌ˚È ÂÊËÏ
-      2	00000000			 .model	flat, stdcall  ; œÎÓÒÍ‡ˇ ÏÓ‰ÂÎ¸	Ô‡ÏˇÚË,	ÒÚ‡Ì‰‡ÚÌ˚È ‚˚ÁÓ‚
-      3					 option	casemap:none
+      1					 .386
+      2	00000000			 .model	flat
+      3					 public	 PadCh
       4
-      5	00000000			 .data
-      6	00000000  FF*(00)		 Res db	255 dup(0)     ; –ÂÁÂ‚ËÛÂÏ ÏÂÒÚÓ ‰Îˇ ÂÁÛÎ¸Ú‡Ú‡ (Ï‡ÍÒ. ‰ÎËÌ‡ 255)
-      7
-      8	000000FF			 .code
-      9	00000000			 PadCh proc S: DWORD, C: BYTE, Len: BYTE
-     10					     ; œÓÎÛ˜‡ÂÏ	‰ÎËÌÛ ÒÚÓÍË S
-1    11	00000000  C8 0000 00			 ENTERD	 00000h,0
-1    12	00000004  8B 45	08		     mov eax, [S]	   ; œÓÎÛ˜‡ÂÏ ‡‰ÂÒ ÒÚÓÍË S
-     13	00000007  0F B6	08		     movzx ecx,	byte ptr [eax] ; œÓÎÛ˜‡ÂÏ ‰ÎËÌÛ	ÒÚÓÍË S (ÔÂ‚˚È ·‡ÈÚ)
-     14	0000000A  88 0D	00000000r	     mov [Res],	cl	   ; —Óı‡ÌˇÂÏ ‰ÎËÌÛ ‚ Res
-     15
-     16	00000010  3A 4D	10		     cmp cl, Len	   ; —‡‚ÌË‚‡ÂÏ	‰ÎËÌÛ S	Ò Len
-     17	00000013  73 17	90 90 90 90	     jae StoreLen	   ; ≈ÒÎË S >= Len, ÔÂÂıÓ‰ËÏ Í	StoreLen
-     18
-     19					     ; «‡ÔÓÎÌˇÂÏ ÒÚÓÍÛ	ÒËÏ‚ÓÎ‡ÏË C
-     20	00000019  BF 00000001r		     lea edi, [Res + 1]	   ; ”Í‡Á‡ÚÂÎ¸ Ì‡ Ì‡˜‡ÎÓ ÂÁÛÎ¸Ú‡Ú‡ (ÔÓÒÎÂ ‰ÎËÌ˚)
-     21	0000001E  8D 70	01		     lea esi, [eax + 1]	   ; ”Í‡Á‡ÚÂÎ¸ Ì‡ ÔÂ‚˚È ÒËÏ‚ÓÎ	ÒÚÓÍË S (ÔÓÔÛÒÍ‡ÂÏ ‰ÎËÌÛ)
-     22	00000021  8B 55	10		     mov edx, Len	   ; ƒÎËÌ‡, ÍÓÚÓÛ˛ ÌÛÊÌÓ Á‡ÔÓÎÌËÚ¸
-**Error** 4_kab_d.asm(21) Operand types	do not match
-     23	00000024  2B D1			     sub edx, cl	   ; ŒÒÚ‡ÚÓÍ ‰Îˇ Á‡ÔÓÎÌÂÌËˇ
-**Error** 4_kab_d.asm(22) Operand types	do not match
-     24
-     25					     ; «‡ÔÓÎÌÂÌËÂ ÓÒÚ‡ÚÍ‡ ÒËÏ‚ÓÎ‡ÏË C
-     26	00000026			 FillLoop:
-     27	00000026  88 2F			     mov [edi],	C	   ; «‡ÔÓÎÌˇÂÏ ÒËÏ‚ÓÎÓÏ	C
-**Error** 4_kab_d.asm(26) Illegal memory reference
-     28	00000028  47			     inc edi		   ; œÂÂıÓ‰ËÏ Í ÒÎÂ‰Û˛˘ÂÏÛ ÒËÏ‚ÓÎÛ
-     29	00000029  4A			     dec edx		   ; ”ÏÂÌ¸¯‡ÂÏ Ò˜ÂÚ˜ËÍ
-     30	0000002A  75 FA			     jnz FillLoop	   ; œÓ‚ÚÓˇÂÏ,	ÔÓÍ‡ ÂÒÚ¸ ÒËÏ‚ÓÎ˚ ‰Îˇ Á‡ÔÓÎÌÂÌËˇ
-     31
-     32	0000002C			 StoreLen:
-     33					     ;  ÓÔËÛÂÏ	ÒÚÓÍÛ S ‚ ÂÁÛÎ¸Ú‡Ú
-     34	0000002C  8D 70	01		     lea esi, [eax + 1]	   ; ”Í‡Á‡ÚÂÎ¸ Ì‡ ÔÂ‚˚È ÒËÏ‚ÓÎ	ÒÚÓÍË S (ÔÓÔÛÒÍ‡ÂÏ ‰ÎËÌÛ)
-     35	0000002F  8B 4D	08		     mov ecx, [S]	   ; œÓÎÛ˜‡ÂÏ ‰ÎËÌÛ ÒÚÓÍË S
-     36	00000032  F3> A4		     rep movsb		   ;  ÓÔËÛÂÏ ÒÚÓÍÛ S ‚ ÂÁÛÎ¸Ú‡Ú
-     37
-1    38	00000034  C9				 LEAVED
-1    39	00000035  C2 000C			 RET	 0000Ch
-     40	00000038			 PadCh endp
+      5	00000000			 .code
+      6	00000000			 start@12:
+      7	00000000  B0 01			 mov al,1
+      8	00000002  C2 000C		 ret 12
+      9
+     10					 ;function PadCh(S: string; C: char; Len: byte): string,
+     11					 ;–í–æ–∑–≤—Ä–∞—â–∞–µ—Ç —Å—Ç—Ä–æ–∫—É,  –≤ –∫–æ—Ç–æ—Ä–æ–π	S —Å–º–µ—â–µ–Ω–∞ –≤–ª–µ–≤–æ, –∞	    +
+     12					 –æ—Å—Ç–∞—Ç–æ–∫	—Å—Ç—Ä–æ–∫–∏ –∑–∞–ø–æ–ª–Ω–µ–Ω —Å–∏–º–≤–æ–ª–∞–º–∏ –°.
+     13					 ;–î–ª—è —ç—Ç–æ–≥–æ –∑–Ω–∞–∫–∏ –° –≤–∫–ª—é—á–∞—é—Ç—Å—è —Å–ø—Ä–∞–≤–∞ –æ—Ç –∫–æ–Ω—Ü–∞ S –¥–æ  +
+     14					 —Ç–µ—Ö	–ø–æ—Ä	–ø–æ–∫–∞ –æ–±—â–∞—è –¥–ª–∏–Ω–∞ —Å—Ç—Ä–æ–∫–∏ –Ω–µ
+     15					 ;—Å—Ç–∞–Ω–µ—Ç —Ä–∞–≤–Ω–æ–π Len. –ï—Å–ª–∏ S –¥–ª–∏–Ω–Ω–µ–µ —á–µ–º Len, —Ç–æ —Å—Ç—Ä–æ–∫–∞    +
+     16					 –Ω–µ –∏–∑–º–µ–Ω—è–µ—Ç—Å—è.
+     17					 ;–ï—Å–ª–∏ S –ø—É—Å—Ç–∞—è —Å—Ç—Ä–æ–∫–∞,	—Ç–æ –≤–æ–∑–≤—Ä–∞—â–∞–µ—Ç—Å—è —Å—Ç—Ä–æ–∫–∞ –∏–∑	Len +
+     18					 —Å–∏–º–≤–æ–ª–æ–≤ –°.
+     19	00000005			 PadCh	 proc	near
+     20					 ; –∞–¥—Ä–µ—Å–∞	–ø–∞—Ä–∞–º–µ—Ç—Ä–æ–≤ –≤	—Å—Ç–µ–∫–µ:
+     21		  = dword ptr [ebp+16]	 S	 equ	 dword ptr [ebp+16]	  ;  –∞–¥—Ä–µ—Å	—Å—Ç—Ä–æ–∫–∏ S:string
+     22		  = byte  ptr [ebp+12]	 Ch1	 equ	 byte  ptr [ebp+12]	   ;  –∞–¥—Ä–µ—Å –ø–∞—Ä–∞–º–µ—Ç—Ä–∞ –° :Char
+     23		  = byte  ptr [ebp+8]	 Len	 equ	 byte  ptr [ebp+8]	  ;  –∞–¥—Ä–µ—Å	–ø–∞—Ä–∞–º–µ—Ç—Ä–∞ Len:Byte
+     24		  = dword ptr [ebp+20]	 Res	 equ	 dword ptr [ebp+20]	  ;  –∞–¥—Ä–µ—Å	—Å—Ç—Ä–æ–∫–∏ —Ä–µ–∑—É–ª—å—Ç–∞—Ç–∞
+     25	00000005  55				 push	 ebp			  ; —Å–æ—Ö—Ä–∞–Ω–µ–Ω–∏–µ bp
+     26	00000006  8B EC				 mov	 ebp,	  esp	   ; –Ω–∞—Å—Ç—Ä–æ–π–∫–∞	bp –Ω–∞	–≤–µ—Ä—à–∏–Ω—É —Å—Ç–µ–∫–∞
+     27						 ;push	  ds		  ; —Å–æ—Ö—Ä–∞–Ω–µ–Ω–∏–µ ds
+     28	00000008  8B 7D	14			 mov	 edi,	  [Res]	  ; es:di:=–∞–¥—Ä–µ—Å —Ä–µ–∑—É–ª—å—Ç–∞—Ç–∞
+     29	0000000B  8B 75	10			 mov	 esi,	  [S]	  ; ds:si:=–∞–¥—Ä–µ—Å –∏—Å—Ö–æ–¥–Ω–æ–π
+     30									 ; —Å—Ç—Ä–æ–∫–∏
+     31	0000000E  B9 00000000			 mov ecx,0
+     32	00000013  FC				 cld			 ; –æ—á–∏—Å—Ç–∫–∞ —Ñ–ª–∞–≥–∞ –Ω–∞–ø—Ä–∞–≤–ª–µ–Ω–∏—è	    +
+     33					 (–∏–Ω–∫—Ä–µ–º–µ–Ω—Ç)
+     34	00000014  AC				 lodsb			 ; al:=(ds:[si]), si:=si+1 (al - –¥–ª–∏–Ω–∞ S)
+     35	00000015  AA				 stosb			 ; –∫–æ–ø–∏—Ä—É–µ–º –¥–ª–∏–Ω—É —Å—Ç—Ä–æ–∫–∏ S –≤ Res
+     36	00000016  8A E0				 mov	 ah,	 al	 ; —Å–æ—Ö—Ä–∞–Ω—è–µ–º –¥–ª–∏–Ω—É —Å—Ç—Ä–æ–∫–∏ S
+     37	00000018  3A 45	08			 cmp	 al,	 [Len]	 ; —Å—Ä–∞–≤–Ω–∏–≤–∞–µ–º	–¥–ª–∏–Ω—É S —Å	Len
+     38	0000001B  73 0E	90 90 90 90		 jae	 StoreLen	 ; –µ—Å–ª–∏ S >= Len, —Ç–æ –∫–æ–ø–∏—Ä—É–µ–º S –∏	    +
+     39					 –≤—ã—Ö–æ–¥–∏–º
+     40
      41
-     42					 end
-Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 2
+     42	00000021			  Pad:
+     43
+     44
+     45	00000021  8A 45	08			 mov al, [Len]
+     46	00000024  88 47	FF			 mov  [edi-1], al	 ; –î–æ–ø–æ–ª–Ω—è–µ–º —Å—Ç—Ä–æ–∫—É
+     47	00000027  8A CC				 mov cl, ah
+     48	00000029  F3> A4			 rep	 movsb		 ; –∑–∞–ø–∏—Å–∞—Ç—å –æ—á–µ—Ä–µ–¥–Ω–æ–π —Å–∏–º–≤–æ–ª	    +
+     49					 —Ä–µ–∑—É–ª—å—Ç–∞—Ç–∞ Res
+     50	0000002B			 StoreLen:
+     51	0000002B  8A 4D	08			 mov cl, [Len]
+     52	0000002E  2A CC				 sub	 cl,	 ah	 ; S –¥–ª–∏–Ω–Ω–µ–µ, —á–µ–º Len
+     53
+     54	00000030  8A 45	0C			 mov	 al,	 [Ch1]	 ; –¥–æ–±–∞–≤–ª—è–µ–º –æ—á–µ—Ä–µ–¥–Ω–æ–π —Å–∏–º–≤–æ–ª
+     55						 ;–ö–æ–ø–∏—Ä—É–µ–º —Å—Ç—Ä–æ–∫—É
+     56	00000033  F3> AA			 rep	 stosb
+     57
+Turbo Assembler	 Version 5.0	    09-13-24 09:18:05	    Page 2
+4_kab_d.asm
+
+
+
+     58
+     59	00000035			 Exit:	; pop	  ds		  ; –≤–æ—Å—Å—Ç–∞–Ω–æ–≤–∏—Ç—å ds
+     60	00000035  5D				 pop	 ebp		  ; –≤–æ—Å—Å—Ç–∞–Ω–æ–≤–∏—Ç—å bp
+     61	00000036  C2 0010			 ret	 16		 ; –≤—ã—Ö–æ–¥ —Å —É–¥–∞–ª–µ–Ω–∏–µ–º –ø–∞—Ä–∞–º–µ—Ç—Ä–æ–≤ Ch1,
+     62									 ; Ch2 –∏ –∞–¥—Ä–µ—Å–∞ S (Res —É–¥–∞–ª—è—Ç—å –Ω–µ–ª—å–∑—è!)
+     63	00000039			 PadCh	endp
+     64
+     65					 end start@12
+Turbo Assembler	 Version 5.0	    09-13-24 09:18:05	    Page 3
 Symbol Table
 
 
@@ -56,42 +81,36 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??date				  Text	 "09-12-24"
+??date				  Text	 "09-13-24"
 ??filename			  Text	 "4_kab_d "
-??time				  Text	 "21:13:53"
+??time				  Text	 "09:18:05"
 ??version			  Number 0500
 @32Bit				  Text	 1
 @CodeSize			  Text	 0
 @Cpu				  Text	 0F0FH
 @DataSize			  Text	 0
 @FileName			  Text	 4_kab_d
-@Interface			  Text	 003h
+@Interface			  Text	 000h
 @Model				  Text	 1
 @WordSize			  Text	 4
 @code				  Text	 FLAT
 @curseg				  Text	 _TEXT
 @data				  Text	 FLAT
 @stack				  Text	 FLAT
-C				  Number [FLAT:EBP+000C]
-FillLoop			  Near32 FLAT:0026
-Len				  Number [FLAT:EBP+0010]
-PadCh				  Near32 FLAT:0000
-Res				  Byte	 FLAT:0000
-S				  Number [FLAT:EBP+0008]
-StoreLen			  Near32 FLAT:002C
+Ch1				  Text	 byte  ptr [ebp+12]
+Exit				  Near32 FLAT:0035
+Len				  Text	 byte  ptr [ebp+8]
+Pad				  Near32 FLAT:0021
+PadCh				  Near32 FLAT:0005
+Res				  Text	 dword ptr [ebp+20]
+S				  Text	 dword ptr [ebp+16]
+StoreLen			  Near32 FLAT:002B
+start@12			  Near32 FLAT:0000
 
 Groups & Segments		  Bit Size Align  Combine Class
 
 DGROUP				  Group
-  _DATA				  32  00FF Dword  Public  DATA
+  _DATA				  32  0000 Dword  Public  DATA
 FLAT				  Group
-_TEXT				  32  0038 Dword  Public  CODE
-Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 3
-Error Summary
-
-
-
-**Error** 4_kab_d.asm(21) Operand types	do not match
-**Error** 4_kab_d.asm(22) Operand types	do not match
-**Error** 4_kab_d.asm(26) Illegal memory reference
+_TEXT				  32  0039 Dword  Public  CODE
 

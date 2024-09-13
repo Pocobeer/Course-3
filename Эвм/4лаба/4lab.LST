@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 1
+Turbo Assembler	 Version 5.0	    09-13-24 09:19:08	    Page 1
 4lab.asm
 
 
@@ -51,7 +51,7 @@ Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 1
      46	0027			     code    ends
      47
      48					     end     main
-Turbo Assembler	 Version 5.0	    09-12-24 21:13:53	    Page 2
+Turbo Assembler	 Version 5.0	    09-13-24 09:19:08	    Page 2
 Symbol Table
 
 
@@ -59,9 +59,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??date				  Text	 "09-12-24"
+??date				  Text	 "09-13-24"
 ??filename			  Text	 "4lab	  "
-??time				  Text	 "21:13:53"
+??time				  Text	 "09:19:08"
 ??version			  Number 0500
 @Cpu				  Text	 0101H
 @FileName			  Text	 4lab

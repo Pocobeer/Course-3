@@ -17,7 +17,7 @@ data    ends
 code    segment byte public
         assume  cs:code, ds:data, ss:_STACK
  
-        extrn   PadCh:far
+        extrn   PadCh:near
 
 main:
         ;инициализация сегментного регистра данных
