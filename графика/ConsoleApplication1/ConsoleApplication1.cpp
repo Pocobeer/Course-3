@@ -31,6 +31,7 @@ void reshape(int w, int h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(25.0, (float)w / h, 0.2, 70.0);
+	cout << "jeq" << endl;
 };
 
 // функция вызывается при перерисовке окна
@@ -56,6 +57,7 @@ void display(void)
 
 	// смена переднего и заднего буферов
 	glutSwapBuffers();
+	cout << "display" << endl;
 };
 
 // функция вызывается каждые 20 мс

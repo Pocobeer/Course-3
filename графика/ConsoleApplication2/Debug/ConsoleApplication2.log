@@ -1,6 +1,2 @@
-﻿  ConsoleApplication2.cpp
-C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication2\ConsoleApplication2.cpp(49,27): warning C4305: аргумент: усечение из "double" в "GLclampf"
-C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication2\ConsoleApplication2.cpp(49,21): warning C4305: аргумент: усечение из "double" в "GLclampf"
-C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication2\ConsoleApplication2.cpp(49,15): warning C4305: аргумент: усечение из "double" в "GLclampf"
-C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication2\ConsoleApplication2.cpp(101,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-  ConsoleApplication2.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication2\Debug\ConsoleApplication2.exe
+﻿  LINK : не найден или не выполнена сборка C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication2\Debug\ConsoleApplication2.exe при последней инкрементной компоновке; выполняется полная компоновка
+  ConsoleApplication2.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication2\Debug\ConsoleApplication2.exe

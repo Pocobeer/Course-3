@@ -1,3 +1,5 @@
+
+
 .game {
   width: 600px;
   height: 200px;
@@ -7,6 +9,7 @@
 }
 
 #dino {
+  /* background-color: aquamarine; */
   width: 50px;
   height: 50px;
   /* background-image: url(images/dino.png);
@@ -19,7 +22,7 @@
 
 
 .jump {
-  animation: jump 0.3s linear;
+  animation: jump 0.3s  infinite linear;
 }
 
 @keyframes jump {
@@ -31,14 +34,38 @@
 }
 
 #cactus {
-  background-color: brown;
+  /* background-color: brown; */
   width: 20px;
   height: 40px;
   position: relative;
   top: 110px;
   left: 580px;
-  background-image: url("images/cactus.png");
-  background-size: 20px 40px;
+  /* background-image: url("images/cactus.png"); */
+  /* background-size: 20px 40px; */
+  animation: block 1s infinite linear;
+}
+
+#ptic_1{
+  /* background-color: brown; */
+  width: 40px;
+  height: 40px;
+  position: relative;
+  top: 70px;
+  left: 580px;
+  /* background-image: url("images/ptic_1.png"); */
+  /* background-size: 20px 40px; */
+  animation: block 1s infinite linear;
+}
+
+#apple{
+  /* background-color: brown; */
+  width: 40px;
+  height: 40px;
+  position: relative;
+  top: 110px;
+  left: 580px;
+  /* background-image: url("images/apple.png"); */
+  /* background-size: 20px 40px; */
   animation: block 1s infinite linear;
 }
 
