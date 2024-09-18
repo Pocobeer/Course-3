@@ -1,0 +1,136 @@
+Turbo Assembler	 Version 5.0	    09-18-24 20:35:10	    Page 1
+4labYav.asm
+
+
+
+      1					 include include.inc
+1     2					 includelib import32.lib
+1     3					  extrn	MessageBoxA:near
+1     4					  extrn	ExitProcess:near
+1     5					  extrn	LoadLibraryA:near
+1     6					  extrn	FreeLibrary:near
+1     7					  extrn	GetProcAddress:near
+1     8					  MessageBox equ MessageBoxA
+1     9					  LoadLibrary equ LoadLibraryA
+1    10		  =0000			 MB_OK equ 0000H
+     11					 .386
+     12	00000000			 .model	flat, stdcall
+     13
+     14	00000000			 .const
+     15	00000000  42 65	66 6F 72 65 20+	     title_S_before db 'Before yav add:', 0
+     16		  79 61	76 20 61 64 64+
+     17		  3A 00
+     18	00000010  41 66	74 65 72 20 61+	     title_S_after db 'After add:', 0
+     19		  64 64	3A 00
+     20	0000001B  34 5F	6B 61 62 5F 64+	     libr db '4_kab_d.dll',0
+     21		  2E 64	6C 6C 00
+     22	00000027  50 61	64 43 68 00		 nameproc db 'PadCh',0
+     23
+     24	0000002D			 .data
+     25	00000000  05 71	77 65 72 74 00	     S db 5, 'qwert', 0	      ;	Исходная строка	с длиной
+     26	00000007  FF*(00)		     Res db 255	dup(0)	      ;	Буфер для результата, инициализированный нулями
+     27	00000106  41			     Ch1 db 'A'		      ;	Символ для добавления
+     28	00000107  05			     Len1 db 5		       ; Длина строки (должна соответствовать фактической длине)
+     29	00000108  ????????		     hlib dd ?
+     30	0000010C  ????????			 PadCh dd ?
+     31
+     32	00000110			 .code
+     33	00000000			 start:
+     34
+     35					     call LoadLibrary,offset libr ;загрузка библиотеки
+1    36	00000000  68 0000001Br			 PUSH	 offset	libr
+1    37	00000005  E8 00000000e			 CALL	 LoadLibraryA
+     38	0000000A  A3 00000108r		     mov hlib,eax
+     39					     call GetProcAddress,hlib,offset nameproc ;получение адреса	функции
+1    40	0000000F  68 00000027r			 PUSH	 offset	nameproc
+1    41	00000014  FF 35	00000108r		 PUSH	 hlib
+1    42	0000001A  E8 00000000e			 CALL	 GetProcAddress
+     43	0000001F  A3 0000010Cr		     mov PadCh,eax
+     44					     ; Вывод сообщения перед добавлением
+     45					     call MessageBox, 0, offset	S, offset title_S_before, MB_OK
+1    46	00000024  6A 00				 PUSH	 MB_OK
+1    47	00000026  68 00000000r			 PUSH	 offset	title_S_before
+1    48	0000002B  68 00000000r			 PUSH	 offset	S
+1    49	00000030  6A 00				 PUSH	 0
+1    50	00000032  E8 00000000e			 CALL	 MessageBoxA
+     51
+     52					     ; Вызов вашей подпрограммы	PadCh
+     53	00000037  68 00000007r		     push    offset Res	       ; адрес результата
+     54	0000003C  68 00000000r		     push    offset S	      ;	адрес строки S
+     55	00000041  A0 00000106r		     mov     al, [Ch1]	      ;	символ для добавления
+     56	00000046  50			     push    eax	      ;	символ
+     57	00000047  A0 00000107r		     mov     al, [Len1]	      ;	длина строки
+Turbo Assembler	 Version 5.0	    09-18-24 20:35:10	    Page 2
+4labYav.asm
+
+
+
+     58	0000004C  50			     push    eax	      ;	длина
+     59	0000004D  FF 15	0000010Cr	     call PadCh		    ; вызов вашей подпрограммы
+     60
+     61					     ; Вывод сообщения после добавления
+     62					     call MessageBox, 0, offset	Res, offset title_S_after, MB_OK
+1    63	00000053  6A 00				 PUSH	 MB_OK
+1    64	00000055  68 00000010r			 PUSH	 offset	title_S_after
+1    65	0000005A  68 00000007r			 PUSH	 offset	Res
+1    66	0000005F  6A 00				 PUSH	 0
+1    67	00000061  E8 00000000e			 CALL	 MessageBoxA
+     68
+     69					     ; Завершение программы
+     70	00000066  6A 00			     push    0		      ;	код завершения
+     71	00000068  E8 00000000e		     call ExitProcess	      ;	завершение программы
+     72
+     73	0000006D			 ends
+     74					 end start
+Turbo Assembler	 Version 5.0	    09-18-24 20:35:10	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??date				  Text	 "09-18-24"
+??filename			  Text	 "4labYav "
+??time				  Text	 "20:35:10"
+??version			  Number 0500
+@32Bit				  Text	 1
+@CodeSize			  Text	 0
+@Cpu				  Text	 0F0FH
+@DataSize			  Text	 0
+@FileName			  Text	 4labYav
+@Interface			  Text	 003h
+@Model				  Text	 1
+@WordSize			  Text	 4
+@code				  Text	 FLAT
+@curseg				  Text	 _TEXT
+@data				  Text	 FLAT
+@stack				  Text	 FLAT
+Ch1				  Byte	 FLAT:0106
+ExitProcess			  Near16 ----:---- Extern
+FreeLibrary			  Near16 ----:---- Extern
+GetProcAddress			  Near16 ----:---- Extern
+Len1				  Byte	 FLAT:0107
+LoadLibrary			  Alias	 LoadLibraryA
+LoadLibraryA			  Near16 ----:---- Extern
+MB_OK				  Number 0000
+MessageBox			  Alias	 MessageBoxA
+MessageBoxA			  Near16 ----:---- Extern
+PadCh				  Dword	 FLAT:010C
+Res				  Byte	 FLAT:0007
+S				  Byte	 FLAT:0000
+hlib				  Dword	 FLAT:0108
+libr				  Byte	 FLAT:001B
+nameproc			  Byte	 FLAT:0027
+start				  Near32 FLAT:0000
+title_S_after			  Byte	 FLAT:0010
+title_S_before			  Byte	 FLAT:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  CONST				  32  002D Dword  Public  DATA
+  _DATA				  32  0110 Dword  Public  DATA
+FLAT				  Group
+_TEXT				  32  006D Dword  Public  CODE
+

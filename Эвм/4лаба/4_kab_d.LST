@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 5.0	    09-13-24 09:18:05	    Page 1
+Turbo Assembler	 Version 5.0	    09-18-24 20:35:06	    Page 1
 4_kab_d.asm
 
 
@@ -60,7 +60,7 @@ Turbo Assembler	 Version 5.0	    09-13-24 09:18:05	    Page 1
      55						 ;Копируем строку
      56	00000033  F3> AA			 rep	 stosb
      57
-Turbo Assembler	 Version 5.0	    09-13-24 09:18:05	    Page 2
+Turbo Assembler	 Version 5.0	    09-18-24 20:35:06	    Page 2
 4_kab_d.asm
 
 
@@ -73,7 +73,7 @@ Turbo Assembler	 Version 5.0	    09-13-24 09:18:05	    Page 1
      63	00000039			 PadCh	endp
      64
      65					 end start@12
-Turbo Assembler	 Version 5.0	    09-13-24 09:18:05	    Page 3
+Turbo Assembler	 Version 5.0	    09-18-24 20:35:06	    Page 3
 Symbol Table
 
 
@@ -81,9 +81,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??date				  Text	 "09-13-24"
+??date				  Text	 "09-18-24"
 ??filename			  Text	 "4_kab_d "
-??time				  Text	 "09:18:05"
+??time				  Text	 "20:35:06"
 ??version			  Number 0500
 @32Bit				  Text	 1
 @CodeSize			  Text	 0

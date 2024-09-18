@@ -1,48 +1,40 @@
-_STACK  segment para stack
-        db      1024 dup(?)
-_STACK  ends
- 
+include include.inc
+includelib 4_kab_d.lib
+extrn PadCh: near         ; Объявление внешней подпрограммы
 
- 
-data    segment
- 
-        S db 5, 'qwert'
-        Res   db      0, 255 dup('$')
- 
-        Ch1     db      'A'
-        Len1    db      10
- 
-data    ends
- 
-code    segment byte public
-        assume  cs:code, ds:data, ss:_STACK
- 
-        extrn   PadCh:near
+.386
+.model flat, stdcall
 
-main:
-        ;инициализация сегментного регистра данных
-        mov     ax,     data
-        mov     ds,     ax
- 
-        push ds
-        mov ax, offset Res
-        push ax
-        push ds
-        mov ax, offset S
-        push ax
-        mov al, Ch1
-        push ax
-        mov al, [Len1]
-        push ax
-        call PadCh
-        mov dx, offset Res+1
-        mov ah, 9
-        int 21h
- 
-        ;завершение программы
-        mov     ax,     4C00h
-        int     21h
- 
-code    ends
- 
-        end     main
+.const
+    title_S_before db 'Before neyav add:', 0
+    title_S_after db 'After add:', 0
+
+.data
+    S db 5, 'qwert', 0       ; Исходная строка с длиной
+    Res db 255 dup(0)        ; Буфер для результата, инициализированный нулями
+    Ch1 db 'A'               ; Символ для добавления
+    Len1 db 5                 ; Длина строки (должна соответствовать фактической длине)
+
+.code
+start:
+    ; Вывод сообщения перед добавлением
+    call MessageBox, 0, offset S, offset title_S_before, MB_OK
+
+    ; Вызов вашей подпрограммы PadCh
+    push    offset Res        ; адрес результата
+    push    offset S         ; адрес строки S
+    mov     al, [Ch1]        ; символ для добавления
+    push    eax              ; символ
+    mov     al, [Len1]       ; длина строки
+    push    eax              ; длина
+    call PadCh             ; вызов вашей подпрограммы
+
+    ; Вывод сообщения после добавления
+    call MessageBox, 0, offset Res, offset title_S_after, MB_OK
+
+    ; Завершение программы
+    push    0                ; код завершения
+    call ExitProcess         ; завершение программы
+
+ends
+end start
