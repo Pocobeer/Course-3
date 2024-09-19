@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 5.0	    09-18-24 20:35:10	    Page 1
+Turbo Assembler	 Version 5.0	    09-19-24 18:53:49	    Page 1
 4labYav.asm
 
 
@@ -29,23 +29,23 @@ Turbo Assembler	 Version 5.0	    09-18-24 20:35:10	    Page 1
      24	0000002D			 .data
      25	00000000  05 71	77 65 72 74 00	     S db 5, 'qwert', 0	      ;	Исходная строка	с длиной
      26	00000007  FF*(00)		     Res db 255	dup(0)	      ;	Буфер для результата, инициализированный нулями
-     27	00000106  41			     Ch1 db 'A'		      ;	Символ для добавления
-     28	00000107  05			     Len1 db 5		       ; Длина строки (должна соответствовать фактической длине)
-     29	00000108  ????????		     hlib dd ?
-     30	0000010C  ????????			 PadCh dd ?
+     27	00000106  00000041		     Ch1 dd 'A'		      ;	Символ для добавления
+     28	0000010A  00000005		     Len1 dd 5		       ; Длина строки (должна соответствовать фактической длине)
+     29	0000010E  ????????		     hlib dd ?
+     30	00000112  ????????			 PadCh dd ?
      31
-     32	00000110			 .code
+     32	00000116			 .code
      33	00000000			 start:
      34
      35					     call LoadLibrary,offset libr ;загрузка библиотеки
 1    36	00000000  68 0000001Br			 PUSH	 offset	libr
 1    37	00000005  E8 00000000e			 CALL	 LoadLibraryA
-     38	0000000A  A3 00000108r		     mov hlib,eax
+     38	0000000A  A3 0000010Er		     mov hlib,eax
      39					     call GetProcAddress,hlib,offset nameproc ;получение адреса	функции
 1    40	0000000F  68 00000027r			 PUSH	 offset	nameproc
-1    41	00000014  FF 35	00000108r		 PUSH	 hlib
+1    41	00000014  FF 35	0000010Er		 PUSH	 hlib
 1    42	0000001A  E8 00000000e			 CALL	 GetProcAddress
-     43	0000001F  A3 0000010Cr		     mov PadCh,eax
+     43	0000001F  A3 00000112r		     mov PadCh,eax
      44					     ; Вывод сообщения перед добавлением
      45					     call MessageBox, 0, offset	S, offset title_S_before, MB_OK
 1    46	00000024  6A 00				 PUSH	 MB_OK
@@ -57,32 +57,30 @@ Turbo Assembler	 Version 5.0	    09-18-24 20:35:10	    Page 1
      52					     ; Вызов вашей подпрограммы	PadCh
      53	00000037  68 00000007r		     push    offset Res	       ; адрес результата
      54	0000003C  68 00000000r		     push    offset S	      ;	адрес строки S
-     55	00000041  A0 00000106r		     mov     al, [Ch1]	      ;	символ для добавления
-     56	00000046  50			     push    eax	      ;	символ
-     57	00000047  A0 00000107r		     mov     al, [Len1]	      ;	длина строки
-Turbo Assembler	 Version 5.0	    09-18-24 20:35:10	    Page 2
+     55	00000041  FF 35	00000106r	     push    Ch1	; символ для добавления
+     56	00000047  FF 35	0000010Ar	     push    Len1	; длина	строки
+     57	0000004D  FF 15	00000112r	     call PadCh		    ; вызов вашей подпрограммы
+Turbo Assembler	 Version 5.0	    09-19-24 18:53:49	    Page 2
 4labYav.asm
 
 
 
-     58	0000004C  50			     push    eax	      ;	длина
-     59	0000004D  FF 15	0000010Cr	     call PadCh		    ; вызов вашей подпрограммы
-     60
-     61					     ; Вывод сообщения после добавления
-     62					     call MessageBox, 0, offset	Res, offset title_S_after, MB_OK
-1    63	00000053  6A 00				 PUSH	 MB_OK
-1    64	00000055  68 00000010r			 PUSH	 offset	title_S_after
-1    65	0000005A  68 00000007r			 PUSH	 offset	Res
-1    66	0000005F  6A 00				 PUSH	 0
-1    67	00000061  E8 00000000e			 CALL	 MessageBoxA
-     68
-     69					     ; Завершение программы
-     70	00000066  6A 00			     push    0		      ;	код завершения
-     71	00000068  E8 00000000e		     call ExitProcess	      ;	завершение программы
-     72
-     73	0000006D			 ends
-     74					 end start
-Turbo Assembler	 Version 5.0	    09-18-24 20:35:10	    Page 3
+     58
+     59					     ; Вывод сообщения после добавления
+     60					     call MessageBox, 0, offset	Res, offset title_S_after, MB_OK
+1    61	00000053  6A 00				 PUSH	 MB_OK
+1    62	00000055  68 00000010r			 PUSH	 offset	title_S_after
+1    63	0000005A  68 00000007r			 PUSH	 offset	Res
+1    64	0000005F  6A 00				 PUSH	 0
+1    65	00000061  E8 00000000e			 CALL	 MessageBoxA
+     66
+     67					     ; Завершение программы
+     68	00000066  6A 00			     push    0		      ;	код завершения
+     69	00000068  E8 00000000e		     call ExitProcess	      ;	завершение программы
+     70
+     71	0000006D			 ends
+     72					 end start
+Turbo Assembler	 Version 5.0	    09-19-24 18:53:49	    Page 3
 Symbol Table
 
 
@@ -90,9 +88,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??date				  Text	 "09-18-24"
+??date				  Text	 "09-19-24"
 ??filename			  Text	 "4labYav "
-??time				  Text	 "20:35:10"
+??time				  Text	 "18:53:49"
 ??version			  Number 0500
 @32Bit				  Text	 1
 @CodeSize			  Text	 0
@@ -106,20 +104,20 @@ Symbol Name			  Type	 Value
 @curseg				  Text	 _TEXT
 @data				  Text	 FLAT
 @stack				  Text	 FLAT
-Ch1				  Byte	 FLAT:0106
+Ch1				  Dword	 FLAT:0106
 ExitProcess			  Near16 ----:---- Extern
 FreeLibrary			  Near16 ----:---- Extern
 GetProcAddress			  Near16 ----:---- Extern
-Len1				  Byte	 FLAT:0107
+Len1				  Dword	 FLAT:010A
 LoadLibrary			  Alias	 LoadLibraryA
 LoadLibraryA			  Near16 ----:---- Extern
 MB_OK				  Number 0000
 MessageBox			  Alias	 MessageBoxA
 MessageBoxA			  Near16 ----:---- Extern
-PadCh				  Dword	 FLAT:010C
+PadCh				  Dword	 FLAT:0112
 Res				  Byte	 FLAT:0007
 S				  Byte	 FLAT:0000
-hlib				  Dword	 FLAT:0108
+hlib				  Dword	 FLAT:010E
 libr				  Byte	 FLAT:001B
 nameproc			  Byte	 FLAT:0027
 start				  Near32 FLAT:0000
@@ -130,7 +128,7 @@ Groups & Segments		  Bit Size Align  Combine Class
 
 DGROUP				  Group
   CONST				  32  002D Dword  Public  DATA
-  _DATA				  32  0110 Dword  Public  DATA
+  _DATA				  32  0116 Dword  Public  DATA
 FLAT				  Group
 _TEXT				  32  006D Dword  Public  CODE
 
