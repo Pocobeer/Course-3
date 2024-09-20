@@ -30,8 +30,10 @@ Res     equ     dword ptr [ebp+20]       ;  адрес строки резуль
         stosb                   ; копируем длину строки S в Res
         mov     ah,     al      ; сохраняем длину строки S
         cmp     al,     [Len]   ; сравниваем длину S с Len
-        jae     StoreLen        ; если S >= Len, то копируем S и выходим
-
+        jb     Pad        ; если S >= Len, то копируем S и выходим
+        mov cl, al
+        rep     movsb 
+        jmp Exit          
         
  Pad:
 
@@ -40,7 +42,7 @@ Res     equ     dword ptr [ebp+20]       ;  адрес строки резуль
         mov  [edi-1], al        ; Дополняем строку
         mov cl, ah
         rep     movsb           ; записать очередной символ результата Res
-StoreLen:
+StoreLen: 
         mov cl, [Len]
         sub     cl,     ah      ; S длиннее, чем Len
          

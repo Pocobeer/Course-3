@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 5.0	    09-19-24 18:54:13	    Page 1
+Turbo Assembler	 Version 5.0	    09-20-24 09:29:33	    Page 1
 4_kab_d.asm
 
 
@@ -40,40 +40,41 @@ Turbo Assembler	 Version 5.0	    09-19-24 18:54:13	    Page 1
      35	00000015  AA				 stosb			 ; копируем длину строки S в Res
      36	00000016  8A E0				 mov	 ah,	 al	 ; сохраняем длину строки S
      37	00000018  3A 45	08			 cmp	 al,	 [Len]	 ; сравниваем	длину S с	Len
-     38	0000001B  73 0E	90 90 90 90		 jae	 StoreLen	 ; если S >= Len, то копируем S и	    +
-     39					 выходим
-     40
-     41
-     42	00000021			  Pad:
-     43
+     38	0000001B  72 0D	90 90 90 90		 jb	Pad	   ; если S	>= Len,	то копируем S	и выходим
+     39	00000021  8A C8				 mov cl, al
+     40	00000023  F3> A4			 rep	 movsb
+     41	00000025  EB 17	90 90 90		 jmp Exit
+     42
+     43	0000002A			  Pad:
      44
-     45	00000021  8A 45	08			 mov al, [Len]
-     46	00000024  88 47	FF			 mov  [edi-1], al	 ; Дополняем строку
-     47	00000027  8A CC				 mov cl, ah
-     48	00000029  F3> A4			 rep	 movsb		 ; записать очередной символ	    +
-     49					 результата Res
-     50	0000002B			 StoreLen:
-     51	0000002B  8A 4D	08			 mov cl, [Len]
-     52	0000002E  2A CC				 sub	 cl,	 ah	 ; S длиннее, чем Len
-     53
-     54	00000030  8A 45	0C			 mov	 al,	 [Ch1]	 ; добавляем очередной символ
-     55						 ;Копируем строку
-     56	00000033  F3> AA			 rep	 stosb
-     57
-Turbo Assembler	 Version 5.0	    09-19-24 18:54:13	    Page 2
+     45
+     46	0000002A  8A 45	08			 mov al, [Len]
+     47	0000002D  88 47	FF			 mov  [edi-1], al	 ; Дополняем строку
+     48	00000030  8A CC				 mov cl, ah
+     49	00000032  F3> A4			 rep	 movsb		 ; записать очередной символ	    +
+     50					 результата Res
+     51	00000034			 StoreLen:
+     52	00000034  8A 4D	08			 mov cl, [Len]
+     53	00000037  2A CC				 sub	 cl,	 ah	 ; S длиннее, чем Len
+     54
+     55	00000039  8A 45	0C			 mov	 al,	 [Ch1]	 ; добавляем очередной символ
+     56						 ;Копируем строку
+     57	0000003C  F3> AA			 rep	 stosb
+Turbo Assembler	 Version 5.0	    09-20-24 09:29:33	    Page 2
 4_kab_d.asm
 
 
 
      58
-     59	00000035			 Exit:	; pop	  ds		  ; восстановить ds
-     60	00000035  5D				 pop	 ebp		  ; восстановить bp
-     61	00000036  C2 0010			 ret	 16		 ; выход с удалением параметров Ch1,
-     62									 ; Ch2 и адреса S (Res удалять нельзя!)
-     63	00000039			 PadCh	endp
-     64
-     65					 end start@12
-Turbo Assembler	 Version 5.0	    09-19-24 18:54:13	    Page 3
+     59
+     60	0000003E			 Exit:	; pop	  ds		  ; восстановить ds
+     61	0000003E  5D				 pop	 ebp		  ; восстановить bp
+     62	0000003F  C2 0010			 ret	 16		 ; выход с удалением параметров Ch1,
+     63									 ; Ch2 и адреса S (Res удалять нельзя!)
+     64	00000042			 PadCh	endp
+     65
+     66					 end start@12
+Turbo Assembler	 Version 5.0	    09-20-24 09:29:33	    Page 3
 Symbol Table
 
 
@@ -81,9 +82,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??date				  Text	 "09-19-24"
+??date				  Text	 "09-20-24"
 ??filename			  Text	 "4_kab_d "
-??time				  Text	 "18:54:13"
+??time				  Text	 "09:29:33"
 ??version			  Number 0500
 @32Bit				  Text	 1
 @CodeSize			  Text	 0
@@ -98,13 +99,13 @@ Symbol Name			  Type	 Value
 @data				  Text	 FLAT
 @stack				  Text	 FLAT
 Ch1				  Text	 byte  ptr [ebp+12]
-Exit				  Near32 FLAT:0035
+Exit				  Near32 FLAT:003E
 Len				  Text	 byte  ptr [ebp+8]
-Pad				  Near32 FLAT:0021
+Pad				  Near32 FLAT:002A
 PadCh				  Near32 FLAT:0005
 Res				  Text	 dword ptr [ebp+20]
 S				  Text	 dword ptr [ebp+16]
-StoreLen			  Near32 FLAT:002B
+StoreLen			  Near32 FLAT:0034
 start@12			  Near32 FLAT:0000
 
 Groups & Segments		  Bit Size Align  Combine Class
@@ -112,5 +113,5 @@ Groups & Segments		  Bit Size Align  Combine Class
 DGROUP				  Group
   _DATA				  32  0000 Dword  Public  DATA
 FLAT				  Group
-_TEXT				  32  0039 Dword  Public  CODE
+_TEXT				  32  0042 Dword  Public  CODE
 

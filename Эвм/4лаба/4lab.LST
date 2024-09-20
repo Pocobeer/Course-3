@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 5.0	    09-19-24 18:54:14	    Page 1
+Turbo Assembler	 Version 5.0	    09-20-24 09:29:34	    Page 1
 4lab.asm
 
 
@@ -31,20 +31,20 @@ Turbo Assembler	 Version 5.0	    09-19-24 18:54:14	    Page 1
      26	00000007  FF*(00)		     Res db 255	dup(0)	      ;	Буфер для результата,			    +
      27					 инициализированный нулями
      28	00000106  41			     Ch1 db 'A'		      ;	Символ для добавления
-     29	00000107  05			     Len1 db 5		       ; Длина строки (должна			    +
+     29	00000107  0A			     Len1 db 10			; Длина строки (должна			    +
      30					 соответствовать	фактической длине)
      31
      32	00000108			 .code
      33	00000000			 start:
      34					     ; Вывод сообщения перед	добавлением
-     35					     call MessageBox, 0, offset	S, offset title_S_before, MB_OK
+     35					     call MessageBox, 0, offset	S+1, offset title_S_before, MB_OK
 1    36	00000000  6A 00				 PUSH	 MB_OK
 1    37	00000002  68 00000000r			 PUSH	 offset	title_S_before
-1    38	00000007  68 00000000r			 PUSH	 offset	S
+1    38	00000007  68 00000001r			 PUSH	 offset	S+1
 1    39	0000000C  6A 00				 PUSH	 0
 1    40	0000000E  E8 00000000e			 CALL	 MessageBoxA
      41
-     42					     ; Вызов вашей подпрограммы PadCh
+     42					     ; Вызов подпрограммы PadCh
      43	00000013  68 00000007r		     push    offset Res	       ; адрес результата
      44	00000018  68 00000000r		     push    offset S	      ;	адрес строки	S
      45	0000001D  A0 00000106r		     mov     al, [Ch1]	      ;	символ для добавления
@@ -54,13 +54,13 @@ Turbo Assembler	 Version 5.0	    09-19-24 18:54:14	    Page 1
      49	00000029  E8 00000000e		     call PadCh		    ; вызов вашей подпрограммы
      50
      51					     ; Вывод сообщения после	добавления
-     52					     call MessageBox, 0, offset	Res, offset title_S_after, MB_OK
+     52					     call MessageBox, 0, offset	Res+1, offset title_S_after, MB_OK
 1    53	0000002E  6A 00				 PUSH	 MB_OK
 1    54	00000030  68 00000012r			 PUSH	 offset	title_S_after
-1    55	00000035  68 00000007r			 PUSH	 offset	Res
+1    55	00000035  68 00000008r			 PUSH	 offset	Res+1
 1    56	0000003A  6A 00				 PUSH	 0
 1    57	0000003C  E8 00000000e			 CALL	 MessageBoxA
-Turbo Assembler	 Version 5.0	    09-19-24 18:54:14	    Page 2
+Turbo Assembler	 Version 5.0	    09-20-24 09:29:34	    Page 2
 4lab.asm
 
 
@@ -72,7 +72,7 @@ Turbo Assembler	 Version 5.0	    09-19-24 18:54:14	    Page 1
      62
      63	00000048			 ends
      64					 end start
-Turbo Assembler	 Version 5.0	    09-19-24 18:54:14	    Page 3
+Turbo Assembler	 Version 5.0	    09-20-24 09:29:34	    Page 3
 Symbol Table
 
 
@@ -80,9 +80,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??date				  Text	 "09-19-24"
+??date				  Text	 "09-20-24"
 ??filename			  Text	 "4lab	  "
-??time				  Text	 "18:54:14"
+??time				  Text	 "09:29:34"
 ??version			  Number 0500
 @32Bit				  Text	 1
 @CodeSize			  Text	 0

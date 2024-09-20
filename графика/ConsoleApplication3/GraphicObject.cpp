@@ -4,7 +4,7 @@ GraphicObject::GraphicObject()
 {
 	position = vec3(0.0f, 0.0f, 0.0f);
 	angle = 0.0f;
-	color = vec3(0.0f, 0.0f, 0.0f);
+	color = vec3(1.0f, 1.0f, 1.0f);
 	recalculateModelMatrix();
 }
 void GraphicObject::setPosition(vec3 position)

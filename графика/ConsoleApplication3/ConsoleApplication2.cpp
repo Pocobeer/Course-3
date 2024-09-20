@@ -49,14 +49,14 @@ void reshape(int w, int h)
 void display(void)
 {
 	// отчищаем буфер цвета и буфер глубины
-	glClearColor(0.00, 0.00, 0.00, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	// включаем тест глубины
 	glEnable(GL_DEPTH_TEST);
 	// устанавливаем камеру
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(10, 15, 17.5, 0, 0, 0, 0, 1, 0);
+	gluLookAt(10, 10, 17.5, 0, 0, 0, 0, 1, 0);
 	
 	for (auto& go : graphicObjects) {
 		go.draw();
@@ -112,7 +112,7 @@ void main(int argc, char** argv)
 	// 2. устанавливаем размер окна
 	glutInitWindowSize(800, 600);
 	// 3. создаем окно
-	glutCreateWindow("Laba_02");
+	glutCreateWindow("Laba_03");
 
 	// УСТАНОВКА ФУНКЦИЙ ОБРАТНОГО ВЫЗОВА
 	// устанавливаем функцию, которая будет вызываться для перерисовки окна
@@ -128,29 +128,30 @@ void main(int argc, char** argv)
 	// 1 -----------------------------------------
 	tempGraphicObject.setPosition(vec3(5, 0, 0));
 	tempGraphicObject.setAngle(180);
-	tempGraphicObject.setСolor(vec3(1, 0, 0));
+	tempGraphicObject.setСolor(vec3(1.0f, 0.0f, 0.0f));
 	graphicObjects.push_back(tempGraphicObject);
 
 	GraphicObject tempGraphicObject2;
 	//2-------------------------------------------
-	tempGraphicObject.setPosition(vec3(-5, 0, 0));
-	tempGraphicObject.setAngle(0);
-	tempGraphicObject.setСolor(vec3(1, 0, 0));
-	graphicObjects.push_back(tempGraphicObject);
+	tempGraphicObject2.setPosition(vec3(-5, 0, 0));
+	tempGraphicObject2.setAngle(0);
+	tempGraphicObject2.setСolor(vec3(0.0f, 0.0f, 1.0f));
+	graphicObjects.push_back(tempGraphicObject2);
 
 	GraphicObject tempGraphicObject3;
 	//3-------------------------------------------
-	tempGraphicObject.setPosition(vec3(0, 0, -5));
-	tempGraphicObject.setAngle(270);
-	tempGraphicObject.setСolor(vec3(1, 0, 0));
-	graphicObjects.push_back(tempGraphicObject);
+	tempGraphicObject3.setPosition(vec3(0, 0, -5));
+	tempGraphicObject3.setAngle(270);
+	tempGraphicObject3.setСolor(vec3(0.0f, 1.0f, 0.0f));
+	graphicObjects.push_back(tempGraphicObject3);
 
 	GraphicObject tempGraphicObject4;
 	//4-------------------------------------------
-	tempGraphicObject.setPosition(vec3(0, 0, 5));
-	tempGraphicObject.setAngle(90);
-	tempGraphicObject.setСolor(vec3(1, 0, 0));
-	graphicObjects.push_back(tempGraphicObject);
+	tempGraphicObject4.setPosition(vec3(0, 0, 5));
+	tempGraphicObject4.setAngle(90);
+	tempGraphicObject4.setСolor(vec3(1.0f, 1.0f, 1.0f));
+	graphicObjects.push_back(tempGraphicObject4);
+	
 	
 	// основной цикл обработки сообщений ОС
 	glutMainLoop();
