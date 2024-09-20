@@ -37,8 +37,9 @@ vec3 GraphicObject::getColor()
 void GraphicObject::recalculateModelMatrix()
 {
 	modelMatrix = mat4(1.0f);
-	modelMatrix = translate(modelMatrix, position);
 	modelMatrix = rotate(modelMatrix, radians(angle), vec3(0.0f, 1.0f, 0.0f));
+	modelMatrix = translate(modelMatrix, position);
+	
 }
 // גûגוסעט מבתוךע
 void GraphicObject::draw()
