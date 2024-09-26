@@ -1,6 +1,7 @@
 ﻿  ConsoleApplication1.cpp
-C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(42,27): warning C4305: аргумент: усечение из "double" в "GLclampf"
-C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(42,21): warning C4305: аргумент: усечение из "double" в "GLclampf"
-C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(42,15): warning C4305: аргумент: усечение из "double" в "GLclampf"
-C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(85,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-  ConsoleApplication1.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication1\Debug\ConsoleApplication1.exe
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(42,27): warning C4305: аргумент: усечение из "double" в "GLclampf"
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(42,21): warning C4305: аргумент: усечение из "double" в "GLclampf"
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(42,15): warning C4305: аргумент: усечение из "double" в "GLclampf"
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(69,16): warning C4244: аргумент: преобразование "double" в "unsigned int", возможна потеря данных
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\ConsoleApplication1.cpp(85,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  ConsoleApplication1.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication1\Debug\ConsoleApplication1.exe

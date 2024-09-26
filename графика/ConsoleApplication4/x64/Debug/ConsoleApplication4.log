@@ -1,0 +1,14 @@
+﻿  ConsoleApplication4.cpp
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutInitWindowSize в функции main.
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutInitDisplayMode в функции main.
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutMainLoop в функции main.
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutPostRedisplay в функции "void __cdecl keyboard(unsigned char,int,int)" (?keyboard@@YAXEHH@Z).
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutSwapBuffers в функции "void __cdecl display(void)" (?display@@YAXXZ).
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutKeyboardFunc в функции main.
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutReshapeFunc в функции main.
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutDisplayFunc в функции main.
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp_glutWireTeapot в функции "public: void __cdecl GraphicObject::draw(void)" (?draw@GraphicObject@@QEAAXXZ).
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp___glutInitWithExit в функции glutInit_ATEXIT_HACK.
+ConsoleApplication4.obj : error LNK2019: ссылка на неразрешенный внешний символ __imp___glutCreateWindowWithExit в функции glutCreateWindow_ATEXIT_HACK.
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication4\\freeglut\lib\freeglut.lib : warning LNK4272: тип компьютера библиотеки "x86" конфликтует с типом целевого компьютера "x64"
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication4\x64\Debug\ConsoleApplication4.exe : fatal error LNK1120: неразрешенных внешних элементов: 11

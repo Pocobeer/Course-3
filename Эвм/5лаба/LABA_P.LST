@@ -1,0 +1,108 @@
+Turbo Assembler	 Version 4.1	    09/26/24 12:35:16	    Page 1
+laba_p.asm
+
+
+
+      1	0000			     code    segment byte public
+      2					     assume  cs:code, ds:nothing
+      3					     public  TransformArray
+      4
+      5				     ; Подпрограмма TransformArray
+      6				     ; Преобразует массив слов в соответствии с	заданными границами
+      7				     ; Массив: array - адрес массива слов
+      8				     ; Низкая граница: lowVal -	низкая граница
+      9				     ; Высокая граница:	highVal	- высокая граница
+     10				     ; Количество элементов: count - количество	элементов
+     11	0000			     TransformArray proc far
+     12				     ; адреса параметров в стеке:
+     13	      =	dword ptr [bp+10]    array   equ     dword ptr [bp+10]	     ; адрес массива
+     14	      =	word  ptr [bp+8]     lowVal  equ     word  ptr [bp+8]	     ; низкая граница
+     15	      =	word  ptr [bp+6]     highVal equ     word  ptr [bp+6]	     ; высокая граница
+     16	      =	word  ptr [bp+4]     count   equ     word  ptr [bp+4]	     ; количество элементов
+     17
+     18	0000  55			     push    bp			     ; сохранение bp
+     19	0001  8B EC			     mov     bp,     sp		     ; настройка bp на вершину стека
+     20	0003  1E			     push    ds			     ; сохранение ds
+     21
+     22	0004  C4 7E 0A			     les     di, [array]	    ; es:di = адрес массива
+     23	0007  8B 4E 04			     mov     cx, [count]	    ; количество элементов в массиве
+     24
+     25	000A			     TransformLoop:
+     26	000A  83 F9 00			     cmp     cx, 0		     ; проверка	на конец массива
+     27	000D  74 1D			     je	     Exit		     ; если 0, выходим
+     28
+     29	000F  8B 05			     mov     ax, [es:di]	     ; загружаем элемент массива в ax
+*Warning* laba_p.asm(29) ":" operator ignored
+     30	0011  3B 46 08			     cmp     ax, [lowVal]	     ; сравниваем с низкой границей
+     31	0014  72 0C			     jb	     NotInBounds	     ; если меньше, переходим к	NotInBounds
+     32	0016  3B 46 06			     cmp     ax, [highVal]	     ; сравниваем с высокой границей
+     33	0019  77 07			     ja	     NotInBounds	     ; если больше, переходим к	NotInBounds
+     34
+     35	001B  C7 05 0001		     mov     [es:di], 1		      ;	если в границах, записываем 1
+*Warning* laba_p.asm(35) ":" operator ignored
+*Warning* laba_p.asm(35) Argument needs	type override
+     36	001F  EB 05 90			     jmp     NextElement
+     37
+     38	0022			     NotInBounds:
+     39	0022  C7 05 0000		     mov     [es:di], 0		      ;	если не	в границах, записываем 0
+*Warning* laba_p.asm(39) ":" operator ignored
+*Warning* laba_p.asm(39) Argument needs	type override
+     40
+     41	0026			     NextElement:
+     42	0026  83 C7 02			     add     di, 2		      ;	переходим к следующему элементу	(слово)
+     43	0029  49			     dec     cx			       ; уменьшаем счетчик
+     44	002A  EB DE			     jmp     TransformLoop	      ;	повторяем цикл
+     45
+     46	002C			     Exit:
+     47	002C  1F			     pop     ds			     ; восстановление ds
+     48	002D  5D			     pop     bp			     ; восстановление bp
+     49	002E  CA 0006			     ret     6			     ; выход с удалением параметров (low, high,	count)
+     50	0031			     TransformArray endp
+     51
+     52	0031			     code    ends
+Turbo Assembler	 Version 4.1	    09/26/24 12:35:16	    Page 2
+laba_p.asm
+
+
+
+     53					     end
+Turbo Assembler	 Version 4.1	    09/26/24 12:35:16	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "09/26/24"
+??FILENAME			  Text	 "laba_p  "
+??TIME				  Text	 "12:35:16"
+??VERSION			  Number 040A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 LABA_P
+@WORDSIZE			  Text	 2
+ARRAY				  Text	 dword ptr [bp+10]
+COUNT				  Text	 word  ptr [bp+4]
+EXIT				  Near	 CODE:002C
+HIGHVAL				  Text	 word  ptr [bp+6]
+LOWVAL				  Text	 word  ptr [bp+8]
+NEXTELEMENT			  Near	 CODE:0026
+NOTINBOUNDS			  Near	 CODE:0022
+TRANSFORMARRAY			  Far	 CODE:0000
+TRANSFORMLOOP			  Near	 CODE:000A
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0031 Byte	  Public
+Turbo Assembler	 Version 4.1	    09/26/24 12:35:16	    Page 4
+Error Summary
+
+
+
+*Warning* laba_p.asm(29) ":" operator ignored
+*Warning* laba_p.asm(35) ":" operator ignored
+*Warning* laba_p.asm(35) Argument needs	type override
+*Warning* laba_p.asm(39) ":" operator ignored
+*Warning* laba_p.asm(39) Argument needs	type override
+

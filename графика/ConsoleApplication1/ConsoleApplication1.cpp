@@ -66,7 +66,7 @@ void simulation(int value)
 	// устанавливаем признак того, что окно нуждается в перерисовке
 	glutPostRedisplay();
 	// эта же функция будет вызвана еще раз через 20 мс
-	glutTimerFunc(20, simulation, 0);
+	glutTimerFunc(5.9, simulation, 0);
 };
 
 // Функция обработки нажатия клавиш

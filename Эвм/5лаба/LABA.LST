@@ -1,0 +1,68 @@
+Turbo Assembler	 Version 4.1	    09/26/24 12:35:20	    Page 1
+laba.asm
+
+
+
+      1	0000			     code    segment byte public
+      2					     assume  cs:code, ds:data
+      3
+      4				     ; Объявляем TransformArray как	внешнюю подпрограмму
+      5				     extrn   TransformArray:far
+      6
+      7	0000			     start:
+      8					     ; Определение данных
+      9	0000				     data    segment
+     10	0000  000A 0014	001E 0028 +  array   dw	 10, 20, 30, 40, 50, 60, 70, 80	; Исходный массив
+     11	      0032 003C	0046 0050
+     12	0010  0014		     lowVal  dw	 20				   ; Низкая граница
+     13	0012  003C		     highVal dw	 60				   ; Высокая граница
+     14	0014  0008		     count   dw	 8				   ; Количество элементов
+     15	0016				     data    ends
+     16
+     17					     ; Установка сегмента данных
+     18	0000  B8 0000s			     mov     ax, data
+     19	0003  8E D8			     mov     ds, ax
+     20
+     21					     ; Вызов подпрограммы
+     22	0005  FF 36 0014r		     push    count			  ; количество элементов
+     23	0009  FF 36 0012r		     push    highVal			 ; высокая граница
+     24	000D  FF 36 0010r		     push    lowVal			 ; низкая	граница
+     25	0011  50 55 8B EC C7 46	02+	     push    offset array		 ; адрес массива
+     26	      0000r 5D
+     27	001B  0E E8 0000e		     call    TransformArray		 ; вызов подпрограммы
+     28	001F  83 C4 08			     add     sp, 8			 ; очистка стека
+     29
+     30					     ; Завершение программы
+     31	0022  B8 4C00			     mov     ax, 4C00h			 ; завершение	программы
+     32	0025  CD 21			     int     21h
+     33
+     34	0027			     code    ends
+     35					     end start
+Turbo Assembler	 Version 4.1	    09/26/24 12:35:20	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "09/26/24"
+??FILENAME			  Text	 "laba	  "
+??TIME				  Text	 "12:35:19"
+??VERSION			  Number 040A
+@CPU				  Text	 0101H
+@CURSEG				  Text	 CODE
+@FILENAME			  Text	 LABA
+@WORDSIZE			  Text	 2
+ARRAY				  Word	 DATA:0000
+COUNT				  Word	 DATA:0014
+HIGHVAL				  Word	 DATA:0012
+LOWVAL				  Word	 DATA:0010
+START				  Near	 CODE:0000
+TRANSFORMARRAY			  Far	 CODE:---- Extern
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CODE				  16  0027 Byte	  Public
+DATA				  16  0016 Para	  none
+
