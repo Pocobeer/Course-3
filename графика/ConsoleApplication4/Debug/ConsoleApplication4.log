@@ -1,2 +1,9 @@
-﻿  ConsoleApplication4.cpp
+﻿  Camera.cpp
+  ConsoleApplication4.cpp
+  Data.cpp
+  Display.cpp
+  GraphicObject.cpp
+  Simulation.cpp
+  Создание кода...
+  LINK : не найден или не выполнена сборка C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication4\Debug\ConsoleApplication4.exe при последней инкрементной компоновке; выполняется полная компоновка
   ConsoleApplication4.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication4\Debug\ConsoleApplication4.exe
