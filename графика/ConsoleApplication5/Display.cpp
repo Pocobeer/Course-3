@@ -60,6 +60,9 @@ void display(void) {
     glLoadIdentity();
 
     camera.apply();
+
+    lights[0].apply(GL_LIGHT0);
+
     for (auto& go : graphicObjects) {
          go.draw();
     }

@@ -20,7 +20,7 @@ public:
     void setSpecular(vec4 color);
 
     // ”становка всех параметров источника света с заданным номером
-    void apply(GLenum LightNumber);
+    void apply(GLenum LightNumber = GL_LIGHT0);
 
 private:
     // ѕараметры источника света

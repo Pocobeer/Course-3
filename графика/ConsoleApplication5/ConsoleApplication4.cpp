@@ -1,5 +1,5 @@
 ﻿#include <windows.h>
-
+#include "PhongMaterial.h"
 #include <iostream>
 #include <vector>
 
@@ -13,6 +13,8 @@
 #include "Simulation.h"
 #include "Camera.h"
 #include "Display.h"
+#include "GraphicObject.h"
+
 
 Camera camera;  // Объявляем камеру как глобальную переменную
 
@@ -22,6 +24,14 @@ using namespace glm;
 int main(int argc, char** argv)
 {
     setlocale(LC_ALL, "ru");
+    auto material = make_shared<PhongMaterial>();
+    try {
+        material->load("materials/material_1.txt");
+    }
+    catch (const exception& e) {
+        cerr << e.what() << endl;
+        return -1;
+    }
 
     // инициализация библиотеки GLUT
     glutInit(&argc, argv);

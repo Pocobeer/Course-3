@@ -35,6 +35,7 @@ void Light::setSpecular(vec4 color) {
 }
 
 void Light::apply(GLenum LightNumber) {
+
 	glLightfv(LightNumber, GL_POSITION, value_ptr(position));
 	glLightfv(LightNumber, GL_AMBIENT, value_ptr(ambient));
 	glLightfv(LightNumber, GL_DIFFUSE, value_ptr(diffuse));

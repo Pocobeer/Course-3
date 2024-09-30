@@ -5,8 +5,11 @@
 #include <glm/glm.hpp>
 #include "Camera.h"
 #include "GraphicObject.h"
+#include "Light.h"
+#include "PhongMaterial.h"
 // список графических объектов
 extern std::vector<GraphicObject> graphicObjects;
+extern std::vector<Light> lights;
 // используемая камера
 // функция для инициализации всех общих данных (камера, объекты и т.д.)
 void initData();

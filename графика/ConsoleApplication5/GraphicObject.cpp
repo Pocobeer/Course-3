@@ -1,5 +1,6 @@
 #include "GraphicObject.h"
 using namespace glm;
+using namespace std;
 GraphicObject::GraphicObject()
 {
 	position = vec3(0.0f, 0.0f, 0.0f);
@@ -33,6 +34,10 @@ vec3 GraphicObject::getColor()
 {
 	return color;
 }
+void GraphicObject::setMaterial(shared_ptr<PhongMaterial> material) {
+	this->material = material;
+}
+
 // расчет матрицы modelMatrix на основе position и angle
 void GraphicObject::recalculateModelMatrix()
 {
@@ -43,6 +48,9 @@ void GraphicObject::recalculateModelMatrix()
 // вывести объект
 void GraphicObject::draw()
 {
+	if (material) {
+		material->apply();
+	}
 	glPushMatrix(); // Сохраняем текущее состояние матрицы
 
 	// Применяем матрицу модели

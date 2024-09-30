@@ -8,6 +8,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <memory>
+#include "PhongMaterial.h"
 using namespace glm;
 // КЛАСС ДЛЯ ПРЕДСТАВЛЕНИЯ ОДНОГО ГРАФИЧЕСКОГО ОБЪЕКТА
 class GraphicObject
@@ -26,6 +28,8 @@ public:
 	// Установка текущего цвета объекта
 	void setСolor(vec3 color);
 	vec3 getColor();
+	// Установка используемого материала
+	void setMaterial(std::shared_ptr<PhongMaterial> material);
 	// Вывести объект
 	void draw();
 private:
@@ -36,7 +40,9 @@ private:
 	// Цвет модели
 	vec3 color;
 	// Матрица модели - чтоб не вычислять каждый раз
-	glm::mat4 modelMatrix;
+	mat4 modelMatrix;
+	// Используемый материал
+	std::shared_ptr<PhongMaterial> material;
 	// расчет матрицы modelMatrix на основе position и angle
 	void recalculateModelMatrix();
 };

@@ -1,4 +1,6 @@
+#pragma once
 #include <string>
+#include <memory>
 #include <glm/glm.hpp> // ƒл€ работы с векторами и цветами, если используете GLM
 using namespace std;
 using namespace glm;
@@ -21,6 +23,10 @@ public:
 
     // ”становка всех параметров материала
     void apply();
+    string vec4_to_string(const glm::vec4& vec) {
+        return "(" + std::to_string(vec.x) + ", " + std::to_string(vec.y) + ", "
+            + std::to_string(vec.z) + ", " + std::to_string(vec.w) + ")";
+    }
 
 private:
     // ‘онова€ составл€юща€
