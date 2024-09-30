@@ -29,6 +29,8 @@ float getSimulationTime() {
     // Вычисляем время, прошедшее с последнего вызова в секундах
     float deltaTime = static_cast<float>(currentTime.QuadPart - lastTime.QuadPart)/ frequency.QuadPart;
 
+
+
     // Обновляем lastTime на текущее время
     lastTime = currentTime;
 

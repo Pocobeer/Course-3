@@ -1,5 +1,2 @@
-﻿  ConsoleApplication2.cpp
-C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication3\ConsoleApplication2.cpp(101,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-  GraphicObject.cpp
-  Создание кода...
+﻿  GraphicObject.cpp
   ConsoleApplication2.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication3\Debug\ConsoleApplication2.exe
