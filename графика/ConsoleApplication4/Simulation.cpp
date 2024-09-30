@@ -2,6 +2,7 @@
 #include <windows.h> // Для использования GetAsyncKeyState, QueryPerformanceCounter и QueryPerformanceFrequency
 #include <iostream>
 #include "Camera.h"
+using namespace std;
 // Глобальная камера (ее указатель будет передан из main.cpp)
 extern Camera camera;
 
@@ -19,7 +20,7 @@ void initSimulation() {
 // Функция для получения времени симуляции
 float getSimulationTime() {
     if (!initialized) {
-        std::cerr << "Simulation not initialized!" << std::endl;
+        cerr << "Simulation not initialized!" << std::endl;
         return 0.0f;
     }
 
@@ -38,7 +39,7 @@ float getSimulationTime() {
 }
 
 // Обработка ввода для камеры
-void processInput(float deltaTime) {
+void keyboardFunc(float deltaTime) {
     // Используем GetAsyncKeyState для управления камерой
     if (GetAsyncKeyState(VK_UP)) {
         camera.rotateUpDown(50.0f * deltaTime); // Вращение камеры вверх
@@ -72,7 +73,7 @@ void simulation() {
     float deltaTime = getSimulationTime();
 
     // Обработка ввода с клавиатуры для управления камерой
-    processInput(deltaTime);
+    keyboardFunc(deltaTime);
 
     // Устанавливаем признак того, что окно нуждается в перерисовке
     glutPostRedisplay();

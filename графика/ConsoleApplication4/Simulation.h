@@ -10,4 +10,4 @@ void simulation();
 // Функция для получения времени симуляции
 float getSimulationTime();
 
-void processInput(float deltaTime);
+void keyboardFunc(float deltaTime);
