@@ -20,6 +20,11 @@ parent(A,X), parent(A,Y), X\=Y,man(X),write(X).
 son(X,Y):-
 parent(X,Y), man(Y),write(Y).
 
+?-parent(X, "Vladimir") = parent("Sergey","Vladimir"), write(X).
+?-X=Y, Y=5, write(X).
+?-X=bdfy, write(X).
+?-X=Y, write(X).
+
 %?-father(X, "Vladimir"), nl.
 %?-mother(X, "Alex"), nl.
 %?-brother("Alex", "Vladimir"), nl.
