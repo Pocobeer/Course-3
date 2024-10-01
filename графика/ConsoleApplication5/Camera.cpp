@@ -1,6 +1,4 @@
-#include <GL/glut.h> 
-#include <GL/gl.h>
-#include <GL/glu.h>
+
 #include "Camera.h"
 // Конструкторы
 Camera::Camera() : r(10.0f), angleX(0.0f), angleY(45.0f) {
@@ -57,6 +55,8 @@ void Camera::zoomInOut(float distance) {
 
 // Функция для установки матрицы камеры
 void Camera::apply() {
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
     gluLookAt(position.x, position.y, position.z,
         0.0f, 0.0f, 0.0f, // Точка наблюдения
         0.0f, 1.0f, 0.0f); // Вектор "вверх"

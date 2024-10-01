@@ -2,21 +2,12 @@
 #include "PhongMaterial.h"
 #include <iostream>
 #include <vector>
-
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include "GL/freeglut.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include "Data.h"
 #include "Simulation.h"
-#include "Camera.h"
 #include "Display.h"
-#include "GraphicObject.h"
 
 
-Camera camera;  // Объявляем камеру как глобальную переменную
+
 
 using namespace std;
 using namespace glm;
@@ -24,14 +15,7 @@ using namespace glm;
 int main(int argc, char** argv)
 {
     setlocale(LC_ALL, "ru");
-    auto material = make_shared<PhongMaterial>();
-    try {
-        material->load("materials/material_1.txt");
-    }
-    catch (const exception& e) {
-        cerr << e.what() << endl;
-        return -1;
-    }
+    
 
     // инициализация библиотеки GLUT
     glutInit(&argc, argv);

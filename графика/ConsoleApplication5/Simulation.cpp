@@ -1,7 +1,5 @@
 #include "Simulation.h"
-#include <windows.h> // Для использования GetAsyncKeyState, QueryPerformanceCounter и QueryPerformanceFrequency
-#include <iostream>
-#include "Camera.h"
+
 using namespace std;
 // Глобальная камера (ее указатель будет передан из main.cpp)
 extern Camera camera;

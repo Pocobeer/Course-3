@@ -1,7 +1,18 @@
 #pragma once
 #include <string>
 #include <memory>
-#include <glm/glm.hpp> // Для работы с векторами и цветами, если используете GLM
+#include <Windows.h>
+
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include "GL/freeglut.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
+#include <fstream>
+#include <sstream>
+#include <iostream>
 using namespace std;
 using namespace glm;
 

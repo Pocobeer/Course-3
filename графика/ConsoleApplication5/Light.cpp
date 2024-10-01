@@ -13,7 +13,7 @@ Light::Light(vec3 position) :
 	specular(vec4(1.0f, 1.0f, 1.0f, 1.0f)) {};
 
 Light::Light(float x, float y, float z):
-	position(vec4(position, 1.0f)),
+	position{ vec4(x,y,z, 1.0f) },
 	ambient(vec4(1.0f, 1.0f, 1.0f, 1.0f)),
 	diffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f)),
 	specular(vec4(1.0f, 1.0f, 1.0f, 1.0f)) {};
@@ -35,9 +35,9 @@ void Light::setSpecular(vec4 color) {
 }
 
 void Light::apply(GLenum LightNumber) {
-
+	//glEnable(LightNumber);
 	glLightfv(LightNumber, GL_POSITION, value_ptr(position));
 	glLightfv(LightNumber, GL_AMBIENT, value_ptr(ambient));
 	glLightfv(LightNumber, GL_DIFFUSE, value_ptr(diffuse));
-	glLightfv(LightNumber, GL_SPECULAR, value_ptr(sprcular));
+	glLightfv(LightNumber, GL_SPECULAR, value_ptr(specular));
 }

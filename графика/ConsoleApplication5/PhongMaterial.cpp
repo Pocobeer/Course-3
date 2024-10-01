@@ -1,11 +1,4 @@
-
 #include "PhongMaterial.h"
-#include <GL/gl.h>
-#include <GL/glut.h>
-#include <glm/gtc/type_ptr.hpp>
-#include <fstream>
-#include <sstream>
-#include <iostream>
 
 
 PhongMaterial::PhongMaterial() :

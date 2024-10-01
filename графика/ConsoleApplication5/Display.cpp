@@ -1,12 +1,6 @@
-#include <GL/glut.h> 
-#include "display.h" 
-#include "Camera.h"
-#include "Data.h"
-#include <windows.h>
-#include <iostream>
-#include <vector>
+#include "Display.h"
 
-extern Camera camera;
+
 // Временные переменные для подсчета FPS
 static int frameCount = 0;                // Количество кадров
 static float fps = 0.0f;                  // Текущий FPS
@@ -56,12 +50,14 @@ void display(void) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+
 
     camera.apply();
 
-    lights[0].apply(GL_LIGHT0);
+    lights[0].apply();
 
     for (auto& go : graphicObjects) {
          go.draw();

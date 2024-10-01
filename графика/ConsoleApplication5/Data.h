@@ -10,6 +10,7 @@
 // список графических объектов
 extern std::vector<GraphicObject> graphicObjects;
 extern std::vector<Light> lights;
+extern Camera camera;
 // используемая камера
 // функция для инициализации всех общих данных (камера, объекты и т.д.)
 void initData();

@@ -10,7 +10,7 @@ find_otr(Tail,Result).
 
 %?- find_otr([],Result), write(Result).
 
-?- find_otr([1,2,-3,-4,5,-6,-9], Result), write(Result).
+%?- find_otr([1,2,-3,-4,5,-6,-9], Result), write(Result).
 
 del_chot([],[]).
 
@@ -19,4 +19,20 @@ del_chot([_],[]).
 del_chot([_,Second|Tail], [Second|Result]):-
 del_chot(Tail,Result).
 
-?- del_chot([1,2,3,4,5,6,7,8,9], Result), write(Result).
+%?- del_chot([1,2,3,4,5,6,7,8,9], Result), write(Result).
+
+podspis([], _).
+
+podspis([H|T], [H|L]) :- 
+podspis(T, L).
+
+podspis(S, [_|L]) :- 
+podspis(S, L).
+
+?- podspis([], [1,2,3,4,5]).
+?- podspis([2], [1,2,3,4,5]).
+?- podspis([2,3], [1,2,3,4,5]).
+?- podspis([2,4,5], [1,2,3,4,5]).
+?- podspis([2,3,4], [1,2,3,4,5]).
+?- podspis([2,1], [1,2,3,4,5]).
+?- podspis([1,2], [1,2,3,4,5]).
