@@ -1,44 +1,96 @@
-Turbo Assembler	 Version 4.1	    09/26/24 12:35:20	    Page 1
+Turbo Assembler	 Version 4.1	    10/02/24 17:04:15	    Page 1
 laba.asm
 
 
 
-      1	0000			     code    segment byte public
-      2					     assume  cs:code, ds:data
-      3
-      4				     ; Объявляем TransformArray как	внешнюю подпрограмму
-      5				     extrn   TransformArray:far
+      1	0000			     _STACK  segment para stack
+      2	0000  0400*(??)			     db	     1024 dup(?)
+      3	0400			     _STACK  ends
+      4
+      5
       6
-      7	0000			     start:
-      8					     ; Определение данных
-      9	0000				     data    segment
-     10	0000  000A 0014	001E 0028 +  array   dw	 10, 20, 30, 40, 50, 60, 70, 80	; Исходный массив
-     11	      0032 003C	0046 0050
-     12	0010  0014		     lowVal  dw	 20				   ; Низкая граница
-     13	0012  003C		     highVal dw	 60				   ; Высокая граница
-     14	0014  0008		     count   dw	 8				   ; Количество элементов
-     15	0016				     data    ends
+      7	0000			     data    segment
+      8
+      9	0000  000A 0014	001E 0028 +	     array   dw	 10, 20, 30, 40, 50, 60, 70, 80	; Исходный массив
+     10	      0032 003C	0046 0050
+     11	0010  0002			     lowIndex  dw  2				    ; Низкая граница
+     12	0012  0006			     highIndex dw  6				    ; Высокая граница
+     13	0014  0008			     count   dw	 8			;колво элементов
+     14	0016  08*(??)			     result  db	8 dup(?)		 ;массив результата
+     15	001E			     data    ends
      16
-     17					     ; Установка сегмента данных
-     18	0000  B8 0000s			     mov     ax, data
-     19	0003  8E D8			     mov     ds, ax
+     17	0000			     code    segment byte public
+     18					     assume  cs:code, ds:data, ss:_STACK
+     19
      20
-     21					     ; Вызов подпрограммы
-     22	0005  FF 36 0014r		     push    count			  ; количество элементов
-     23	0009  FF 36 0012r		     push    highVal			 ; высокая граница
-     24	000D  FF 36 0010r		     push    lowVal			 ; низкая	граница
-     25	0011  50 55 8B EC C7 46	02+	     push    offset array		 ; адрес массива
-     26	      0000r 5D
-     27	001B  0E E8 0000e		     call    TransformArray		 ; вызов подпрограммы
-     28	001F  83 C4 08			     add     sp, 8			 ; очистка стека
-     29
-     30					     ; Завершение программы
-     31	0022  B8 4C00			     mov     ax, 4C00h			 ; завершение	программы
-     32	0025  CD 21			     int     21h
-     33
-     34	0027			     code    ends
-     35					     end start
-Turbo Assembler	 Version 4.1	    09/26/24 12:35:20	    Page 2
+     21	0000			     main:
+     22					     ;инициализация сегментного	регистра данных
+     23	0000  B8 0000s			     mov     ax,     data
+     24	0003  8E D8			     mov     ds,     ax
+     25
+     26					     ;инициализация индекса
+     27	0005  8B 0E 0014r		     mov     cx, count		; Количество элементов в массиве
+     28	0009  BE 0000r			     lea     si, array		; Адрес исходного	массива
+     29	000C  BF 0016r			     lea     di, result		; Адрес результирующего массива
+     30	000F  8B 1E 0010r		     mov     bx, lowIndex	; Низкий индекс
+     31	0013  8B 16 0012r		     mov     dx, highIndex	; Высокий индекс
+     32
+     33	0017  33 C9			     xor     cx, cx		; Обнуляем cx для использования	    +
+     34				     как счетчика
+     35	0019			     next_element:
+     36	0019  3B CB			     cmp     cx, bx		; Сравниваем текущий индекс с	    +
+     37				     низким индексом
+     38	001B  72 0A			     jb	     not_in_bounds	 ; Если текущий индекс	меньше,	    +
+     39				     переходим	к not_in_bounds
+     40	001D  3B CA			     cmp     cx, dx		; Сравниваем текущий индекс с	    +
+     41				     высоким индексом
+     42	001F  77 06			     ja	     not_in_bounds	; Если текущий индекс больше,	    +
+     43				     переходим	к not_in_bounds
+     44
+     45					     ; Если	индекс в	пределах границ
+     46	0021  C6 05 01			     mov     byte ptr [di], 1	; Записываем 1 в результирующий    +
+     47				     массив
+     48	0024  EB 04 90			     jmp     increment_index	 ; Переходим к увеличению индекса
+     49
+     50	0027			     not_in_bounds:
+     51	0027  C6 05 00			     mov     byte ptr [di], 0	; Записываем 0 в результирующий    +
+     52				     массив
+     53
+     54	002A			     increment_index:
+     55	002A  41			     inc     cx			 ; Увеличиваем текущий индекс
+     56	002B  83 C7 01			     add     di, 1		 ; Переход к следующему элементу  +
+     57				     результирующего массива
+Turbo Assembler	 Version 4.1	    10/02/24 17:04:15	    Page 2
+laba.asm
+
+
+
+     58	002E  3B 0E 0014r		     cmp     cx, count		 ; Проверяем, достигли	ли конца	    +
+     59				     массива
+     60	0032  7C E5			     jl	     next_element	 ; Если нет, продолжаем цикл
+     61
+     62					 ; Вывод результата
+     63	0034  BE 0016r			     lea     si, result		 ; Адрес результирующего массива
+     64	0037  8B 0E 0014r		     mov     cx, count		 ; Количество	элементов для	    +
+     65				     вывода
+     66
+     67	003B			      print_result:
+     68	003B  8A 04			     mov     al, [si]		; Загружаем байт из			    +
+     69				     результирующего массива
+     70	003D  04 30			     add     al, '0'		 ; Преобразуем 0/1 в символ '0'/'1'
+     71	003F  B4 02			     mov     ah, 02h		; Функция вывода символа
+     72	0041  CD 21			     int     21h		; Вызов DOS
+     73	0043  46			     inc     si			 ; Переход к следующему байту
+     74	0044  E2 F5			     loop    print_result	 ; Повторяем, пока	не выведем все  +
+     75				     элементы
+     76
+     77					     ; Завершение программы
+     78	0046  B8 4C00			     mov     ax, 4C00h
+     79	0049  CD 21			     int     21h
+     80
+     81	004B			     code    ends
+     82					     end     main
+Turbo Assembler	 Version 4.1	    10/02/24 17:04:15	    Page 3
 Symbol Table
 
 
@@ -46,9 +98,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "09/26/24"
+??DATE				  Text	 "10/02/24"
 ??FILENAME			  Text	 "laba	  "
-??TIME				  Text	 "12:35:19"
+??TIME				  Text	 "17:04:15"
 ??VERSION			  Number 040A
 @CPU				  Text	 0101H
 @CURSEG				  Text	 CODE
@@ -56,13 +108,18 @@ Symbol Name			  Type	 Value
 @WORDSIZE			  Text	 2
 ARRAY				  Word	 DATA:0000
 COUNT				  Word	 DATA:0014
-HIGHVAL				  Word	 DATA:0012
-LOWVAL				  Word	 DATA:0010
-START				  Near	 CODE:0000
-TRANSFORMARRAY			  Far	 CODE:---- Extern
+HIGHINDEX			  Word	 DATA:0012
+INCREMENT_INDEX			  Near	 CODE:002A
+LOWINDEX			  Word	 DATA:0010
+MAIN				  Near	 CODE:0000
+NEXT_ELEMENT			  Near	 CODE:0019
+NOT_IN_BOUNDS			  Near	 CODE:0027
+PRINT_RESULT			  Near	 CODE:003B
+RESULT				  Byte	 DATA:0016
 
 Groups & Segments		  Bit Size Align  Combine Class
 
-CODE				  16  0027 Byte	  Public
-DATA				  16  0016 Para	  none
+CODE				  16  004B Byte	  Public
+DATA				  16  001E Para	  none
+_STACK				  16  0400 Para	  Stack
 

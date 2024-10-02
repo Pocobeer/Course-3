@@ -21,31 +21,29 @@ del_chot(Tail,Result).
 
 %?- del_chot([1,2,3,4,5,6,7,8,9], Result), write(Result).
 
-<<<<<<< Updated upstream
-podspis([], _).
-
-podspis([H|T], [H|L]) :- 
-podspis(T, L).
-
-podspis(S, [_|L]) :- 
-podspis(S, L).
-=======
-
-podspis([], _).
+prefix([], Lst).
 
 
-podspis([H|T], [H|L]) :- 
-    podspis(T, L).
+prefix([Prefix|Tail], [Prefix|Tail_1]) :- 
+    prefix(Tail, Tail_1).
 
+suffix(Lst, Lst).
 
-podspis(S, [_|L]) :- 
-    podspis(S, L).
->>>>>>> Stashed changes
+suffix(Suffix, [_|Tail]):-
+suffix(Suffix, Tail).
 
-?- podspis([], [1,2,3,4,5]).
-?- podspis([2], [1,2,3,4,5]).
-?- podspis([2,3], [1,2,3,4,5]).
-?- podspis([2,4,5], [1,2,3,4,5]).
-?- podspis([2,3,4], [1,2,3,4,5]).
-?- podspis([2,1], [1,2,3,4,5]).
-?- podspis([1,2], [1,2,3,4,5]).
+sublist_1(Sub,Lst):- prefix(Pref,Lst), suffix(Sub,Pref).
+sublist_2(Sub,Lst):- suffix(Suff,Lst), prefix(Sub,Suff).
+
+?- sublist_2([], [1,2,3,4,5]).
+?- sublist_1([2], [1,2,3,4,5]).
+
+delete(El, Lst, New_lst).
+
+delete(El, [El|Tail], Tail).
+
+delete(El, [Y|Tail], [Y|Tail_1]):-
+delete(El, Tail, Tail_1).
+
+%?-delete(2, [1,2,3,4,5,6], X), write(X).
+

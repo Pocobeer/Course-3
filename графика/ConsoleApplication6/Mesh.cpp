@@ -83,5 +83,5 @@ void Mesh::draw() {
     }
     glEnd();
 
-    cout << "jdkw" << endl;
+    //cout << "jdkw" << endl;
 }

@@ -27,7 +27,7 @@ void initData()
         material2->load("materials/material_2.txt");
         material3->load("materials/material_3.txt");
         material4->load("materials/material_4.txt");
-        cout << "dwld" << endl;
+        //cout << "dwld" << endl;
     }
     catch (const exception& e) {
         cerr << e.what() << endl;
