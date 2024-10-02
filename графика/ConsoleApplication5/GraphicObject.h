@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <memory>
 #include "PhongMaterial.h"
+#include "Mesh.h"
 using namespace glm;
 // йкюяя дкъ опедярюбкемхъ ндмнцн цпютхвеяйнцн назейрю
 class GraphicObject
