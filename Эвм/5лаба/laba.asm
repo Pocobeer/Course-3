@@ -1,28 +1,24 @@
 _STACK  segment para stack
         db      1024 dup(?)
 _STACK  ends
- 
 
- 
 data    segment
- 
-        array   dw  10, 20, 30, 40, 50, 60, 70, 80 ; Исходный массив
-        lowIndex  dw  2                                ; Низкая граница
-        highIndex dw  6                                ; Высокая граница
-        count   dw  8                      ;колво элементов
-        result  db 8 dup(?)                 ;массив результата
+        array       dw 10, 20, 30, 40, 50, 60, 70, 80 ; Исходный массив
+        lowIndex    dw 2                                ; Низкая граница
+        highIndex   dw 6                                ; Высокая граница
+        count       dw 8                                ; Количество элементов
+        result      db 8 dup(?)                         ; Массив результата
 data    ends
- 
+
 code    segment byte public
         assume  cs:code, ds:data, ss:_STACK
- 
 
 main:
-        ;инициализация сегментного регистра данных
-        mov     ax,     data
-        mov     ds,     ax
+        ; Инициализация сегментного регистра данных
+        mov     ax, data
+        mov     ds, ax
 
-        ;инициализация индекса
+        ; Инициализация индекса
         mov     cx, count          ; Количество элементов в массиве
         lea     si, array          ; Адрес исходного массива
         lea     di, result         ; Адрес результирующего массива
@@ -49,21 +45,27 @@ increment_index:
         cmp     cx, count           ; Проверяем, достигли ли конца массива
         jl      next_element        ; Если нет, продолжаем цикл
 
-    ; Вывод результата
-        lea     si, result          ; Адрес результирующего массива
-        mov     cx, count           ; Количество элементов для вывода
+; Вывод результата
+lea     si, result              ; Адрес результирующего массива
+mov     cx, count               ; Количество элементов для вывода
 
- print_result:
-        mov     al, [si]           ; Загружаем байт из результирующего массива
-        add     al, '0'             ; Преобразуем 0/1 в символ '0'/'1'
-        mov     ah, 02h            ; Функция вывода символа
-        int     21h                ; Вызов DOS
-        inc     si                  ; Переход к следующему байту
-        loop    print_result        ; Повторяем, пока не выведем все элементы
+print_result:
+    mov     al, [si]            ; Загружаем байт из результирующего массива
+    add     al, '0'             ; Преобразуем 0/1 в символ '0'/'1'
+    mov     ah, 02h             ; Функция вывода символа
+    int     21h                 ; Вызов DOS
+    inc     si                   ; Переход к следующему байту
+    loop    print_result         ; Повторяем, пока не выведем все элементы
+
+; Перенос строки
+mov     ah, 02h                 ; Функция вывода символа
+mov     dl, 0Dh                 ; Символ возврата каретки
+int     21h                     ; Вызов DOS
+mov     dl, 0Ah                 ; Символ новой строки
+int     21h                     ; Вызов DOS
 
         ; Завершение программы
-        mov     ax, 4C00h
-        int     21h
-
+        mov     ax, 4C00h        ; Завершение программы
+        int     21h              ; Вызов DOS
 code    ends
-        end     main
+end main

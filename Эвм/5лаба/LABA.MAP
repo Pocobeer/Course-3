@@ -3,7 +3,7 @@
 
  00000H 003FFH 00400H _STACK             
  00400H 0041DH 0001EH DATA               
- 0041EH 00468H 0004BH CODE               
+ 0041EH 00472H 00055H CODE               
 
 Program entry point at 0041:000E
 Warning: No stack
