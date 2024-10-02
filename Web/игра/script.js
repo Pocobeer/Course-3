@@ -15,7 +15,19 @@ let isGameActive = true;
 bestScoreElement.innerText = `Лучший результат: ${bestScore}`;
 
 //
-
+scoreInterval = setInterval(function () {
+    if (isGameActive) {
+        scoreElement.innerText = `Счет: ${score}`;
+        score++;
+        // Сохраняем лучший результат
+        if (score > bestScore) {
+            bestScore = score;
+            localStorage.setItem('bestScore', bestScore);
+            bestScoreElement.innerText = `Лучший результат: ${bestScore}`;
+        }
+    }
+}, 1000);
+ 
 function jump() {
     if (dino.classList != "jump") {
         dino.classList.add("jump");
