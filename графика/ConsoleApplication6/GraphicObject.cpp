@@ -61,15 +61,10 @@ void GraphicObject::draw()
 	}
 
 	glPushMatrix(); // Сохраняем текущее состояние матрицы
-
+	modelMatrix = glm::translate(glm::mat4(1.0f), position);
 	// Применяем матрицу модели
 	glMultMatrixf(value_ptr(modelMatrix));
-
-	// Устанавливаем цвет
-	glColor3f(color.r, color.g, color.b);
-
-	// Рисуем чайник
-	glutSolidTeapot(1.0f); // Выводим чайник с размером 1.0
-
+	mesh->draw();
 	glPopMatrix(); // Восстанавливаем состояние матрицы
+	//cout << "Object drawn at position: " << position.x << ", " << position.y << ", " << position.z << endl;
 }

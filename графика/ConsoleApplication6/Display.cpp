@@ -42,7 +42,7 @@ void display(void) {
 
     // Обновляем заголовок окна
     char title[50];
-    sprintf_s(title, "Laba_04 - FPS: %.2f", fps);
+    sprintf_s(title, "Laba_06 - FPS: %.2f", fps);
     glutSetWindowTitle(title);
 
     // Очищаем буферы
@@ -58,10 +58,11 @@ void display(void) {
     camera.apply();
 
     lights[0].apply();
+    renderScene();
 
     if (meshLoaded) {
         mesh->draw(); // Вызываем метод draw у объекта mesh
-        cout << "mdksw" << endl;
+        //cout << "mdksw" << endl;
     }
     else {
         cout << "mesh not loaded" << endl;
@@ -70,3 +71,4 @@ void display(void) {
     // Меняем передний и задний буферы
     glutSwapBuffers();
 }
+

@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 // Конструктор
-GameObject::GameObject() : position(0, 0) {}
+GameObject::GameObject() : position(0, 0), height(0.0f) {}
 
 // Установка графического объекта
 void GameObject::setGraphicObject(const GraphicObject& graphicObject) {
@@ -17,6 +17,11 @@ void GameObject::setPosition(ivec2 position) {
     this->position = position;
 }
 
+void GameObject::setPosition(int x, float height, int z) {
+    position = ivec2(x, z); // Сохраняем X и Z как логические координаты
+    this->height = height; // Сохраняем Y как высоту
+}
+
 // Получение текущих логических координат
 ivec2 GameObject::getPosition(){
     return position;
@@ -24,5 +29,7 @@ ivec2 GameObject::getPosition(){
 
 // Вывод игрового объекта на экран
 void GameObject::draw(){
+    graphicObject.setPosition(vec3(position.x, height, position.y));
+
     graphicObject.draw(); // Предполагается, что метод draw не принимает аргументов
 }

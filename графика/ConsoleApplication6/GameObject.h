@@ -15,7 +15,7 @@ public:
     // Установка логических координат (два перегруженных метода для удобства)
     void setPosition(int x, int y);
     void setPosition(ivec2 position);
-
+    void setPosition(int x, float height, int z);
     // Получение текущих логических координат
     ivec2 getPosition();
 
@@ -25,7 +25,7 @@ public:
 private:
     // Логические координаты игрового объекта
     ivec2 position;
-
+    float height;
     // Графический объект (для вывода на экран)
     GraphicObject graphicObject;
 };

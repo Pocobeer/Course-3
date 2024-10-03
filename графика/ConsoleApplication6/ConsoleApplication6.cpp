@@ -31,6 +31,7 @@ void main(int argc, char** argv)
 	initData();
 	initSimulation();
 	camera.setPosition(vec3(10.0f, 15.0f, 17.5f));
+	initializeMapObjects(passabilityMap);
 
 	// УСТАНОВКА ФУНКЦИЙ ОБРАТНОГО ВЫЗОВА
 	glutDisplayFunc(display);  // Устанавливаем функцию для перерисовки окна
