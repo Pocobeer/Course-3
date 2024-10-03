@@ -53,8 +53,8 @@ let isAlive = setInterval(function () {
 
     if (((cactusLeft < 50 && cactusLeft > 10 && dinoTop >= 140)) || (ptic_1Left < 50 && ptic_1Left > 10 && dinoTop >= 90 && dinoTop <= 160)) {
         isGameActive = false;
-        document.getElementById("gameOverMessage").innerText = "Game Over! Ваш счет: " + score;
-        document.getElementById("modal").style.display = "block"; // Показываем модальное окно
+        createModal();
+        modal.style.display = "block";
         cactus.style.animation = "none";
         ptic_1.style.animation = "none";
         apple.style.animation = "none";
@@ -124,35 +124,64 @@ function getItem(){
     }
 }
 
-document.getElementById("closeModal").onclick = function() {
-    document.getElementById("modal").style.display = "none";
-}
+// document.getElementById("closeModal").onclick = function() {
+//     document.getElementById("modal").style.display = "none";
+// }
 
-document.getElementById("restartButton").onclick = function() {
-    document.getElementById("modal").style.display = "none";
-    score = 0; // Сбрасываем счет
-    scoreElement.innerText = `Счет: ${score}`;
-    isGameActive = true; // Восстанавливаем игру
-    cactus.style.animation = "block 1s infinite linear"
-    ptic_1.style.animation = "block 1s infinite linear"
-    apple.style.animation = "block 1s infinite linear"
-    // Перезапускаем таймеры
-    scoreInterval = setInterval(function () {
-        if (isGameActive) {
-            scoreElement.innerText = `Счет: ${score}`;
-            score++;
-            // Сохраняем лучший результат
-            if (score > bestScore) {
-                bestScore = score;
-                localStorage.setItem('bestScore', bestScore);
-                bestScoreElement.innerText = `Лучший результат: ${bestScore}`;
-            }
-        }
-    }, 1000);
-};
+
 
 window.onclick = function(event) {
     if (event.target == document.getElementById("modal")) {
         document.getElementById("modal").style.display = "none";
     }
 } 
+
+function upperChild(parent, child) {
+    parent.appendChild(child);
+}
+function createModal(){
+    const modal = document.createElement('div');
+        modal.id = 'modal';
+        modal.className = 'modal';
+
+        const modalContent = document.createElement('div');
+        modalContent.className = 'modal-content';
+
+        // const closeButton = document.createElement('span');
+        // closeButton.id = 'closeModal';
+        // closeButton.className = 'close';
+        // closeButton.innerHTML = '&times;';
+
+        const message = document.createElement('p');
+        message.id = 'gameOverMessage';
+        if(score == 0){
+            message.innerText = 'Game Over! Ваш счет:' + score;
+        }else{
+            message.innerText = 'Game Over! Ваш счет: ' + (score-1);
+        }
+        const restartButton = document.createElement('button');
+        restartButton.id = 'restartButton';
+        restartButton.innerText = 'Начать новую игру';
+
+        //upperChild(modalContent, closeButton);
+        upperChild(modalContent, message);
+        upperChild(modalContent, restartButton);
+        upperChild(modal, modalContent);
+
+        restartButton.onclick = function() {
+            document.getElementById("modal").style.display = "none";
+            score = 0; // Сбрасываем счет
+            scoreElement.innerText = `Счет: ${score}`;
+            isGameActive = true; // Восстанавливаем игру
+            cactus.style.animation = "block 1s infinite linear"
+            ptic_1.style.animation = "block 1s infinite linear"
+            apple.style.animation = "block 1s infinite linear"
+            modal.remove();
+        };
+
+        upperChild(document.getElementById('container'), modal);
+
+        // closeButton.onclick = function() {
+        //     modal.style.display = 'none';
+        // }
+}   

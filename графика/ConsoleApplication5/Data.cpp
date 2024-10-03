@@ -27,7 +27,7 @@ void initData()
     }
 
     // Инициализация одного источника света
-    Light light1 = vec3(0.0f, 10.0f, 0.0f); // Свет сверху
+    Light light1 = vec3(10.0f, 5.0f, 0.0f); // Свет сверху
     light1.setAmbient(vec4(1.0f, 1.0f, 1.0f, 1.0f));
     light1.setDiffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
     light1.setSpecular(vec4(1.0f, 1.0f, 1.0f, 1.0f));

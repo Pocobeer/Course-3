@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    10/02/24 22:32:31	    Page 1
+Turbo Assembler	 Version 4.1	    10/03/24 13:03:12	    Page 1
 laba.asm
 
 
@@ -8,91 +8,102 @@ laba.asm
       3	0400			     _STACK  ends
       4
       5	0000			     data    segment
-      6	0000  000A 0014	001E 0028 +	     array	 dw 10,	20, 30,	40, 50,	60, 70,	80 ; Исходный массив
-      7	      0032 003C	0046 0050
-      8	0010  0002			     lowIndex	 dw 2				     ; Низкая граница
-      9	0012  0006			     highIndex	 dw 6				     ; Высокая граница
-     10	0014  0008			     count	 dw 8				     ; Количество		    +
-     11				     элементов
-     12	0016  08*(??)			     result	 db 8 dup(?)			     ; Массив результата
-     13	001E			     data    ends
-     14
-     15	0000			     code    segment byte public
-     16					     assume  cs:code, ds:data, ss:_STACK
-     17
-     18	0000			     main:
-     19					     ; Инициализация сегментного регистра данных
-     20	0000  B8 0000s			     mov     ax, data
-     21	0003  8E D8			     mov     ds, ax
-     22
-     23					     ; Инициализация индекса
-     24	0005  8B 0E 0014r		     mov     cx, count		; Количество элементов в массиве
-     25	0009  BE 0000r			     lea     si, array		; Адрес исходного	массива
-     26	000C  BF 0016r			     lea     di, result		; Адрес результирующего массива
-     27	000F  8B 1E 0010r		     mov     bx, lowIndex	; Низкий индекс
-     28	0013  8B 16 0012r		     mov     dx, highIndex	; Высокий индекс
-     29
-     30	0017  33 C9			     xor     cx, cx		; Обнуляем cx для использования	    +
-     31				     как счетчика
-     32	0019			     next_element:
-     33	0019  3B CB			     cmp     cx, bx		; Сравниваем текущий индекс с	    +
-     34				     низким индексом
-     35	001B  72 0A			     jb	     not_in_bounds	 ; Если текущий индекс	меньше,	    +
-     36				     переходим	к not_in_bounds
-     37	001D  3B CA			     cmp     cx, dx		; Сравниваем текущий индекс с	    +
-     38				     высоким индексом
-     39	001F  77 06			     ja	     not_in_bounds	; Если текущий индекс больше,	    +
-     40				     переходим	к not_in_bounds
-     41
-     42					     ; Если	индекс в	пределах границ
-     43	0021  C6 05 01			     mov     byte ptr [di], 1	; Записываем 1 в результирующий    +
-     44				     массив
-     45	0024  EB 04 90			     jmp     increment_index	 ; Переходим к увеличению индекса
-     46
-     47	0027			     not_in_bounds:
-     48	0027  C6 05 00			     mov     byte ptr [di], 0	; Записываем 0 в результирующий    +
-     49				     массив
-     50
-     51	002A			     increment_index:
-     52	002A  41			     inc     cx			 ; Увеличиваем текущий индекс
-     53	002B  83 C7 01			     add     di, 1		 ; Переход к следующему элементу  +
-     54				     результирующего массива
-     55	002E  3B 0E 0014r		     cmp     cx, count		 ; Проверяем, достигли	ли конца	    +
-     56				     массива
-     57	0032  7C E5			     jl	     next_element	 ; Если нет, продолжаем цикл
-Turbo Assembler	 Version 4.1	    10/02/24 22:32:31	    Page 2
+      6					     ;array	  db "Hello!g" , "$"; Исходный массив
+      7	0000  000A 0014	001E 0028 +	     array	 dw 10,	20, 30,	40, 50,	60, 70,	80 ; Исходный массив
+      8	      0032 003C	0046 0050
+      9	0010  0003			     lowIndex	 dw 3				   ; Низкая граница
+     10	0012  0006			     highIndex	 dw 6				     ; Высокая граница
+     11	0014  0008			     count	 dw 8				     ; Количество		    +
+     12				     элементов
+     13	0016  08*(??)			     result	 db 8 dup(?)			     ; Массив результата
+     14	001E			     data    ends
+     15
+     16	0000			     code    segment byte public
+     17					     assume  cs:code, ds:data, ss:_STACK
+     18
+     19	0000			     main:
+     20					     ; Инициализация сегментного регистра данных
+     21	0000  B8 0000s			     mov     ax, data
+     22	0003  8E D8			     mov     ds, ax
+     23
+     24					     ; Инициализация индекса
+     25	0005  8B 0E 0014r		     mov     cx, count		; Количество элементов в массиве
+     26	0009  BE 0000r			     lea     si, array		; Адрес исходного	массива
+     27	000C  BF 0016r			     lea     di, result		; Адрес результирующего массива
+     28	000F  8B 1E 0010r		     mov     bx, lowIndex	; Низкий индекс
+     29	0013  8B 16 0012r		     mov     dx, highIndex	; Высокий индекс
+     30
+     31	0017  33 C9			     xor     cx, cx		; Обнуляем cx для использования	    +
+     32				     как счетчика
+     33	0019			     next_element:
+     34	0019  3B CB			     cmp     cx, bx		; Сравниваем текущий индекс с	    +
+     35				     низким индексом
+     36	001B  72 0A			     jb	     not_in_bounds	 ; Если текущий индекс	меньше,	    +
+     37				     переходим	к not_in_bounds
+     38	001D  3B CA			     cmp     cx, dx		; Сравниваем текущий индекс с	    +
+     39				     высоким индексом
+     40	001F  77 06			     ja	     not_in_bounds	; Если текущий индекс больше,	    +
+     41				     переходим	к not_in_bounds
+     42
+     43					     ; Если	индекс в	пределах границ
+     44	0021  C6 05 31			     mov     byte ptr [di], "1"	  ; Записываем 1 в результирующий  +
+     45				     массив
+     46	0024  EB 04 90			     jmp     increment_index	 ; Переходим к увеличению индекса
+     47
+     48	0027			     not_in_bounds:
+     49	0027  C6 05 30			     mov     byte ptr [di], "0"	  ; Записываем 0 в результирующий  +
+     50				     массив
+     51
+     52	002A			     increment_index:
+     53	002A  41			     inc     cx			 ; Увеличиваем текущий индекс
+     54	002B  83 C7 01			     add     di, 1		 ; Переход к следующему элементу  +
+     55				     результирующего массива
+     56	002E  3B 0E 0014r		     cmp     cx, count		 ; Проверяем, достигли	ли конца	    +
+     57				     массива
+Turbo Assembler	 Version 4.1	    10/03/24 13:03:12	    Page 2
 laba.asm
 
 
 
-     58
-     59				     ; Вывод результата
-     60	0034  BE 0016r		     lea     si, result		     ; Адрес результирующего массива
-     61	0037  8B 0E 0014r	     mov     cx, count		     ; Количество элементов для вывода
-     62
-     63	003B			     print_result:
-     64	003B  8A 04			 mov	 al, [si]	     ; Загружаем байт из				    +
-     65				     результирующего массива
-     66	003D  04 30			 add	 al, '0'	     ; Преобразуем 0/1 в символ '0'/'1'
-     67	003F  B4 02			 mov	 ah, 02h	     ; Функция вывода символа
-     68	0041  CD 21			 int	 21h		     ; Вызов DOS
-     69	0043  46			 inc	 si		      ;	Переход к следующему байту
-     70	0044  E2 F5			 loop	 print_result	      ;	Повторяем, пока не выведем все	    +
-     71				     элементы
+     58	0032  7C E5			     jl	     next_element	 ; Если нет, продолжаем цикл
+     59
+     60				     ; Вывод результата
+     61	0034  BE 0016r		     lea     si, result		     ; Адрес результирующего массива
+     62	0037  8B 0E 0014r	     mov     cx, count		     ; Количество элементов для вывода
+     63
+     64				     ;print_result:
+     65				     ;	  mov	  al, [si]	      ;	Загружаем байт из			    +
+     66				     результирующего массива
+     67				     ;	  add	  al, '0'	      ;	Преобразуем 0/1 в символ '0'/'1'
+     68				     ;	  mov	  ah, 02h	      ;	Функция вывода символа
+     69				     ;	  int	  21h		      ;	Вызов DOS
+     70				     ;	  inc	  si		       ; Переход	к следующему	байту
+     71				     ;	  loop	  print_result	       ; Повторяем, пока не выведем все
      72
-     73				     ; Перенос строки
-     74	0046  B4 02		     mov     ah, 02h		     ; Функция вывода символа
-     75	0048  B2 0D		     mov     dl, 0Dh		     ; Символ возврата каретки
-     76	004A  CD 21		     int     21h		     ; Вызов DOS
-     77	004C  B2 0A		     mov     dl, 0Ah		     ; Символ новой строки
-     78	004E  CD 21		     int     21h		     ; Вызов DOS
-     79
-     80					     ; Завершение программы
-     81	0050  B8 4C00			     mov     ax, 4C00h	      ;	Завершение программы
-     82	0053  CD 21			     int     21h	      ;	Вызов DOS
-     83	0055			     code    ends
-     84				     end main
-Turbo Assembler	 Version 4.1	    10/02/24 22:32:31	    Page 3
+     73	003B			     print_result:
+     74
+     75	003B  8B D6			     mov dx, offset si
+     76	003D  B4 09			     mov ah, 09h
+     77	003F  CD 21			     int 21h
+     78
+     79	0041  B8 0024			     mov ax, "$"
+     80	0044  8B D0			     mov dx, ax
+     81	0046  B4 09			     mov ah, 09h
+     82	0048  CD 21			     int 21h
+     83
+     84				     ; ; Перенос	строки
+     85				     ; mov     ah, 02h		       ; Функция	вывода символа
+     86				     ; mov     dl, 0Dh		       ; Символ возврата каретки
+     87				     ; int     21h		       ; Вызов DOS
+     88				     ; mov     dl, 0Ah		       ; Символ новой строки
+     89				     ; int     21h		       ; Вызов DOS
+     90
+     91					     ; Завершение программы
+     92	004A  B8 4C00			     mov     ax, 4C00h	      ;	Завершение программы
+     93	004D  CD 21			     int     21h	      ;	Вызов DOS
+     94	004F			     code    ends
+     95				     end main
+Turbo Assembler	 Version 4.1	    10/03/24 13:03:12	    Page 3
 Symbol Table
 
 
@@ -100,9 +111,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "10/02/24"
+??DATE				  Text	 "10/03/24"
 ??FILENAME			  Text	 "laba	  "
-??TIME				  Text	 "22:32:31"
+??TIME				  Text	 "13:03:12"
 ??VERSION			  Number 040A
 @CPU				  Text	 0101H
 @CURSEG				  Text	 CODE
@@ -121,7 +132,7 @@ RESULT				  Byte	 DATA:0016
 
 Groups & Segments		  Bit Size Align  Combine Class
 
-CODE				  16  0055 Byte	  Public
+CODE				  16  004F Byte	  Public
 DATA				  16  001E Para	  none
 _STACK				  16  0400 Para	  Stack
 
