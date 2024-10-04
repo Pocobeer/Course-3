@@ -1,98 +1,88 @@
-Turbo Assembler	 Version 4.1	    10/03/24 17:25:08	    Page 1
+Turbo Assembler	 Version 4.1	    10/04/24 08:53:39	    Page 1
 laba.asm
 
 
 
-      1	0000			     _STACK  segment para stack
-      2	0000  0400*(??)			     db	     1024 dup(?)
-      3	0400			     _STACK  ends
+      1	    0000			 _STACK	 segment para stack
+      2	    0000  0400*(??)			 db	 1024 dup(?)
+      3	    0400			 _STACK	 ends
       4
-      5	0000			     data    segment
-      6	0000  000A 0014	001E 0028 +	     array	 dw 10,	20, 30,	40, 50,	60, 70,	80 ; Исходный массив
-      7	      0032 003C	0046 0050
-      8	0010  0008			     count	 dw 8				   ; Количество элементов
-      9	0012  08*(??)			     result	 db 8 dup(?)			   ; Массив результата
-     10	001A  0000 0007			     bounds	 dw 0, 7			   ; Таблица границ: min =	0,  +
-     11				     max = 7
-     12	001E			     data    ends
+      5	    0000			 data	 segment
+      6	    0000  000A 0014 001E 0028 +		 array	     dw	10, 20,	30, 40,	50, 60,	70, 80 ; Исходный массив
+      7		  0032 003C 0046 0050
+      8	    0010  0008				 count	     dw	8			       ; Количество		    +
+      9					 элементов
+     10	    0012  0002 0006			 bounds	     dw	2, 6			       ; Таблица	границ: min = +
+     11					 0, max	= 7
+     12	    0016			 data	 ends
      13
-     14	0000			     code    segment byte public
-     15					     assume  cs:code, ds:data, ss:_STACK
+     14	    0000			 code	 segment byte public
+     15						 assume	 cs:code, ds:data, ss:_STACK
      16
-     17	0000			     main:
-     18					     ; Инициализация сегментного регистра данных
-     19	0000  B8 0000s			     mov     ax, data
-     20	0003  8E D8			     mov     ds, ax
-     21
-     22					     ; Инициализация индекса
-     23	0005  33 C9			     xor     cx, cx				; Обнуляем cx для		    +
-     24				     использования	как счетчика
-     25	0007  BE 0000r			     lea     si, array				; Адрес исходного		    +
-     26				     массива
-     27	000A  BF 0012r			     lea     di, result				; Адрес результирующего +
-     28				     массива
-     29
-     30	000D			     next_element:
-     31	000D  3B 0E 0010r		     cmp     cx, count			       ; Проверяем, достигли ли  +
-     32				     конца	массива
-     33	0011  7D 12			     jge     end_processing			; Если да, переходим к	    +
-     34				     завершению
-     35
-     36					     ; Проверяем, находится ли текущий индекс в	    +
-     37				     пределах массива с	помощью BOUND
-     38	0013  8B D9			     mov     bx, cx			       ; Загружаем текущий	    +
-     39				     индекс в bx
-     40					     bound   bx, bounds			       ; Проверка границ индекса
-**Error** laba.asm(31) Illegal instruction for currently selected processor(s)
+     17	    0000			 main:
+     18
+     19						 ; Инициализация сегментного регистра данных
+     20	    0000  B8 0000s			 mov	 ax, data
+     21	    0003  8E D8				 mov	 ds, ax
+     22	    0005  B8 0000			 mov ax,0
+     23	    0008  8E C0				 mov es,ax
+     24	    000A  BB 0014			 mov bx,20
+     25	    000D  26: C7 07 004Er		 mov word ptr es:[bx], offset my_int5
+     26	    0012  26: 8C 4F 02			 mov es:[bx+2],	cs
+     27						 ; Инициализация индекса
+     28	    0016  8B 0E	0010r			mov cx,count				; Обнуляем cx для		    +
+     29					 использования как счетчика
+     30						.386
+     31	    001A  66| BB 00000000		mov ebx,0
+     32	    0020  BB 0000r			 lea	 bx, array			    ; Адрес исходного	    +
+     33					 массива
+     34	    0023  66| BE 00000000		 mov esi,0
+     35	    0029			 next_element:
+     36	    0029  67| C7 04 73 0031		 mov word ptr [ebx+esi*2],"1"
+     37						 ; Проверяем, находится ли текущий индекс в	    +
+     38					 пределах массива с помощью BOUND
+     39	    002F  62 36	0012r			 bound	si, dword ptr bounds			    ; Проверка границ +
+     40					 индекса
      41
-     42					     ; Если	индекс в	пределах границ
-     43	0015  C6 05 31			     mov     byte ptr [di], '1'		       ; Записываем '1' в		    +
-     44				     результирующий массив
-     45	0018  EB 04 90			     jmp     increment_index		       ; Переходим к увеличению +
-     46				     индекса
-     47
-     48	001B			     not_in_bounds:
-     49	001B  C6 05 30			     mov     byte ptr [di], '0'		       ; Записываем '0' в		    +
-     50				     результирующий массив
-     51
-     52	001E			     increment_index:
-     53	001E  41			     inc     cx					; Увеличиваем текущий	    +
-     54				     индекс
-     55	001F  83 C6 02			     add     si, 2				; Переход к следующему    +
-     56				     элементу (2 байта для слова)
-Turbo Assembler	 Version 4.1	    10/03/24 17:25:08	    Page 2
+     42	    0033			 increment_index:
+     43	    0033  66| 46			 inc esi
+     44	    0035  E2 F2				 loop	next_element			   ; Переходим	к		    +
+     45					 следующему элементу
+     46
+     47	    0037			 end_processing:
+     48						 ; Вывод результата
+     49	    0037  8B 0E	0010r			 mov	 cx, count			    ; Количество		    +
+     50					 элементов для вывода
+     51	    003B  BE 0000r			 mov si, offset	array
+     52	    003E			 print_result:
+     53	    003E  B4 02				 mov	 ah, 02h			   ; Функция вывода	    +
+     54					 символа
+     55	    0040  8A 14				 mov	 dl, [si]			    ; Загружаем байт из	    +
+     56					 результирующего	массива
+     57	    0042  CD 21				 int	 21h				    ; Вызов DOS
+Turbo Assembler	 Version 4.1	    10/04/24 08:53:39	    Page 2
 laba.asm
 
 
 
-     57	0022  47			     inc     di					; Переход к следующему    +
-     58				     элементу результирующего массива
-     59	0023  EB E8			     jmp     next_element			; Переходим к	следующему+
-     60				     элементу
-     61
-     62	0025			     end_processing:
-     63					     ; Вывод результата
-     64	0025  BE 0012r			     lea     si, result				; Адрес результирующего +
-     65				     массива
-     66	0028  8B 0E 0010r		     mov     cx, count				; Количество элементов   +
-     67				     для вывода
-     68
-     69	002C			     print_result:
-     70	002C  B4 02			     mov     ah, 02h			       ; Функция	вывода символа
-     71	002E  8A 14			     mov     dl, [si]				; Загружаем байт из	    +
-     72				     результирующего массива
-     73	0030  CD 21			     int     21h				; Вызов DOS
-     74	0032  46			     inc     si					; Переход к следующему    +
-     75				     байту
-     76	0033  E2 F7			     loop    print_result			; Повторяем, пока не	    +
-     77				     выведем все элементы
-     78
-     79					     ; Завершение программы
-     80	0035  B8 4C00			     mov     ax, 4C00h			       ; Завершение программы
-     81	0038  CD 21			     int     21h				; Вызов DOS
-     82	003A			     code    ends
-     83				     end main
-Turbo Assembler	 Version 4.1	    10/03/24 17:25:08	    Page 3
+     58	    0044  83 C6	02			 add si,2			       ; Переход	к следующему	    +
+     59					 байту
+     60	    0047  E2 F5				 loop	 print_result			    ; Повторяем, пока не	    +
+     61					 выведем	все элементы
+     62
+     63						 ; Завершение	программы
+     64	    0049  B8 4C00			 mov	 ax, 4C00h			   ; Завершение программы
+     65	    004C  CD 21				 int	 21h				    ; Вызов DOS
+     66	    004E				 my_int5 proc
+     67	    004E  67| C7 04 73 0030		 mov word ptr [ebx+esi*2],"0"
+     68	    0054  58				 pop ax
+     69	    0055  05 0004			 add ax, 4
+     70	    0058  50				 push ax ;корректирование адреса возвврата
+     71	    0059  CF				 iret
+     72	    005A				 my_int5 endp
+     73	    005A			 code	 ends
+     74					 end main
+Turbo Assembler	 Version 4.1	    10/04/24 08:53:39	    Page 3
 Symbol Table
 
 
@@ -100,34 +90,27 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "10/03/24"
+??DATE				  Text	 "10/04/24"
 ??FILENAME			  Text	 "laba	  "
-??TIME				  Text	 "17:25:08"
+??TIME				  Text	 "08:53:39"
 ??VERSION			  Number 040A
-@CPU				  Text	 0101H
+@CPU				  Text	 0F0FH
 @CURSEG				  Text	 CODE
 @FILENAME			  Text	 LABA
-@WORDSIZE			  Text	 2
+@WORDSIZE			  Text	 4
 ARRAY				  Word	 DATA:0000
-BOUNDS				  Word	 DATA:001A
+BOUNDS				  Word	 DATA:0012
 COUNT				  Word	 DATA:0010
-END_PROCESSING			  Near	 CODE:0025
-INCREMENT_INDEX			  Near	 CODE:001E
+END_PROCESSING			  Near	 CODE:0037
+INCREMENT_INDEX			  Near	 CODE:0033
 MAIN				  Near	 CODE:0000
-NEXT_ELEMENT			  Near	 CODE:000D
-NOT_IN_BOUNDS			  Near	 CODE:001B
-PRINT_RESULT			  Near	 CODE:002C
-RESULT				  Byte	 DATA:0012
+MY_INT5				  Near	 CODE:004E
+NEXT_ELEMENT			  Near	 CODE:0029
+PRINT_RESULT			  Near	 CODE:003E
 
 Groups & Segments		  Bit Size Align  Combine Class
 
-CODE				  16  003A Byte	  Public
-DATA				  16  001E Para	  none
+CODE				  16  005A Byte	  Public
+DATA				  16  0016 Para	  none
 _STACK				  16  0400 Para	  Stack
-Turbo Assembler	 Version 4.1	    10/03/24 17:25:08	    Page 4
-Error Summary
-
-
-
-**Error** laba.asm(31) Illegal instruction for currently selected processor(s)
 

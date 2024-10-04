@@ -112,19 +112,19 @@ void initializeMapObjects(int passabilityMap[21][21]) {
             }
             else if (passabilityMap[i][j] == 1) { // Проходимый объект типа 1
                 auto gameObject = make_shared<GameObject>();
-                gameObject->setGraphicObject(graphicObjects[3]); // Замените на подходящий объект
+                gameObject->setGraphicObject(graphicObjects[3]); // Заменить на подходящий объект
                 gameObject->setPosition(i - 10, 0.5f, j - 10);
                 mapObjects[i][j] = gameObject;
             }
             else if (passabilityMap[i][j] == 2) { // Проходимый объект типа 2
                 auto gameObject = make_shared<GameObject>();
-                gameObject->setGraphicObject(graphicObjects[2]); // Замените на подходящий объект
+                gameObject->setGraphicObject(graphicObjects[2]); // Заменить на подходящий объект
                 gameObject->setPosition(i - 10, 0.5f, j - 10);
                 mapObjects[i][j] = gameObject;
             }
             else if (passabilityMap[i][j] == 3) { // Проходимый объект типа 3
                 auto gameObject = make_shared<GameObject>();
-                gameObject->setGraphicObject(graphicObjects[1]); // Замените на подходящий объект
+                gameObject->setGraphicObject(graphicObjects[1]); // Заменить на подходящий объект
                 gameObject->setPosition(i - 10, 0.5f, j - 10);
                 mapObjects[i][j] = gameObject;
             }
