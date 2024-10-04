@@ -107,7 +107,7 @@ void initializeMapObjects(int passabilityMap[21][21]) {
             if (passabilityMap[i][j] == 0) { // Пол
                 auto gameObject = make_shared<GameObject>();
                 gameObject->setGraphicObject(graphicObjects[0]); // Предполагаем, что graphicObjects[0] это пол
-                //gameObject->setPosition(i-10, -5.5f,j-10); // Установка логических координат
+                //gameObject->setPosition(i-10, -1.0f,j-10); // Установка логических координат
                 mapObjects[i][j] = gameObject; // Сохраняем объект в массиве
             }
             else if (passabilityMap[i][j] == 1) { // Проходимый объект типа 1
@@ -115,6 +115,7 @@ void initializeMapObjects(int passabilityMap[21][21]) {
                 gameObject->setGraphicObject(graphicObjects[3]); // Заменить на подходящий объект
                 gameObject->setPosition(i - 10, 0.5f, j - 10);
                 mapObjects[i][j] = gameObject;
+                //cout << "created at:" << i << ", " << j << endl;
             }
             else if (passabilityMap[i][j] == 2) { // Проходимый объект типа 2
                 auto gameObject = make_shared<GameObject>();
@@ -138,6 +139,7 @@ void initializeMapObjects(int passabilityMap[21][21]) {
 
 
 void renderScene() {
+    graphicObjects.clear();
     // Отрисовка объектов на карте
     for (int i = 0; i < 21; ++i) {
         for (int j = 0; j < 21; ++j) {

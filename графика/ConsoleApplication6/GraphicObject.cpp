@@ -56,9 +56,9 @@ void GraphicObject::draw()
 		material->apply();
 	}
 
-	if (mesh) {
+	/*if (mesh) {
 		mesh->draw();
-	}
+	}*/
 
 	glPushMatrix(); // Сохраняем текущее состояние матрицы
 	modelMatrix = glm::translate(glm::mat4(1.0f), position);
