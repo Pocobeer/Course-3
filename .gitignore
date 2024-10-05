@@ -86,3 +86,4 @@
 графика/ConsoleApplication6/.vs/ConsoleApplication6/v17/ipch/AutoPCH/7a9ab4bf84773e74/CONSOLEAPPLICATION6.ipch
 графика/ConsoleApplication6/.vs/ConsoleApplication6/v17/ipch/AutoPCH/bb50b731d8624718/MESH.ipch
 графика/ConsoleApplication6/.vs/ConsoleApplication6/v17/ipch/AutoPCH/bd26a4360316779c/GAMEOBJECT.ipch
+*.ipch
