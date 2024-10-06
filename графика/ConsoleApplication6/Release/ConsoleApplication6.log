@@ -1,0 +1,39 @@
+﻿  ConsoleApplication6.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): error C2065: Gluint: необъявленный идентификатор
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2923: std::vector: "Gluint" не является допустимым аргументом типа шаблон для параметра "_Ty"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): message : см. объявление "Gluint"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2976: std::vector: слишком мало аргументов шаблон
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : см. объявление "std::vector"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\ConsoleApplication6.cpp(15,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  Data.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): error C2065: Gluint: необъявленный идентификатор
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2923: std::vector: "Gluint" не является допустимым аргументом типа шаблон для параметра "_Ty"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): message : см. объявление "Gluint"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2976: std::vector: слишком мало аргументов шаблон
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : см. объявление "std::vector"
+  Display.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): error C2065: Gluint: необъявленный идентификатор
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2923: std::vector: "Gluint" не является допустимым аргументом типа шаблон для параметра "_Ty"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): message : см. объявление "Gluint"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2976: std::vector: слишком мало аргументов шаблон
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : см. объявление "std::vector"
+  GameObject.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): error C2065: Gluint: необъявленный идентификатор
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2923: std::vector: "Gluint" не является допустимым аргументом типа шаблон для параметра "_Ty"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): message : см. объявление "Gluint"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2976: std::vector: слишком мало аргументов шаблон
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : см. объявление "std::vector"
+  GraphicObject.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): error C2065: Gluint: необъявленный идентификатор
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2923: std::vector: "Gluint" не является допустимым аргументом типа шаблон для параметра "_Ty"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): message : см. объявление "Gluint"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2976: std::vector: слишком мало аргументов шаблон
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : см. объявление "std::vector"
+  Mesh.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): error C2065: Gluint: необъявленный идентификатор
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2923: std::vector: "Gluint" не является допустимым аргументом типа шаблон для параметра "_Ty"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,17): message : см. объявление "Gluint"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.h(24,10): error C2976: std::vector: слишком мало аргументов шаблон
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : см. объявление "std::vector"
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Mesh.cpp(7,14): error C2512: std::vector: нет подходящего конструктора по умолчанию
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\vector(438,1): message : см. объявление "std::vector"

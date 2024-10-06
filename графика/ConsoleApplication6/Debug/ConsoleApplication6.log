@@ -1,2 +1,9 @@
-﻿  Data.cpp
-  ConsoleApplication6.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication6\Debug\ConsoleApplication6.exe
+﻿  ConsoleApplication6.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\ConsoleApplication6.cpp(15,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  Data.cpp
+  Display.cpp
+  GameObject.cpp
+  GraphicObject.cpp
+  Создание кода...
+  LINK : не найден или не выполнена сборка C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Debug\ConsoleApplication6.exe при последней инкрементной компоновке; выполняется полная компоновка
+  ConsoleApplication6.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication6\Debug\ConsoleApplication6.exe

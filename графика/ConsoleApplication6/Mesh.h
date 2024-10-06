@@ -9,6 +9,9 @@
 #include <memory>
 #include "Vertex.h"
 #include <algorithm>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include "GL/freeglut.h"
 
 class Mesh {
 public:
@@ -18,4 +21,5 @@ public:
 
 private:
     std::vector<Vertex> vertices; // Массив вершин полигональной сетки
+    std::vector<Gluint> indices;//массив индексов
 };

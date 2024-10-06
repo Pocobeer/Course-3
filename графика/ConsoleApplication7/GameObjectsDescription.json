@@ -1,0 +1,62 @@
+{
+    "LightObject": {
+        "mesh": "data//meshes//HighPolyChamferBox.obj",
+        "material": {
+            "diffuse": [1.0, 1.0, 0.6, 1.0],
+            "ambient": [0.4, 0.4, 0.2, 1.0],
+            "specular": [1.0, 1.0, 1.0, 1.0],
+            "emission": [0.0, 0.0, 0.0, 1.0],
+            "shininess": 64.0
+        }
+    },
+    "HeavyObject": {
+        "mesh": "data//meshes//HighPolyChamferBox.obj",
+        "material": {
+            "diffuse": [0.6, 0.6, 0.6, 1.0],
+            "ambient": [0.1, 0.1, 0.1, 1.0],
+            "specular": [0.0, 0.0, 0.0, 1.0],
+            "emission": [0.0, 0.0, 0.0, 1.0],
+            "shininess": 64.0
+        }
+    },
+    "BorderObject": {
+        "mesh": "data//meshes//HighPolyBox.obj",
+        "material": {
+            "diffuse": [0.3, 0.3, 0.3, 1.0],
+            "ambient": [0.1, 0.1, 0.1, 1.0],
+            "specular": [0.0, 0.0, 0.0, 1.0],
+            "emission": [0.0, 0.0, 0.0, 1.0],
+            "shininess": 64.0
+        }
+    },
+    "Player": {
+        "mesh": "data//meshes//Sphere.obj",
+        "material": {
+            "diffuse": [0.0, 0.6, 0.6, 1.0],
+            "ambient": [0.0, 0.0, 0.0, 1.0],
+            "specular": [0.0, 0.0, 0.0, 1.0],
+            "emission": [0.0, 0.6, 0.6, 1.0],
+            "shininess": 64.0
+        }
+    },
+    "Bomb": {
+        "mesh": "data//meshes//Sphere.obj",
+        "material": {
+            "diffuse": [0.2, 0.2, 0.2, 1.0],
+            "ambient": [0.0, 0.0, 0.0, 1.0],
+            "specular": [1.0, 1.0, 1.0, 1.0],
+            "emission": [0.0, 0.0, 0.0, 1.0],
+            "shininess": 64.0
+        }
+    },
+    "Monster": {
+        "mesh": "data//meshes//Sphere.obj",
+        "material": {
+            "diffuse": [0.6, 0.1, 0.1, 1.0],
+            "ambient": [0.0, 0.0, 0.0, 1.0],
+            "specular": [0.0, 0.0, 0.0, 0.0],
+            "emission": [0.6, 0.1, 0.1, 1.0],
+            "shininess": 64.0
+        }
+    }
+}
