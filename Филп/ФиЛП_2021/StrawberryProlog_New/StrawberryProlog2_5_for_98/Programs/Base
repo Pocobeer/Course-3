@@ -1,0 +1,138 @@
+% This file is a part from Base.spj and is included in it at every compiling.
+
+?-
+  window( _, _, win_func(_), "Car's Store", 20, 20, 500, 400).
+win_func(init) :-
+  static( _, _, fail(_), "Part:", 0, 30, 50, 30),
+  edit( G_E2, _, fail(_), "", 50, 30, 180, 30),
+  static( _, _, fail(_), "Color:", 230, 30, 60, 30),
+  edit( G_E3, _, fail(_), "", 290, 30, 100, 30),
+  static( _, _, fail(_), "L/R:", 390, 30, 50, 30),
+  edit( G_E4, _, fail(_), "", 440, 30, 40, 30),
+  static( _, _, fail(_), "Car:", 0, 90, 50, 30),
+  edit( G_E5, _, fail(_), "", 50, 90, 210, 30),
+  static( _, _, fail(_), "Model:", 260, 90, 70, 30),
+  edit( G_E6, _, fail(_), "", 330, 90, 150, 30),
+  static( _, _, fail(_), "Prize:", 0, 150, 50, 30),
+  edit( G_E7, _, fail(_), "", 50, 150, 150, 30),
+  static( _, _, fail(_), "Where?", 200, 150, 80, 30),
+  edit( G_E8, _, fail(_), "", 280, 150, 200, 30),
+  static( _, _, fail(_), "Haw many:", 0, 210, 100, 30),
+  edit( G_E1, _, fail(_), "", 100, 210, 100, 30),
+
+  button( _, _, but_take_in(_),
+		"Add to the Store", 250, 210, 230, 30),
+  button( _, _, but_take_out(_),
+		"Take Out", 20, 300, 120, 30),
+  button( _, _, but_ask(_),
+		"Ask", 240, 300, 80, 30),
+  button( _, _, but_end(_), "End", 390, 300, 80, 30).
+
+but_end(press) :-
+  F is parent(_),
+  close_window(F).
+
+but_ask(press) :-
+  Sum:=0,
+  calk(G_E2, X2),
+  check(X2, part),
+  calk(G_E3, X3),
+  check(X3, color),
+  calk(G_E4, X4),
+  check(X4, l_or_r),
+  calk(G_E5, X5),
+  check(X5, car),
+  calk(G_E6, X6),
+  check(X6, model),
+  calk(G_E7, X7),
+  check(X7, prize),
+  calk(G_E8, X8),
+  check(X8, place),
+  nl, write(list), write((:)), nl,
+  s(X1, X2, X3, X4, X5, X6 ,X7, X8),
+  Sum:=Sum + X1,
+  S1 is print(Sum),
+  set_text(S1, G_E1),
+  Res =s(X1, X2, X3, X4, X5, X6 ,X7, X8),
+  write(Res), nl,
+  fail.
+but_take_in(press) :-
+  but_take(in).
+but_take_out(press) :-
+  but_take(out).
+but_take(T) :-
+  calk_no(G_E2, X2),
+  check(X2, part),
+  calk_no(G_E3, X3),
+  check(X3, color),
+  calk_no(G_E4, X4),
+  check(X4, l_or_r),
+  calk_no(G_E5, X5),
+  check(X5, car),
+  calk_no(G_E6, X6),
+  check(X6, model),
+  calk_no(G_E7, X7),
+  check(X7, prize),
+  calk_no(G_E8, X8),
+  check(X8, place),
+  calk_no(G_E1, X1),
+  check(X1, number),
+  add_to(T, X1, X2, X3, X4, X5, X6, X7, X8),
+  !, fail.
+add_to(in, X1, X2, X3, X4, X5, X6, X7, X8) :-
+  s(S, X2, X3, X4, X5, X6 ,X7, X8), !,
+  retract_in(s(S, X2, X3, X4, X5, X6, X7, X8)),
+  X1:=X1 + S,
+  assert_in(s(X1, X2, X3, X4, X5, X6 ,X7, X8)).
+add_to(in, X1, X2, X3, X4, X5, X6 ,X7, X8) :-
+  assert_in(s(X1, X2, X3, X4, X5, X6, X7, X8)).
+add_to(out, X1, X2, X3, X4, X5, X6, X7, X8) :-
+  s(S, X2, X3, X4, X5, X6, X7, X8),
+  S>=X1, !,
+  retract_in(s(S, X2, X3, X4, X5, X6, X7, X8)),
+  X1:=S - X1,
+  X1>0,
+  assert_in(s(X1, X2, X3, X4, X5, X6 ,X7, X8)).
+add_to(out|_) :-
+  message("", "You can not take out more than you have!", s), fail.
+calk(E, X) :-
+  S is get_text(E),
+  calk2(X, S).
+calk2(X, S) :-
+  S="", !.
+calk2(X, S) :-
+  X is scan(S).
+calk_no(E, X) :-
+  S is get_text(E),
+  calk3(X, S).
+calk3(no, S) :-
+  S="", !.
+calk3(X, S) :-
+  X is scan(S).
+check(X, T) :-
+  not(not(check2(X, T))).
+check2(X, prize) :-
+  number(X), !.
+check2(X, T) :-
+  T(X), !.
+check2(X, T) :-
+  S is print(X),
+  do_you(S, T),
+  assert_in(T(X)).
+do_you(S, part) :-
+  yes_no(S, "This is not a part. Do you want to add it to the parts?", ?).
+do_you(S, color) :-
+  yes_no(S, "This is not a color. Do you want to add it to the colors?", ?).
+do_you(S, l_or_r) :-
+  message(S, "This is not left or right.", s), fail.
+do_you(S, car) :-
+  yes_no(S, "This is not a car. Do you want to add it to the cars?", ?).
+do_you(S, model) :-
+  yes_no(S, "This is not a model. Do you want to add it to the models?", ?).
+do_you(S, place) :-
+  yes_no(S, "This is not a place. Do you want to add it to the places?", ?).
+do_you(S, number) :-
+  message(S, "This is not a number. You have to write haw many!", s), fail.
+
+prize(no).
+

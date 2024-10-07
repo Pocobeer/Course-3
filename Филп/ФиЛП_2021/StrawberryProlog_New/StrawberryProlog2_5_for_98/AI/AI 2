@@ -1,0 +1,135 @@
+init_AI:-
+  G_ImpLengthV=8,
+  G_ImpAtomsV=6,
+  G_ImpLengthB=6,
+  G_ImpAtomsB=2,
+
+  G_AIName="AI 2",
+
+  G_ListV=[],
+  G_ListB=[],
+  G_B2=0.
+
+put_more_menu:-
+  menu(pop_up, _, _, menu_ax(_), "&Axioms").
+
+menu_ax(init) :-
+  menu( normal, _, _, menu_ax_vic(_), "For &Victory"),
+  menu( normal, _, _, menu_ax_bad(_), "For &Bad Move").
+menu_ax_vic(press):-
+  nl,nl,
+  vic(1,L),
+  write("Vic <= "),write(L), nl,
+  fail.
+menu_ax_bad(press):-
+  nl,nl,
+  bad(1,N,L),
+  N>10,
+  write(N+" Bad <= "),write(L), nl,
+  fail.
+
+ai(Do, DoNext):-
+  kick_out(G_ListV,R),
+  A is scan(string_from_ASCII(first_ASCII("a")+Do)),
+  B is scan(string_from_ASCII(first_ASCII("q")+G_ViewOld)),
+  (G_V=0->
+    retract_axioms([A,B|R])
+  ),
+  (G_B=0->
+    (list_length(G_ListV)>=G_ImpLengthV->
+      G_ListV:=R  
+    ),
+    G_ListV:=[A,B|G_ListV]
+  ),
+  (G_V=1, not(vic(1,G_ListV)), list_length(G_ListV)=:=G_ImpLengthV ->
+    add_axioms(G_ListV)
+  ),
+
+  kick_out(G_ListB,Rb),
+  Bb is scan(string_from_ASCII(first_ASCII("q")+ (G_B2=1->5 else G_ViewOld))),
+  (G_B=0->
+    retract_axiomsB([A,Bb|Rb])
+  else
+    increase_axiomsB([A,Bb|Rb])
+  ),
+  (list_length(G_ListB)>=G_ImpLengthB->
+    G_ListB:=Rb  
+  ),
+  G_ListB:=[A,Bb|G_ListB],
+  (G_B=1, not(bad(1,_,G_ListB)), list_length(G_ListB)=:=G_ImpLengthB ->
+    add_axiomsB(G_ListB)
+  ),
+
+  G_B2:=G_B,
+  kick_out(G_ListV,L2),
+  kick_out(G_ListB,L3),
+  View is scan(string_from_ASCII(first_ASCII("q")+G_View)),
+  (vic(1,[Move,View|L2]) ->
+    DoNext is first_ASCII(print(Move))-first_ASCII("a")
+  else
+    View2 is scan(string_from_ASCII(first_ASCII("q")+ (G_B=1->5 else G_View))),
+    make_good_move(DoNext, View2, L3)
+  ).
+
+retract_axioms(L):-
+  vic(1,L),
+  R is on_the_last_step(a),
+  modify_at(R, 0, 0),
+  fail.
+retract_axioms(L).
+
+retract_axiomsB(L):-
+  bad(1,_,L),
+  R is on_the_last_step(a),
+  modify_at(R, 0, 0),
+  fail.
+retract_axiomsB(L).
+
+increase_axiomsB(L):-
+  bad(1,N,L),
+  R is on_the_last_step(a),
+  modify_at(R, 1, N+1),
+  fail.
+increase_axiomsB(L).
+
+add_axioms(L):-
+  L=[Head|ListF],
+  make_general_cases(ListF, ListG, G_ImpAtomsV),
+  not_similar(vic(_,[Head|ListG])),
+  assert(vic(1,[Head|ListG])),
+  fail.
+add_axioms(L).
+
+add_axiomsB(L):-
+  L=[Head|ListF],
+  make_general_cases(ListF, ListG, G_ImpAtomsB),
+  not_similar(bad(_,_,[Head|ListG])),
+  assert(bad(1,1,[Head|ListG])),
+  fail.
+add_axiomsB(L).
+
+make_general_cases([], [], N).
+make_general_cases([H|T], [H|T2], N):-
+  N>0,
+  N1 is N - 1,
+  make_general_cases(T,T2, N1).
+make_general_cases([H|T], [_|T2], N):-
+  make_general_cases(T,T2, N).
+
+not_similar(A):-
+  A,
+  R is on_the_last_step(s),
+  !, fail.
+not_similar(A).
+
+kick_out([],[]):- !.
+kick_out([_,_],[]):- !.
+kick_out([X,Y|T],[X,Y|R]):-
+  kick_out(T,R).
+
+make_good_move(DoNext, V, L3):-
+  repeat,
+  DoNext is random(G_MaxOut),
+  H is scan(string_from_ASCII(first_ASCII("a")+DoNext)),
+  not(bad(1,N,[H,V|L3]), N>10, !, random(100)>0), !.
+

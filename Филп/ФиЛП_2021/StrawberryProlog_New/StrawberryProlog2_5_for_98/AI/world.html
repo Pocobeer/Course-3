@@ -1,0 +1,147 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Dimiter Dobrev">
+   <meta name="GENERATOR" content="Mozilla/4.51 [en] (Win98; I) [Netscape]">
+   <title>The world of AI</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#000099" vlink="#551A8B" alink="#CC0000">
+&nbsp;
+<table CELLSPACING=0 CELLPADDING=0 WIDTH="100%" >
+<tr>
+<td WIDTH="20%">
+<blockquote><a href="http://pcmag.sagabg.net"><img SRC="pcmagazine.gif" NOSAVE BORDER=0 height=113 width=73></a></blockquote>
+</td>
+
+<td><b><font color="#CC0000"><font size=+2>AI - How does it cope in an
+arbitrary world</font></font></b>
+<br><b>What is the world of the artificial intellect like</b>
+<p>February'2001
+<br>this paper is a part from <a href="http://www.dobrev.com/AI/index.html">AI-
+Project</a></td>
+</tr>
+</table>
+
+<blockquote><a href="http://www.dobrev.com/dobrev.html">Dimiter Dobrev</a>
+<br><a href="mailto:dimiter@dobrev.com">dimiter@dobrev.com</a>
+<br>illustrations - Konstantin Lakov</blockquote>
+
+<table BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="80%" >
+<tr>
+<td WIDTH="90">
+<blockquote><a href="http://www.dobrev.com/AI/index.html"><img SRC="R_01.gif" BORDER=0 height=175 width=81></a></blockquote>
+</td>
+
+<td>
+<blockquote><font color="#000099">&nbsp;&nbsp;&nbsp;&nbsp; In this paper
+we are going to find out what is an arbitrary world and when two worlds
+are indistinguishable. Also, we are going to think whether the world is
+determined or not. We are going to ask ourselves how would AI cope, without
+knowing the world it got into. We are going to see that the way for understanding
+the world is the building of a correct model.</font></blockquote>
+</td>
+</tr>
+</table>
+
+<table CELLSPACING=0 CELLPADDING=0 COLS=2 WIDTH="100%" >
+<tr>
+<td VALIGN=TOP WIDTH="50%">
+<blockquote>&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b><font size=+2>T</font></b>his
+paper is the sequel of "<a href="definition.html">AI - What is this</a>"
+(ed. 11/2000). We said there that we want to create a device which in an
+arbitrary world will cope not worse than a human being. Let us think what
+is an arbitrary world and how our device would cope in such world. We are
+going to ask ourselves how many are the possible world’s states and when
+two worlds are indistinguishable?
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We said that an arbitrary world
+is an arbitrary function <b><font color="#CC0000">World(s, d)</font></b>,
+the arguments of which are the world’s state and the influence that our
+device has on the world. The result of this function is the world’s new
+state. We said that the device works out finite information (<b><font color="#CC0000">m</font></b>
+bits), i.e. the possible influence actions towards the world are finite
+(<b><font color="#CC0000">2<sup>m</sup></font></b>).
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Let us have an arbitrary world.
+We are going to build the tree of the attainable world’s states. An attainable
+world’s state will be the one that can be reached by our device (or the
+one that the device can bring the world to). In the tree’s root we are
+going to place the state <font color="#CC0000"><b>s</b><sub>0</sub></font>.
+This world’s state will be reached at the moment of birth. Inheritors of
+<font color="#CC0000"><b>s</b><sub>0</sub></font>
+will be the states <font color="#CC0000">World(<b>s</b><sub>0</sub>, d<sub>i</sub>)</font>
+where <font color="#CC0000">d<sub>i</sub></font> runs through all possible
+actions (as we have already said, they are a finite number). These states
+can be reached in a moment one (if the action in moment zero was the respective
+one).
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; By analogy, we define the inheritors
+of the inheritors and so on. We get an infinite tree with countably many
+knots. We will call this tree the tree of the attainable states.
+<center>
+<p><img SRC="S_01.gif" height=159 width=293></center>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; From the tree of the attainable
+states we can easily get another tree, which we will call the tree of the
+world. This will be the same tree but at each knot instead some state (<font color="#CC0000"><b>s</b><sub>i</sub></font>)
+we will juxtapose <font color="#CC0000"><b>View(s</b><sub>i</sub><b>)</b></font>,
+i.g. instead the respective world’s state we will juxtapose the information
+the device gets as an entrance when it is in that state (what it sees).
+Why did we call this tree with the pretentious name tree of the world?
+It is because that if two worlds have the same tree of the world then they
+are absolutely indistinguishable from the point of view of the device.
+No matter what experiment it would carry out, it would get the same result
+in both worlds because with the same sequence of actions it would see the
+same things.</blockquote>
+</td>
+
+<td>
+<blockquote>&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now we are ready to answer the
+question how many the world’s states are. They can be arbitrary many, but
+because only the attainable ones matter we can safely consider that the
+others do not exist. It means that if we throw out the unattainable states
+from a world, we will get a world indistinguishable from the given one.
+The newly obtained world will have no more than countably many states.&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; What is the life of our device?
+This is a path in the tree of the world, starting from the root <font color="#CC0000"><b>View(s</b><sub>0</sub><b>)</b></font>.
+This path is potentially infinite but at a given moment <b><font color="#CC0000">t</font></b>
+of its life the path has length <b><font color="#CC0000">t</font></b>.
+What does our device know at the moment <b><font color="#CC0000">t</font></b>?
+Up to this moment it knows only its own life path, the other knots are
+- what would have happened if it would have done another thing or what
+will happen in future. All these are things that our device does not know
+and only can suppose about them.
+<center>
+<p><img SRC="S_02.gif" height=220 width=254></center>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; That is to say, our device is at
+the moment <b><font color="#CC0000">t</font></b> of its life and its task
+is to understand the world, to understand the principles that make it move.
+This understanding of the world is necessary for it to be able in future
+to choose its way better and to get a better mark for its actions. Well,
+the understanding of the world is important, but how it can be done, how
+from a finite path in a infinite tree a whole tree can be built.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The latter (to be built a whole
+tree) is a too ambitious task. This means the world to be fully understood.
+If you understand fully the world you live in, you will not need to carry
+out experiments, because you will know the result you will get. For example,
+you will not have to look for your things, because you will already know
+where they are, even when you throw dice you will know what will the result
+be, also you will know the lottery numbers. As you can see, you do not
+know fully the world you live in and it is not sensible for us to hope
+our device to achieve such a result. We can have full knowledge of the
+world only in very simple worlds, but even there, even if we have a model,
+giving us a full description of the world, we can never be sure that this
+is a correct model. This model could have proved itself million times,
+but we do not have guarantees that in the million and first one it will
+not mislead us.</blockquote>
+</td>
+</tr>
+</table>
+
+<center><b><font color="#000099">Page 1 of 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="world2.html">Next >></a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="definition.html">&lt;&lt;the
+previous paper</a></font></b></center>
+
+</body>
+</html>

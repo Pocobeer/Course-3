@@ -1,0 +1,228 @@
+init_world:-
+  G_Step=0,
+  G_V=0,
+  G_L=0,
+  G_B=0,
+  G_View=0,
+  G_ViewOld=0,
+  G_Vic=0,
+  G_Loss=0,
+  G_Draw=0,
+  G_Bad=0,
+  G_WorldName="World 2",
+  G_MaxOut=8,
+
+  G_NewGame=0,
+  G_PlayFirst=0,
+  array(game_field,9,0),
+  G_X=0,
+  G_Y=0.
+
+put_check_boxes:-
+  check_box( G_CB1, _, check_func, "Check Box 1", 150, 20, 120, 20),
+  check_box( G_CB2, _, check_func, "Check Box 2", 150, 40, 120, 20),
+  check_box( G_CB3, _, check_func, "Check Box 3", 150, 60, 120, 20).
+
+give_up:-
+  text_out(200,120,G_X+", "+G_Y),
+  text_out(150,100,game_field(0)+" "+game_field(1)+" "+game_field(2)),
+  text_out(150,120,game_field(3)+" "+game_field(4)+" "+game_field(5)),
+  text_out(150,140,game_field(6)+" "+game_field(7)+" "+game_field(8)).
+
+put_lamps:-
+  (G_View=1->
+    brush(G_Yellow)
+  else
+    brush(G_Black)
+  ),
+  ellipse(20,110,40,130),
+  (G_View=2->
+    brush(G_Yellow)
+  else
+    brush(G_Black)
+  ),
+  ellipse(20,140,40,160).
+
+Do is get_check_boxes():-
+  Do is 4*get_check_box_value(G_CB1)
+       +2*get_check_box_value(G_CB2)
+       +  get_check_box_value(G_CB3).
+
+set_check_boxes(Do):-
+  set_check_box_value(G_CB1, Do//4),
+  set_check_box_value(G_CB2, (Do mod 4) // 2),
+  set_check_box_value(G_CB3, Do mod 2).
+
+world(Do):-
+  G_ViewOld:=G_View,
+  C1 is Do//4,
+  C2 is (Do mod 4) // 2,
+  C3 is Do mod 2,
+  (C1=0->  % move
+    (C2=0->  % horizontal
+      (C3=0->  % left
+        (G_X=0->
+          wrong
+        else
+          G_X:=G_X- 1,
+          ok
+        )
+      else  % right
+        (G_X=2->
+          wrong
+        else
+          G_X:=G_X+1,
+          ok
+        )
+      )
+    else % vertical
+      (C3=0->  % up
+        (G_Y=0->
+          wrong
+        else
+          G_Y:=G_Y- 1,
+          ok
+        )
+      else  % down
+        (G_Y=2->
+          wrong
+        else
+          G_Y:=G_Y+1,
+          ok
+        )
+      )
+    )
+  else % no move
+    (C2=0->  % correct
+      (C3=0->  % play
+        (game_field(G_X+3*G_Y)=:=0, G_NewGame=0->
+          game_field(G_X+3*G_Y):=1,
+          play
+        else
+          wrong
+        )
+      else % new game
+        (G_NewGame=1->
+          new_game
+        else
+          wrong
+        )
+      )
+    else
+      wrong
+    )
+  ),
+  G_View:= game_field(G_X+3*G_Y),
+  update_window(_),
+  fail.
+world(Do).
+
+wrong:-
+  G_V:=0,
+  G_L:=0,
+  G_B:=1,
+  G_Bad:=G_Bad+1.
+
+ok:-
+  G_V:=0,
+  G_L:=0,
+  G_B:=0.
+
+draw:-
+  G_V:=1,
+  G_L:=1,
+  G_Draw:=G_Draw+1,
+  G_B:=0,
+  G_NewGame:=1,
+  new_game.
+
+play:-
+  win->
+    G_V:=1,
+    G_L:=0,
+    G_B:=0,
+    G_NewGame:=1,
+    G_Vic:=G_Vic+1,
+    new_game
+  else
+    answer.
+
+
+answer:-
+  K:=9,
+  choose(K),
+  (K=9->
+    draw
+  else
+    game_field(K):=2,
+    X:=K mod 3, 
+    Y:=K//3,
+    (lose(X,Y)->
+      G_V:=0,
+      G_L:=1,
+      G_B:=0,
+      G_NewGame:=1,
+      G_Loss:=G_Loss+1,
+      new_game
+    else
+      K:=9,
+      choose(K),
+      (K=9->
+        draw
+      else
+        ok
+      ) 
+    )
+  ).
+
+choose(K):-
+  for(I,0,8),
+  game_field(I)=:=0,
+  K:=I,
+  random(4)=:=1, !.
+choose(K).
+
+new_game:-
+  for(I,0,8),
+    game_field(I):=0,
+  fail.
+new_game:-
+  G_NewGame:=0,
+  G_PlayFirst:=1 - G_PlayFirst,
+  (G_PlayFirst=1->
+    game_field(random(9)):=2
+  ).
+
+win:-
+  game_field(G_X)=:=1,
+  game_field(G_X+3)=:=1,
+  game_field(G_X+6)=:=1.
+win:-
+  game_field(3*G_Y)=:=1,
+  game_field(1+3*G_Y)=:=1,
+  game_field(2+3*G_Y)=:=1.
+win:-
+  game_field(4)=:=1,
+  (game_field(0)=:=1,
+   game_field(8)=:=1
+  ;
+   game_field(2)=:=1,
+   game_field(6)=:=1
+  ).
+
+lose(X,Y):-
+  game_field(X)=:=2,
+  game_field(X+3)=:=2,
+  game_field(X+6)=:=2.
+lose(X,Y):-
+  game_field(3*Y)=:=2,
+  game_field(1+3*Y)=:=2,
+  game_field(2+3*Y)=:=2.
+lose(X,Y):-
+  game_field(4)=:=2,
+  (game_field(0)=:=2,
+   game_field(8)=:=2
+  ;
+   game_field(2)=:=2,
+   game_field(6)=:=2
+  ).

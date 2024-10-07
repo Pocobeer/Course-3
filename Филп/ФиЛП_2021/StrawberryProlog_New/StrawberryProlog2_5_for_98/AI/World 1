@@ -1,0 +1,83 @@
+init_world:-
+  G_Step=0,
+  G_V=0,
+  G_L=0,
+  G_B=0,
+  G_View=7,
+  G_ViewOld=7,
+  G_Vic=0,
+  G_Loss=0,
+  G_Draw=0,
+  G_Bad=0,
+  G_WorldName="World 1",
+  G_MaxOut=4,
+
+  G_OpponentTook=0,
+  G_YouTook=0.
+
+put_check_boxes:-
+  check_box( G_CB1, _, check_func, "Check Box 1", 150, 20, 120, 20),
+  check_box( G_CB2, _, check_func, "Check Box 2", 150, 40, 120, 20).
+
+give_up:-
+  text_out(130,120,"You took "+G_YouTook),
+  text_out(130,140,"The opponent took "+G_OpponentTook),
+  text_out(130,160,"The rest of the sticks is "+G_View).
+
+put_lamps:-
+  (G_View /\ 4 > 0->
+    brush(G_Yellow)
+  else
+    brush(G_Black)
+  ),
+  ellipse(20,110,40,130),
+  (G_View /\ 2 > 0->
+    brush(G_Yellow)
+  else
+    brush(G_Black)
+  ),
+  ellipse(20,140,40,160),
+  (G_View /\ 1 > 0->
+    brush(G_Yellow)
+  else
+    brush(G_Black)
+  ),
+  ellipse(20,170,40,190).
+
+Do is get_check_boxes():-
+  Do is 2*get_check_box_value(G_CB1) + get_check_box_value(G_CB2).
+
+set_check_boxes(Do):-
+  set_check_box_value(G_CB1, Do//2),
+  set_check_box_value(G_CB2, Do mod 2).
+
+world(Do):-
+  G_ViewOld:=G_View,
+  G_YouTook:=Do,
+  G_OpponentTook:=0,
+  (Do>G_View; Do=:=0->  % wrong
+    G_V:=0,
+    G_L:=0,
+    G_B:=1,
+    G_Bad:=G_Bad+1
+  else (Do=:=G_View ->  % lost
+    G_V:=0,
+    G_L:=1,
+    G_B:=0,
+    G_View:=7,
+    G_Loss:=G_Loss+1
+  else (Do=:=G_View - 1 ->  % victory
+    G_V:=1,
+    G_L:=0,
+    G_B:=0,
+    G_View:=7,
+    G_OpponentTook:="the last",
+    G_Vic:=G_Vic+1
+  else
+    G_V:=0,
+    G_L:=0,
+    G_B:=0,
+    New is max(1, G_View - Do - 1 - random(3)),
+    G_OpponentTook:=G_View - Do - New,
+    G_View:=New
+  ))).

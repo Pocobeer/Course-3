@@ -1,0 +1,16 @@
+:-(and_no(_0,_1,_2),and_(_0,_1,_3),no_(_3,_2)) .
+and_(0,0,0).
+and_(0,1,0).
+and_(1,0,0).
+and_(1,1,1).
+no_(0,1).
+no_(1,0).
+
+%?-assert(and_(1,1,1)),and_(X,Y,Z),
+  % write(X), write(Y), write(Z).
+
+
+%?-asserta_in(and_no(X,Y,Z):-and_(X,Y,T), no_(T,Z)),
+   % and_no(X,Y,Z), write(X),write(Y),write(Z),nl.
+
+?-retractall(and_(_,_,_)), and_(X,Y,Z), write(X), write(Y), write(Z).

@@ -1,0 +1,17 @@
+
+otr_elem([], _, []).
+
+otr_elem([H|T], N, [N|List]):-
+	H<0, 
+	N1 is N+1,
+	otr_elem(T, N1, List).
+
+%?- otr_elem([-1, -2, -3 , -1, -2, -3], 1 , List), write(List).
+
+
+mem(H,[H|_]):-!.
+mem(X,[_|T]):- mem(X,T).
+%?-mem(s,[a,s,d,f]).
+
+%?-X=true, write(X).
+?-X=fail, write(X).

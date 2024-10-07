@@ -1,0 +1,144 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Dimiter Dobrev">
+   <meta name="GENERATOR" content="Mozilla/4.51 [en] (Win98; I) [Netscape]">
+   <title>AI Definition</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#000099" vlink="#551A8B" alink="#CC0000">
+&nbsp;
+<table CELLSPACING=0 CELLPADDING=0 WIDTH="100%" >
+<tr>
+<td WIDTH="20%">
+<blockquote><a href="http://pcmag.sagabg.net"><img SRC="pcmagazine.gif" NOSAVE BORDER=0 height=113 width=73></a></blockquote>
+</td>
+
+<td><b><font color="#CC0000"><font size=+2>AI - What is this</font></font></b>
+<br><b>A Definition of Artificial Intelligence</b>
+<p>November'2000
+<br>this paper is a part from <a href="http://www.dobrev.com/AI/index.html">AI-
+Project</a></td>
+</tr>
+</table>
+
+<blockquote><a href="http://www.dobrev.com/dobrev.html">Dimiter Dobrev</a>
+<br><a href="mailto:dimiter@dobrev.com">dimiter@dobrev.com</a>
+<br>illustrations - Konstantin Lakov</blockquote>
+
+<table BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="80%" >
+<tr>
+<td WIDTH="90">
+<blockquote><a href="http://www.dobrev.com/AI/index.html"><img SRC="R_01.gif" BORDER=0 height=175 width=81></a></blockquote>
+</td>
+
+<td>
+<blockquote><font color="#000099">&nbsp;&nbsp;&nbsp;&nbsp; In this paper
+we are going to discuss the following questions: "Do we have to know what
+is AI?" and "What is intelligence?". After that we are going to give a
+definition of Artificial Intelligence. Finally, from this definition we
+are going to get an algorithm which after a final number of steps will
+discover AI.</font></blockquote>
+</td>
+</tr>
+</table>
+
+<table CELLSPACING=0 CELLPADDING=0 COLS=2 WIDTH="100%" >
+<tr>
+<td VALIGN=TOP WIDTH="50%">
+<blockquote>&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b><font color="#000000"><font size=+2>D</font></font></b>o
+we have to know what is AI? This question can be easily answered: Yes,
+if we want to find it then our task will be a lot easier if we know what
+is the thing we are looking for. Failing to define AI, our position will
+not differ from that of the Alchemists who sought for the Philosopher's
+stone but almost had no idea what they were searching for.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The most widely spread definition
+of AI is the so called Turing's test. Alan Turing was a British mathematician
+famous for the invention of the theoretical Turing machine and for the
+deciphering of the German codes during World War II.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Turing's test is quite simple.
+We place something behind a curtain and it speaks with us. If we can't
+make difference between it and a human being then it will be AI. However,
+this definition exists from more than fifty years, so we are going to create
+a newer and a more up-to-date one.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Turing's definition suggests that,
+an Intellect is a person with knowledge gained through the years. If this
+is so, then what about a newly born baby? Is it an Intellect? Our answer
+will be "yes". Our definition of an intellect will be: a thing that knows
+nothing but it can learn. At this point we differ from most people who
+imagine a university professor when they hear the word Intellect.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Before giving a formal definition
+of AI we will make it clear that we accept the thesis of Church, stating
+that every calculating device can be modelled by a program. This means
+that we are going to look for AI in the set of programs. We will suppose
+that AI is a step device living in a kind of world. At each step it receives
+information (from the world) and influences (at the world) by the information
+it works out. Also, we will assume that the information received and worked
+out at each step will be a finite amount. Let's say it gets <b><font color="#CC0000">n</font></b>
+bits and works out <b><font color="#CC0000">m</font></b> bits.
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; After this clarification we can
+state informally our definition. AI will be such a program which in an
+arbitrary world will cope not worse than a human.
+<br>&nbsp;&nbsp;&nbsp;&nbsp; The next task will be to formalise this definition
+in order to use it and to search for AI with it. First, what is a world
+for us? These will be two functions <b><font color="#CC0000">World(s, d)</font></b>
+and <b><font color="#CC0000">View(s)</font></b>.</blockquote>
+</td>
+
+<td>
+<blockquote>&nbsp;
+<br>The first will take as arguments the state of the world and the influence
+that our device has on the world at this step. As a result, this function
+will return the new state of the world (which it will obtain on the next
+step). The second function will inform us what does our device see. An
+argument of this function will be the world's state and the returned value
+will be the information that the device will receive (at a given step).
+Also, we have to add one <font color="#CC0000"><b>s</b><sub>0</sub></font>.
+It will be the world's state when our device was born. During its life
+the world will go through the states <font color="#CC0000"><b>s</b><sub>0</sub>,
+<b>s</b><sub>1</sub>,
+<b>s</b><sub>2</sub>,
+...</font> . The device will influence the world with the information it
+works out at each step <font color="#CC0000"><b>d</b><sub>0</sub>,
+<b>d</b><sub>1</sub>,
+<b>d</b><sub>2</sub>,
+...</font> . Also, AI will receive information from the world <font color="#CC0000"><b>v</b><sub>0</sub>,
+<b>v</b><sub>1</sub>,
+<b>v</b><sub>2</sub>,
+...</font> . It is clear that <font color="#CC0000"><b>s</b><sub>i+1</sub><b>=World(s</b><sub>i</sub><b>
+, d</b><sub>i</sub><b>) </b></font><font color="#000000">and</font><font color="#CC0000"><b>
+v</b><sub>i</sub><b>=View(s</b><sub>i</sub><b>)</b></font>.
+<center><img SRC="R_02.gif" height=110 width=200></center>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; We have everything up to this moment.
+We have a world and a device that lives in it. However, there is one thing
+missing - the meaning of life. What is life without pain and joy, a philosopher
+would say. That is why we will introduce meaning of life. This will be
+an evaluation to tell us whether one row <font color="#CC0000"><b>v</b><sub>0</sub>,
+<b>v</b><sub>1</sub>,
+<b>v</b><sub>2</sub>,
+...</font> is better than another.&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Most people think that they have
+spent their life better if they have seen more Swiss resorts and less coal-mines.
+More or less our definition of the meaning of life will be the same. We
+will pick out two bits from <font color="#CC0000"><b>v</b><sub>i
+</sub></font>and
+call them victory and loss. The aim will be to get&nbsp; more victories
+and fewer losses.&nbsp;
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The last step will be to make an algorithm
+that will discover AI. The idea is to start all programs on all worlds
+and to take those which cope best. This does not sound as an algorithm,
+it is as if we are going to make a never-ending exam with an infinite number
+of candidates. The problem is not the infinite number of the candidates,
+we do not need all of them but only a part from those who have passed the
+exam. The real problem is that the exam will never end even for a single
+candidate.</blockquote>
+</td>
+</tr>
+</table>
+
+<center><b><font color="#000099">Page 1 of 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="definition2.html">Next >></a></font></b></center>
+
+</body>
+</html>

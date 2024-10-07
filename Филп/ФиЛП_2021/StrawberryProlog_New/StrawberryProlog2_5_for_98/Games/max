@@ -1,0 +1,11 @@
+max(X,Y,X):-X< Y,!.
+max(X,Y,Y).
+%?-max(2,3,Y), write(Y).
+
+fun(X,1):-X>0,X<2,!.
+fun(X,2):-X>1,X<3.
+%?- fun(1,X), write(X).
+
+mem(X,[X|_]):-!.
+mem(X,[_|T]):-mem(X,T).
+?-mem(X,[a,s,d,f]),write(X).

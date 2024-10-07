@@ -1,0 +1,52 @@
+init_AI:-
+  G_AIName="AI 1".
+
+put_more_menu.
+
+ai(Do, DoNext):-
+  (not(old_sit(G_ViewOld, Do ,G_View, G_V, G_L)) ->
+    assert(old_sit(G_ViewOld, Do ,G_View, G_V, G_L))
+  ),
+  Best= -1,
+  G_DoNext:=random(G_MaxOut), 
+  for(I,0,G_MaxOut - 1),
+  Good=1,
+  min_max(G_View,I,Good,2),
+  Best<Good,
+  Best:=Good,
+  G_DoNext:=I,
+  fail.
+ai(_,DoNext):-
+  DoNext is G_DoNext.
+
+min_max(N,Do,Min,Deep):-
+  old_sit(N,Do,New_N,V,L),
+  (N=New_N ; Deep=0->
+    Good= -1
+  else (V=1 ->
+    (L=1 ->
+      Good=0
+    else
+      Good=1
+    )
+  else
+    (L=1->
+      Good= -1
+    else
+      Good= -1,
+      Deep2 is Deep - 1,
+      max_min(New_N,Good,Deep2)
+    )
+  )),
+  Min>Good,
+  Min:=Good,
+  fail.
+min_max(_,_,_,_).
+max_min(N,Max,Deep):-
+  for(I,0,G_MaxOut - 1),
+    Good= 1,
+    min_max(N,I,Good,Deep),
+    Max<Good,
+    Max:=Good,
+  fail.
+max_min(_,_,_).

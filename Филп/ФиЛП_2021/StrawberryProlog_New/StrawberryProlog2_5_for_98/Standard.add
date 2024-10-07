@@ -1,0 +1,519 @@
+% This file is added to your program at every compiling.
+
+% It starts with some operator definitions.
+op( 1200, fxx, ?- ).
+op( 1200, xfxx, :- ). 
+op( 1200, xfxx, :-- ). 
+op( 1199, fx, *** ).
+op( 1100, xxfyy, -> ). 
+op( 1050, xxfyy, ; ). 
+op( 1050, xxfyy, else ). 
+op( 1030, xfxx, --> ). 
+op( 700, xfx, = ). 
+op( 700, xfx, ?=).
+op( 700, xfx, \= ). 
+op( 700, xfx, == ). 
+op( 700, xfx, \== ). 
+op( 700, xfx, @< ). 
+op( 700, xfx, @=< ). 
+op( 700, xfx, @> ). 
+op( 700, xfx, @>= ). 
+op( 700, xfx, is ). 
+op( 700, xfx, := ). 
+op( 700, xfx, <>= ). 
+op( 700, xfx, =:= ). 
+op( 700, xfx, =\= ). 
+op( 700, xfx, < ). 
+op( 700, xfx, =< ). 
+op( 700, xfx, > ). 
+op( 700, xfx, >= ). 
+op( 700, xfx, =.. ). 
+op( 500, yfx, + ). 
+op( 500, yfx, - ). 
+op( 500, yfx, /\ ). 
+op( 500, yfx, \/ ). 
+op( 500, yfx, xor ). 
+op( 400, yfx, * ). 
+op( 400, yfx, / ). 
+op( 400, yfx, // ). 
+op( 400, yfx, rem ). 
+op( 400, yfx, mod ). 
+op( 400, yfx, << ). 
+op( 400, yfx, >> ). 
+op( 300, xfx, of ). 
+op( 200, fy, \ ). 
+op( 200, xfx, ** ). 
+op( 200, fy, ~ ). 
+op( 100, xfx, @ ). 
+op( 50, xfx, : ).
+op( 40, fy, str ).
+op( 40, fy, int ).
+op( 40, fy, float ).
+op( 20, yfx, '.' ).
+
+% These nine rows are used by the system
+(?-) :- (?-).
+F(M) :- F(M).
+F(M(X)) :- F(M(X)).
+F(M(X, Y)) :- F(M(X, Y)).
+F(M(X, Y, Z)) :- F(M(X, Y, Z)).
+F(M(X, Y, Z, U)) :- F(M(X, Y, Z, U)).
+F(M(X, Y, Z, U, V)) :- F(M(X, Y, Z, U, V)).
+X :- X.
+n.
+
+% Then follow the built-in predicates.
+% You can rename some of them if you like.
+
+R is arrayArg(obj(N), int Arg) :- 240. % must be the first definition
+R is arrayArgOut(obj(N), int Arg) :- 241. % must be the second definition
+R is array( Name, int StartSize, str int float obj(var(Init))) :- 230.
+*** array( Name, int StartSize, str int float obj(var(Init))) :- 230.
+
+external :- read(X), call(|X), write(X), nl.
+
+R is (str(X) = Y) :- 215.
+R is io2(X, var(Y)) :- 216.
+R is io(io(X)) :- 217.
+R is int2(int obj(X)) :- 218.
+R is int4(int obj(X)) :- 219.
+R is float4(float obj(X)) :- 220.
+R is float8(float obj(X)) :- 221.
+R is str(str obj(X)) :- 222.
+R is dispatch_interface(obj(X)) :- 223.
+*** obj(X).method(Y) :- 213.
+R is obj(X).method(Y) :- 213.
+R is server(str X) :- 212.
+
+*** message(str(X), str(Y), T) :- 14.
+*** yes_no( str(X), str(Y), T) :- 15.
+*** draw_point( int X, int Y, int C) :- 198.
+*** draw_bitmap( int X, int Y, obj(B), num(var(W)), int var(H) ) :- 199.
+*** line( | int list(X) ) :- 16.
+*** fill_polygon( | int list(X) ) :- 17.
+*** bezier_line( | int list(X) ) :- 18.
+*** ellipse( int X, int Y, int A, int B) :- 128.
+*** rect( int X, int Y, int A, int B) :- 129.
+*** round_rect( int X, int Y, int A, int B, int W, int H) :- 130.
+*** draw_chord( int X, int Y, int A, int B, int C, int D, int W, int H) :- 131.
+*** draw_pie( int X, int Y, int A, int B, int C, int D, int W, int H) :- 132.
+*** draw_arc( int X, int Y, int A, int B, int C, int D, int W, int H) :- 133.
+*** size(var(obj(W)), int var(X), int var(Y)) :- 30.
+*** position(var(obj(W)), int var(X), int var(Y)) :- 31.
+*** set_text(str T, var(obj(W))) :- 32.
+T is get_text(var(obj(W))) :- 33.
+*** set_check_box_value(var(obj(W)), int V) :- 139.
+V is get_check_box_value(var(obj(W))) :- 140.
+*** enable_window(var(obj(W)), int V) :- 176.
+R is set_timer(var(obj(W)), num(T), F) :- 141.
+*** kill_timer(var(obj(W)), obj(T)) :- 142.
+*** add_text2(var(obj(W)), str T, var(obj(F))) :- 144.
+*** set_selection(var(obj(W)), int term(S), int term(E)) :- 165.
+*** get_selection(var(obj(W)), var(S), var(E)) :- 166.
+*** position_to_line_number(var(obj(W)), int var(P), int var(L), int var(C)) :- 204.
+S is get_selected_text(var(obj(W))) :- 167.
+*** change_selected_text(var(obj(W)), str T) :- 168.
+*** format_selected_text(var(obj(W)), obj(F)) :- 169.
+*** cut_in_edit(var(obj(W))) :- 191.
+*** copy_in_edit(var(obj(W))) :- 192.
+*** paste_in_edit(var(obj(W))) :- 193.
+*** insert_tree_item(var(obj(W)), io(H), int term(N), int term(N), str T, int var(I), int var(I)) :- 226.
+*** set_tree_icons(var(obj(W)), str I, str I, str I) :- 227.
+L is get_tree_length(var(obj(W))) :- 228.
+*** get_tree_item(var(obj(W)), int I, io(T), io(I), io(I)) :- 231.
+*** set_tree_item(var(obj(W)), int I, str var(T), int var(I), int var(I)) :- 232.
+N is get_tree_selected(var(obj(W)) ) :- 233.
+*** delete_tree_item(var(obj(W)), int H):-234.
+*** clean_the_tree(var(obj(W))) :- 235.
+R is tree_parent(var(obj(W)), int I) :- 236.
+R is tree_child(var(obj(W)), int term(I)) :- 237.
+R is tree_next_brother(var(obj(W)), int I) :- 238.
+*** insert_list_item(var(obj(W)), int term(N), str T, int var(I)) :- 145.
+T is get_list_text(var(obj(W)), int N) :- 146.
+L is get_list_length(var(obj(W))) :- 224.
+N is get_list_selected(var(obj(W)) ) :- 147.
+*** delete_list_item(var(obj(W)), int I):-208.
+*** clean_the_list(var(obj(W))) :- 150.
+*** set_list_icons(var(obj(W)), T, str I, str I, str I) :- 210.
+*** add_list_column(var(obj(W)), int N, str L, int W) :- 211.
+*** set_list_label(var(obj(W)), int N, int C, str L) :- 271.
+*** change_style(var(obj(W)), int X, int A, int O):-209.
+*** modify_menu(var(obj(W)), int N, term(var(F)), str var(T) ) :- 152.
+*** draw_menu_bar(var(obj(W))) :- 190.
+*** color_text(var(obj(W)), int var(C)) :- 34.
+*** color_text_back(var(obj(W)), int var(C)) :- 35.
+R is first_child(var(obj(W))) :- 177.
+R is last_child(var(obj(W))) :- 178.
+R is next_child(var(obj(W))) :- 179.
+R is previous_child(var(obj(W))) :- 180.
+R is active_child(var(obj(W))) :- 181.
+*** set_focus(var(obj(W))) :- 205.
+R is child_from_point(var(obj(W)), int X, int Y) :- 194.
+P is parent(var(obj(W))) :- 37.
+*** close_window(obj(var(W))) :- 38.
+H is get_handle(obj(var(W))) :- 163.
+*** update_window(obj(var(W))) :- 39.
+*** press_button(obj(var(W)), int X, int Y) :- 40.
+T is get_clipboard_data(int C) :- 195.
+*** set_clipboard_data(str S, int C) :- 196.
+*** set_active_window( obj(W)):- 158.
+R is open_DLL(str D) :- 162.
+*** cursor(X) :- 53.
+C is system_color(T) :- 60.
+*** beep(S) :- 71.
+*** play_sound(int F, num(T)) :- 171.
+*** text_out(int var(X), int var(Y), str T) :- 72.
+*** wait(num(T)) :- 73.
+*** pen2(int var(obj(T)), int var(C)) :- 19.
+P is pen(int var(T), int var(C)) :- 19.
+*** brush2(int str obj(C), T) :- 74.
+B is brush2(int str C, T) :- 74.
+B is brush(int str C) :- B:=brush2(C,_).
+*** window_brush2(obj(var(W)), int str var(C), T) :- 75.
+*** font2(int var(obj(X)), int var(Y), str var(S)) :- 159.
+F is font(int var(X), int var(Y), str var(S)) :- 159.
+M is font_mask(term(var(obj(F))), int var(C), str var(Face), num(var(S)), num(var(Of)), term(var(B)), term(var(I)), term(var(U))) :- 160.
+*** set_default( obj(B) ):- 161.
+H is bitmap_image(str B, str var(F)):- 197.
+*** select_color(var(R), var(obj(W)), int var(C)) :- 77.
+R is select_color(var(obj(W)), int var(C)) :- select_color(R, W, C).
+*** select_font(var(obj(W)), io(F), int io(C), io(N), io(S)) :- 170.
+R is select_font(var(obj(W)), int io(C), io(N), io(S)) :- select_font(W, R, C, N, S).
+*** close_servers :- 81.
+*** shell_execute2(str F, str var(A)) :- 172.
+*** logon(str Profile, str Password) :- 83.
+*** logoff :- 84.
+*** send_mail(str Address, str Subject, str Mail) :- 85.
+*** read_new_mail(var(From), var(Subject), var(Mail)) :- 86.
+
+*** window_n(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy, Icon, Cursor, B) :- 242.
+*** dialog_n(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy, _, _, _) :- 243.
+*** button_n(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy, _, _, _) :- 244.
+*** check_box(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy) :- 138.
+*** radio_button(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy) :- 173.
+*** group_box(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy) :- 175.
+*** static_n(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy, _, _, _) :- 245.
+*** edit_n(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy, int var(T), _, _) :- 246.
+*** list_box(io(H), F, Class, str Title, int Px, int Py, int Sx, int Sy ) :- 143.
+*** tree_box(io(H), F, Class, Free, int Px, int Py, int Sx, int Sy ) :- 225.
+*** bitmap_n(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy, _, _, _) :- 247.
+*** icon_n(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy, _, _, _) :- 248.
+*** animate_n(io(H), F, Class, Title, int Px, int Py, int Sx, int Sy, _, _, _) :- 249.
+*** menu_n(io(H), F, Class, Title,  int Px, int Py, int Sx, int Sy, T,_, _) :- 250.
+
+window(H, F, Class(|_), Title, Px, Py, Sx, Sy) :-
+  window_n(H, F, Class, Title, Px, Py, Sx, Sy, _, _, _).
+dialog(H, F, Class(|_), Title, Px, Py, Sx, Sy) :-
+  dialog_n(H, F, Class, Title, Px, Py, Sx, Sy, _, _, _).
+button(H, F, Class(|_), Title, Px, Py, Sx, Sy) :-
+  button_n(H, F, Class, Title, Px, Py, Sx, Sy, _, _, _).
+static(H, F, Class(|_), Title, Px, Py, Sx, Sy) :-
+  static_n(H, F, Class, Title, Px, Py, Sx, Sy, _, _, _).
+edit(H, F, Class(|_), Title, Px, Py, Sx, Sy) :-
+  edit_n(H, F, Class, Title, Px, Py, Sx, Sy, _, _, _).
+bitmap(H, F, Class(|_), Title, Px, Py) :-
+  bitmap_n(H, F, Class, Title, Px, Py, 0, 0, _, _, _).
+icon(H, F, Class(|_), Title, Px, Py) :-
+  icon_n(H, F, Class, Title, Px, Py, 0, 0, _, _, _).
+animate(H, F, Class(|_), Title, Px, Py) :-
+  animate_n(H, F, Class, Title, Px, Py, 0, 0, _, _, _).
+menu(T, H, F, Class(|_), Title) :-
+  menu_n(H, F, Class, Title,  0, 0, 0, 0, T,_, _).
+
+add_text(W, T) :- add_text2(W, T, _).
+add_text(W, T, F) :- add_text2(W, T, F).
+pen(O) :- pen2(O, _).
+pen(T, C) :- pen2(T, C).
+brush(C) :- brush2(C, _).
+brush(C, T) :- brush2(C, T).
+window_brush(W, C) :- window_brush2(W, C, _).
+window_brush(W, C, T) :- window_brush2(W, C, T).
+shell_execute(F):-shell_execute2(F,_).
+shell_execute(F,A):-shell_execute2(F,A).
+
+F is select_file(T, str var(N), str var(Filter)) :- 41.
+*** set_current_directory( str var(D)):- 153.
+D is get_current_directory():- 154.
+*** create_directory( str D):- 155.
+*** remove_directory( str D):- 156.
+*** delete_file( str F):- 157.
+*** copy_file( str F1, str F2, int F):- 201.
+*** move_file( str F1, str F2):- 202.
+
+
+R is getenv(str term(S)) :- 251.
+R is get_environment_arg(int N, str S) :- 252.
+R is get_html_form(int var(N), str var(S), str E) :- 253.
+R is url_encode(str U) :- 367.
+R is sql_encode(str S) :- 371.
+R is lower_case(str S) :- 372.
+R is upper_case(str S) :- 373.
+R is stabilise(str S) :- 374.
+R is tagless(str S) :- 375.
+R is split(str S1, str S2, int N) :- 254.
+*** set_content_type(str S) :- 263.
+*** set_cookie(str Field, str Path, str Exp) :- 264.
+R is replace(str In, str What, str With) :- 353.
+R is charAt(str In, int N) :- 360.
+R is indexOf(str Str, str Target, int From) :- 363.
+R is ignIndexOf(str Str, str Target, int From) :- 365.
+R is lastIndexOf(str Str, str Target, int From) :- 366.
+R is subString(str Str, int From, int To) :- 364.
+R is socket(str Server, int Port) :- 258.
+R is read_sock(obj(H), int var(Len)) :-- 260.
+*** write_sock(obj(H), str S) :- 259.
+R is server_socket(str Host, int Port):- 350.
+C is get_client(obj(Server)):- 351.
+R is read_con() :-352.
+R is mysql_connect(str Host, str Username, str Password) :- 308.
+*** mysql_select_db(obj(H), str Db) :- 301.
+*** mysql_query(obj(H), str Query) :- 302.
+R is mysql_store_result(obj(H)) :- 303.
+*** mysql_free_result(obj(H)) :- 304.
+R is mysql_fetch_row(obj(H)) :-- 305.
+R is field(obj(H), int N) :- 306.
+R is mysql_num_fields(obj(H)) :- 307.
+*** mysql_eof(obj(H)) :- 309.
+R is get_program_argument(int X) :- 300.
+
+*** nocalc(X) is Y :- 214.
+*** io(X) := Y :- 229.
+*** fail :- 0.
+*** true :- 1.
+I is identity(X) :- 203.
+*** calc(X) :- 1.
+*** ! :- 4.
+*** trace :- 5.
+*** nl :- 7.
+*** beep :- 8.
+*** const(nocalc(X)) :- 9.
+*** var(nocalc(X)) :- 10.
+*** number(nocalc(X)) :- 11.
+*** integer(nocalc(X)) :- 100.
+*** float(nocalc(X)) :- 101.
+*** string(nocalc(X)) :- 49.
+*** object(nocalc(X)) :- 50.
+*** read2(var(T), str var(M), F) :- 12.
+*** write2(X,var(obj(F))) :- 13.
+*** writeq(nocalc(X)) :- 3.
+R is str(num(X)) + str(num(Y)) :- 21.
+R is num(X) - num(Y) :- 22.
+R is num(X) * num(Y) :- 23.
+R is int(X) // int(Y) :- 24.
+R is int(X) mod int(Y) :- 25.
+R is int(X) rem int(Y) :- 89.
+R is random(int X) :- 26.
+*** start_random_from(int var(X)) :- 200.
+*** nocalc(X) == nocalc(Y) :- 148.
+*** nocalc(X) \== nocalc(Y) :- 149.
+*** str num(X) > str num(Y) :- 27.
+*** str num(X) < str num(Y) :- 28.
+*** str num(X) =:= str num(Y) :- 29.
+*** str num(X) =< str num(Y) :- 134.
+*** str num(X) >= str num(Y) :- 135.
+*** str num(X) =\= str num(Y) :- 136.
+*** equal2(str A, str B, T) :- 123.
+*** less_than2(str A, str B, T) :- 124.
+*** op(int P, T, A) :- 43.
+R is open(str F, str M) :- 44.
+*** close(obj(H)) :- 45.
+*** writef(obj(H), str S) :- 256.
+R is readf(obj(H)) :-- 257.
+R is readln(obj(H)) :-- 261.
+*** ftruncate(str File, int N) :- 354.
+*** feof(obj(H)) :- 262.
+*** set_file_pos(obj(H), int P, F) :- 265.
+R is get_file_pos(obj(H), F) :- 266.
+R is get(obj(H), T) :- 46.
+*** put(int W, obj(H), T) :- 47.
+
+R is print(T) :- 51.
+R is printq(nocalc(T)) :- 381.
+R is scan(str S) :- 52.
+R is scan(str S) :- 0.
+R is on_the_last_step(F):-239.
+*** the_head_of(int N, io(H)):-267.
+*** set_at(int W, nocalc(X)) :- 268.
+*** retract_at(int W) :- 269.
+*** modify_at(int W, int V, X) :- 270.
+*** assert(nocalc(X)) :- 54.
+*** assert_in(nocalc(X)) :- 55.
+*** asserta(nocalc(X)) :- 56.
+*** asserta_in(nocalc(X)) :- 57.
+*** retract_one(nocalc(X)) :- 58.
+*** retract_one_in(nocalc(X)) :- 59.
+S is chronometer_steps() :- 151.
+*** chronometer(var(T)) :- 61.
+T is chronometer() :- 61.
+*** repeat :-- 1.
+*** for2(var(I), int A, int B, int var(S)) :- 63.
+*** for2(var(I), int A, int B, int var(S)) :-- 64.
+*** io(X) <>= Y :- 67.
+*** io(X) <>= Y :- 68.
+*** execute(str P) :- 82.
+R is execute(str P) :- 403.
+*** s_mail( | str list(X)) :- 255.
+*** rgb( int var(C), int var(R), int var(G), int var(B) ):- 137.
+C is rgb( int R, int G, int B ):- 76.
+
+*** get_time2(int T, int var(Tz), int var(Dl), int var(H), int var(M), int var(S) ) :- 87.
+*** get_date2(int T, int var(Tz), int var(Dl), int var(D), int var(M), int var(Y) ) :- 88.
+R is current_time() :- 359.
+R is abs( num(X)):- 90.
+R is sign( num(X)):- 91.
+R is num(X) ** num(Y) :- 92.
+R is num(X) / num(Y) :- 93.
+R is int(X) >> int(Y) :- 94.
+R is int(X) << int(Y) :- 95.
+R is int(X) /\ int(Y) :- 96.
+R is int(X) \/ int(Y) :- 97.
+R is int(X) xor int(Y) :- 98.
+R is \int(X) :- 99.
+R is integer(num(X)) :- 102.
+R is truncate(num(X)) :- 102.
+R is float(num(X)) :- 103.
+R is sin(num(X)) :- 104.
+R is cos(num(X)) :- 105.
+R is tg(num(X)) :- 106.
+R is arcsin(num(X)) :- 107.
+R is arccos(num(X)) :- 108.
+R is arctg(num(X)) :- 109.
+R is sinh(num(X)) :- 110.
+R is cosh(num(X)) :- 111.
+R is tgh(num(X)) :- 112.
+R is sqrt(num(X)) :- 113.
+R is log(num(X)) :- 114.
+R is log10(num(X)) :- 115.
+R is exp(num(X)) :- 116.
+R is round(num(X)) :- 117.
+R is ceiling(num(X)) :- 118.
+R is floor(num(X)) :- 119.
+R is str_length(str S) :- 122.
+S is string_from_ASCII(int A) :- 164.
+A is first_ASCII(str S) :- 182.
+S is hex_string(int N) :- 370.
+*** print_file( | str list(X)):- 377.
+*** print_string( | str list(X)):- 378.
+S is print_file( | str list(X)):- 379.
+S is print_string( | str list(X)):- 380.
+*** print_file2(str F):- 401.
+R is convert_UTF8_to_local(str S, var(T)):- 405.
+R is convert_charset(str S, int From, int To):- 406.
+R is char_set_name(int C, T) :- 407.
+R is parse_multipart_form(str D, int M, str F) :- 400.
+*** s_mail_att(str To, str Name, str Email, str Subject, str Mail, str F1, str F2, str F3, str F1N, str F2N, str F3N) :- 402.
+R is get_file_size(str F) :- 404.
+
+*** sub_string(str var(Sub), str S, int var(N), int var(C) ) :- 120.
+*** sub_string(str var(Sub), str S, int var(N), int var(C) ) :-- 121.
+*** terminate(M)  :- 125.
+*** not_deeper_than(int D) :- 126.
+*** not_deeper_than(int D) :- 127.
+
+R is nl:-183.
+R is pi:-184.
+R is prolog_path:-185.
+R is windows_path:-186.
+R is this_program_path:-187.
+R is this_program_name:-188.
+
+% On the end there are some predicates defined in Prolog
+
+for(I, A, B) :- for2(I, A, B, _).
+for(I, A, B, S) :- for2(I, A, B, S).
+read(T) :- read2(T, _, _).
+read(T, M) :- read2(T, M, _).
+read(T, M, F) :- read2(T, M, F).
+equal(A, B) :- equal2(A, B, _).
+equal(A, B, T) :- equal2(A, B, T).
+less_than(A, B) :- less_than2(A, B, _).
+less_than(A, B, T) :- less_than2(A, B, T).
+font(O) :- font2(O, _, _).
+font(X, Y, S) :- font2(X, Y, S).
+write(X):-write2(X,_).
+write(X,F):-write2(X,F).
+get_time(H:M/S):- get_time2(current_time(),_,_,H,M,S).
+get_date( D / M / Y ):- get_date2(current_time(),_,_,D,M,Y).
+
+X=X.
+X\=Y :- not(X=Y).
+X?=Y :- not(not(X=Y)).
+
+X(|Y)=..[X|Y].
+
+not(|G) :- call(|G), !, fail.
+not(|G).
+
+functor(F(|S), F, A) :- A is list_length(S).
+R is list_length(nocalc(L)):- L=[], !, R:=0.
+R is list_length(nocalc(L)):- L=[_|S], R:=list_length(S)+1.
+
+->(A, [ else(B, C)]) :- call(|A), !, call(|B).
+->(A, [ else(B, C)]) :- !, call(|C).
+->(A, [ ;(B, C)]) :- call(|A), !, call(|B).
+->(A, [ ;(B, C)]) :- !, call(|C).
+->(A, B) :- call(|A), !, call(|B).
+->(A, B).
+
+R is ->(nocalc(A), nocalc(E)):- call(|A), !, E=[ else([B], [C])], R:=B.
+R is ->(nocalc(A), nocalc(E)):- E=[ else([B], [C])], R:=C.
+
+R is var(X) of nocalc(Y) :- Y, R:=X.
+R is true_value(nocalc(X)):- X, !, R:=1.
+R is true_value(nocalc(X)):- R:=0.
+
+;(A,B) :- call(|A).
+;(A,B) :- call(|B).
+
+once(|G) :- call(|G), !.
+
+call().
+call(X):-X.
+call(X,Y):-X,Y.
+call(X,Y,Z):-X,Y,Z.
+call(X,Y,Z,A):-X,Y,Z,A.
+call(X,Y,Z,A,B):-X,Y,Z,A,B.
+call(X,Y,Z,A,B,C):-X,Y,Z,A,B,C.
+call(X,Y,Z,A,B,C,D):-X,Y,Z,A,B,C,D.
+call(X,Y,Z,A,B,C,D,E):-X,Y,Z,A,B,C,D,E.
+call(X,Y,Z,A,B,C,D,E,F):-X,Y,Z,A,B,C,D,E,F.
+call(X,Y,Z,A,B,C,D,E,F,G|H):-X,Y,Z,A,B,C,D,E,F,G,call(|H).
+
+++(X) :- X:=X + 1.
+--(X) :- X:=X - 1.
+
+retract(X) :-
+       X, retract_one(X).
+retract_in(X) :-
+       X, retract_one_in(X).
+
+retractall(X) :- retract(X), fail.
+retractall(X).
+
+set(F(|A)) :- retractall(F(|_)), assert(F(|A)).
+
+atom(A):-const(A).
+atom([C|A]):-const(C),atom(A).
+
+R is min(num(A),num(B)) :- A=<B, !, R:=A.
+R is min(num(A),num(B)) :- R:=B.
+
+R is max(num(A),num(B)) :- A>=B, !, R:=A.
+R is max(num(A),num(B)) :- R:=B.
+
+N is count_successes(nocalc(X)) :- N:=0, count_successes_sys(N, X).
+
+count_successes_sys(N, X) :- X, N:=N+1, fail.
+count_successes_sys(_, _).
+
+findall(X,Goal,Xlist) :-
+  Goal,
+  assert(temp_fa(X)),
+  fail.
+findall(X,Goal,Xlist) :-
+  assert(temp_fa(bottom_fa)),
+  collect_fa(Xlist).
+collect_fa(L) :-
+  retract(temp_fa(X)),!,
+  (X==bottom_fa,!,L=[];
+  L=[X|Rest],collect_fa(Rest) ).

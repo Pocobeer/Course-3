@@ -1,0 +1,8 @@
+app([],L,L).
+app([H|T1],L,[H|T2]):- app(T1,L,T2).
+
+%?-app([a,b,c],[1,2,3,4],L), write(L),nl.
+
+sub(Sub,Lst):- app(_,Sub,L1), app(L1,_,Lst).
+
+?- sub([5,4],[1,2,3,4]).
