@@ -1,10 +1,8 @@
 #include "Mesh.h"
-#include <GL/GL.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
+
 using namespace std;
 
-Mesh::Mesh() {};
+Mesh::Mesh() {}
 
 void Mesh::load(const string& filename) {
     ifstream file(filename);
@@ -19,6 +17,8 @@ void Mesh::load(const string& filename) {
     vector<ivec3> fPoints; // Индексы атрибутов
 
     string line;
+    map<string, GLuint> vertexToIndexTable; // Ассоциативный контейнер для уникальных вершин
+
     while (getline(file, line)) {
         istringstream iss(line);
         string prefix;
@@ -45,43 +45,63 @@ void Mesh::load(const string& filename) {
             }
             else if (prefix == "f") {
                 string vertexInfo;
-                while (iss >> vertexInfo) {
-                    replace(vertexInfo.begin(), vertexInfo.end(), '/', ' '); // Заменяем / на пробел
-                    istringstream vertexStream(vertexInfo);
-                    int posIndex, texIndex, normIndex;
-                    vertexStream >> posIndex >> texIndex >> normIndex;
-                    fPoints.push_back(ivec3(posIndex - 1, texIndex - 1, normIndex - 1)); // Индексы начинаются с 1
+                for (int i = 0; i < 3; ++i) { // Обрабатываем только треугольники
+                    if (iss >> vertexInfo) {
+                        replace(vertexInfo.begin(), vertexInfo.end(), '/', ' '); // Заменяем / на пробел
+                        istringstream vertexStream(vertexInfo);
+                        int posIndex, texIndex, normIndex;
+                        vertexStream >> posIndex >> texIndex >> normIndex;
+
+                        // Создаем уникальный ключ для этой вершины
+                        string key = to_string(posIndex) + "/" + to_string(texIndex) + "/" + to_string(normIndex);
+                        GLuint index;
+
+                        // Проверяем, использовалась ли вершина ранее
+                        if (vertexToIndexTable.find(key) != vertexToIndexTable.end()) {
+                            index = vertexToIndexTable[key]; // Получаем индекс существующей вершины
+                        }
+                        else {
+                            // Создаем новую вершину и добавляем в массив
+                            Vertex vertex;
+                            vertex.position = v[posIndex - 1]; // Индексы начинаются с 1
+                            vertex.normal = n[normIndex - 1];
+                            vertex.texCoord = t[texIndex - 1];
+                            index = static_cast<GLuint>(vertices.size());
+                            vertices.push_back(vertex);
+                            vertexToIndexTable[key] = index; // Сохраняем индекс новой вершины
+                        }
+                        indices.push_back(index); // Добавляем индекс в массив индексов
+                    }
                 }
             }
         }
     }
 
-    // Построение массива вершин
-    for (const auto& f : fPoints) {
-        Vertex vertex;
-        vertex.position = v[f.x];
-        vertex.normal = n[f.z];
-        vertex.texCoord = t[f.y];
-        vertices.push_back(vertex);
-    }
-
-    cout << "Загружено вершин: " << vertices.size() << std::endl;
+    cout << "Загружено вершин: " << vertices.size() << endl;
+    cout << "Загружено индексов: " << indices.size() << endl;
     file.close();
 }
 
 // Вывод меша
 void Mesh::draw() {
-    if (vertices.empty()) {
-        cout << "Нет вершин для отрисовки!" << endl;
+    if (vertices.empty() || indices.empty()) {
+        cout << "Нет вершин или индексов для отрисовки!" << endl;
         return;
     }
-    glBegin(GL_TRIANGLES);
-    for (const auto& vertex : vertices) {
-        glTexCoord2f(vertex.texCoord.x, vertex.texCoord.y);
-        glNormal3f(vertex.normal.x, vertex.normal.y, vertex.normal.z);
-        glVertex3f(vertex.position.x, vertex.position.y, vertex.position.z);
-    }
-    glEnd();
 
-    //cout << "jdkw" << endl;
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    // Устанавливаем указатели на массивы
+    glVertexPointer(3, GL_FLOAT, sizeof(Vertex), &vertices[0].position);
+    glNormalPointer(GL_FLOAT, sizeof(Vertex), &vertices[0].normal);
+    glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].texCoord);
+
+    // Рисуем с использованием индексов
+    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, indices.data());
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
