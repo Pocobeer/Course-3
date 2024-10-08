@@ -135,6 +135,7 @@
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameObjectFactory.cpp" />
     <ClCompile Include="GraphicObject.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Mesh.cpp" />

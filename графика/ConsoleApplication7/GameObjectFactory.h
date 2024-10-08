@@ -1,7 +1,9 @@
 #pragma once
-#include <vector>
+#include <iostream>
+#include <map>
+#include <memory>
 #include <string>
-#include<memory>
+#include <rapidjson/document.h>
 #include "Mesh.h"
 #include "PhongMaterial.h"
 #include "GameObject.h"

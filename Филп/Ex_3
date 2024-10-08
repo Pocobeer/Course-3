@@ -3,4 +3,27 @@ T is sin(2*3.14/N),
 C is R**2,
 X is N/2 * C * T.
 
-?- read(N), read(R), ploshyad(N, R, X), write(X), nl.
+%?- read(N), read(R), ploshyad(N, R, X), write(X), nl.
+
+parent("Sergey", "Vladimir").
+parent("Sergey","Alex").
+parent("Helen","Vladimir").
+parent("Helen","Alex").
+man(sergey).
+man("Alex").
+man("Vladimir").
+woman("Helen").
+married("Sergey", "Helen").
+op(700,yfx,'is_parent').
+op(700, yf, 'is_man').
+sergey is_parent vladimir.
+sergey is_parent alex.
+helen is_parent vladimir.
+helen is_parent alex.
+sergey is_man.
+alex is_man.
+vladimir is_man.
+parent(X,Y):- X is_parent Y, X is_man.
+
+?- X is_parent vladimir, X is_man, write(X), nl.
+?- X is_parent alex, X is_man, write(X), nl.

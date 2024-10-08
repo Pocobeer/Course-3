@@ -21,5 +21,4 @@ public:
 
 private:
     std::vector<Vertex> vertices; // Массив вершин полигональной сетки
-    std::vector<Gluint> indices;//массив индексов
 };

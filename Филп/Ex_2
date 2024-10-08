@@ -23,7 +23,6 @@ del_chot(Tail,Result).
 
 prefix([], Lst).
 
-
 prefix([Prefix|Tail], [Prefix|Tail_1]) :- 
     prefix(Tail, Tail_1).
 
@@ -35,10 +34,14 @@ suffix(Suffix, Tail).
 sublist_1(Sub,Lst):- prefix(Pref,Lst), suffix(Sub,Pref).
 sublist_2(Sub,Lst):- suffix(Suff,Lst), prefix(Sub,Suff).
 
-?- sublist_2([], [1,2,3,4,5]).
-?- sublist_1([2], [1,2,3,4,5]).
+%?-prefix([1,2,4], [1,2,3,4,5]).
 
-delete(El, Lst, New_lst).
+%?-suffix([3,4], [1,2,3,4]).
+
+%?- sublist_2([], [1,2,3,4,5]).
+%?- sublist_1([2], [1,2,3,4,5]).
+
+%delete(El, Lst, New_lst).
 
 delete(El, [El|Tail], Tail).
 
@@ -47,3 +50,16 @@ delete(El, Tail, Tail_1).
 
 %?-delete(2, [1,2,3,4,5,6], X), write(X).
 
+swap([X,Y|T],[Y,X|T]):-
+X>Y,!.
+
+swap([X|T],[X|T1]):-
+swap(T,T1).
+
+bubble_sort(L,L1):-
+swap(L,LL),!,
+bubble_sort(LL,L1).
+
+bubble_sort(L,L).
+
+?- bubble_sort([1,1,-1,-2,2,1,0,1,0],Result), write(Result).
