@@ -130,11 +130,11 @@ function getItem(){
 
 
 
-window.onclick = function(event) {
-    if (event.target == document.getElementById("modal")) {
-        document.getElementById("modal").style.display = "none";
-    }
-} 
+// window.onclick = function(event) {
+//     if (event.target == document.getElementById("modal")) {
+//         document.getElementById("modal").style.display = "none";
+//     }
+// } 
 
 function upperChild(parent, child) {
     parent.appendChild(child);
