@@ -1,121 +1,128 @@
 #include "GameObjectFactory.h"
-#include <fstream>
 #include <iostream>
-#include <rapidjson/filereadstream.h>
-#include <rapidjson/error/en.h>
+#include <fstream>
 
-// Метод инициализации фабрики
-bool GameObjectFactory::init(std::string filename) {
-    // Открытие файла
-    FILE* fp = fopen(filename.c_str(), "r");
-    if (!fp) {
-        std::cerr << "Не удалось открыть файл: " << filename << std::endl;
+using namespace std;
+
+bool GameObjectFactory::init(string filename) {
+    // Открываем JSON-файл
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Не удалось открыть файл: " << filename << endl;
         return false;
     }
 
-    // Чтение JSON-документа
-    char readBuffer[65536];
-    rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-    rapidjson::Document document;
-    document.ParseStream(is);
-    fclose(fp);
+    // Чтение содержимого файла
+    string jsonContent((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+    Document document;
+    document.Parse(jsonContent.c_str());
 
-    // Проверка на наличие ошибок в документе
     if (document.HasParseError()) {
-        std::cerr << "Ошибка парсинга JSON: " << rapidjson::GetParseError_En(document.GetParseError()) << std::endl;
+        cerr << "Ошибка парсинга JSON: " << GetParseError_En(document.GetParseError()) << endl;
         return false;
     }
 
-    // Загрузка мешей и материалов из JSON
-    if (document.IsObject()) {
-        for (auto& obj : document.GetObject()) {
-            GameObjectType type;
-            std::string objectName = obj.name.GetString(); // Получаем имя объекта
+    // Загружаем меши и материалы из JSON
+    for (auto itr = document.MemberBegin(); itr != document.MemberEnd(); ++itr) {
+        GameObjectType type;
 
-            if (objectName == "PLAYER") {
-                type = GameObjectType::PLAYER;
-            }
-            else if (objectName == "BOMB") {
-                type = GameObjectType::BOMB;
-            }
-            else if (objectName == "MONSTER") {
-                type = GameObjectType::MONSTER;
-            }
-            else if (objectName == "LIGHT_OBJECT") {
-                type = GameObjectType::LIGHT_OBJECT;
-            }
-            else if (objectName == "HEAVY_OBJECT") {
-                type = GameObjectType::HEAVY_OBJECT;
-            }
-            else if (objectName == "BORDER_OBJECT") {
-                type = GameObjectType::BORDER_OBJECT;
-            }
-            else {
-                continue; // Игнорируем неизвестные типы
-            }
+        // Приведение имени к типу
+        string objectName = itr->name.GetString();
+        if (objectName == "LightObject") type = GameObjectType::LIGHT_OBJECT;
+        else if (objectName == "HeavyObject") type = GameObjectType::HEAVY_OBJECT;
+        else if (objectName == "BorderObject") type = GameObjectType::BORDER_OBJECT;
+        else if (objectName == "Player") type = GameObjectType::PLAYER;
+        else if (objectName == "Bomb") type = GameObjectType::BOMB;
+        else if (objectName == "Monster") type = GameObjectType::MONSTER;
+        else continue; // Пропускаем неизвестные типы
 
-            // Загрузка меша
-           // Предполагается, что obj.value - это объект JSON, содержащий информацию о меше
-            if (obj.value.HasMember("mesh") && obj.value["mesh"].IsString()) {
-                std::string meshFile = obj.value["mesh"].GetString(); // Получаем строку с именем файла
-                meshes[type] = std::make_shared<Mesh>(meshFile); // Создаем shared_ptr для меша
+        // Проверяем наличие и получаем описание меша
+        if (itr->value.HasMember("mesh") && itr->value["mesh"].IsString()) {
+            string meshFile = itr->value["mesh"].GetString();
+            shared_ptr<Mesh> mesh = make_shared<Mesh>();
+            if (itr->value.HasMember("mesh") && itr->value["mesh"].IsString()) {
+                string meshFile = itr->value["mesh"].GetString();
+                shared_ptr<Mesh> mesh = make_shared<Mesh>();
+                mesh->load(meshFile); // Просто вызываем метод load()
+
+                // Если метод load() может вызвать ошибку, вы можете обработать это внутри метода load()
+                meshes.push_back(mesh);
             }
             else {
-                // Обработка случая, когда "mesh" отсутствует или не является строкой
-                std::cerr << "Ошибка: 'mesh' не найден или не является строкой для типа: " << objectName << std::endl;
+                cerr << "Не найдено или неверно задано имя меша для объекта(1): " << objectName << endl;
+                continue;
             }
-
-
-            // Загрузка материала
-            // Загрузка материала
-            const rapidjson::Value& materialObj = obj.value["material"]; // Используйте const ссылку на объект JSON
-            auto material = std::make_shared<PhongMaterial>();
-
-            // Предполагается, что materialObj содержит массивы для ambient, diffuse и т.д.
-            material->ambient = {
-                materialObj["ambient"][0].GetFloat(),
-                materialObj["ambient"][1].GetFloat(),
-                materialObj["ambient"][2].GetFloat(),
-                materialObj["ambient"][3].GetFloat()
-            };
-
-            material->diffuse = {
-                materialObj["diffuse"][0].GetFloat(),
-                materialObj["diffuse"][1].GetFloat(),
-                materialObj["diffuse"][2].GetFloat(),
-                materialObj["diffuse"][3].GetFloat()
-            };
-
-            material->specular = {
-                materialObj["specular"][0].GetFloat(),
-                materialObj["specular"][1].GetFloat(),
-                materialObj["specular"][2].GetFloat(),
-                materialObj["specular"][3].GetFloat()
-            };
-
-            material->emission = {
-                materialObj["emission"][0].GetFloat(),
-                materialObj["emission"][1].GetFloat(),
-                materialObj["emission"][2].GetFloat(),
-                materialObj["emission"][3].GetFloat()
-            };
-
-            material->shininess = materialObj["shininess"].GetFloat();
-
-            materials[type] = material;
         }
+        else {
+            cerr << "Не найдено или неверно задано имя меша для объекта(2): " << objectName << endl;
+            continue;
+        }
+
+        // Проверяем наличие и получаем описание материала
+        if (itr->value.HasMember("material") && itr->value["material"].IsObject()) {
+            const Value& materialValue = itr->value["material"];
+            shared_ptr<PhongMaterial> material = make_shared<PhongMaterial>();
+
+            if (materialValue.HasMember("ambient") && materialValue["ambient"].IsArray()) {
+                material->setAmbient(vec4(materialValue["ambient"][0].GetFloat(),
+                    materialValue["ambient"][1].GetFloat(),
+                    materialValue["ambient"][2].GetFloat(),
+                    materialValue["ambient"][3].GetFloat()));
+            }
+
+            if (materialValue.HasMember("diffuse") && materialValue["diffuse"].IsArray()) {
+                material->setDiffuse(vec4(materialValue["diffuse"][0].GetFloat(),
+                    materialValue["diffuse"][1].GetFloat(),
+                    materialValue["diffuse"][2].GetFloat(),
+                    materialValue["diffuse"][3].GetFloat()));
+            }
+
+            if (materialValue.HasMember("specular") && materialValue["specular"].IsArray()) {
+                material->setSpecular(vec4(materialValue["specular"][0].GetFloat(),
+                    materialValue["specular"][1].GetFloat(),
+                    materialValue["specular"][2].GetFloat(),
+                    materialValue["specular"][3].GetFloat()));
+            }
+
+            if (materialValue.HasMember("emission") && materialValue["emission"].IsArray()) {
+                material->setEmission(vec4(materialValue["emission"][0].GetFloat(),
+                    materialValue["emission"][1].GetFloat(),
+                    materialValue["emission"][2].GetFloat(),
+                    materialValue["emission"][3].GetFloat()));
+            }
+
+            if (materialValue.HasMember("shininess") && materialValue["shininess"].IsFloat()) {
+                material->setShininess(materialValue["shininess"].GetFloat());
+            }
+
+            materials.push_back(material);
+        }
+        else {
+            cerr << "Не найден или неверно задан материал для объекта: " << objectName << endl;
+            continue;
+        }
+
+        // Сохраняем соответствие типа объекта и индекса
+        objectTypeToIndex[type] = meshes.size() - 1; // Индекс последнего добавленного меша
     }
+
+
+    return true;
 }
-// Метод создания игрового объекта
-std::shared_ptr<GameObject> GameObjectFactory::create(GameObjectType type, int x, int y) {
-    auto meshIt = meshes.find(type);
-    auto materialIt = materials.find(type);
 
-    if (meshIt != meshes.end() && materialIt != materials.end()) {
-        auto gameObject = std::make_shared<GameObject>(meshIt->second, materialIt->second, x, y);
-        return gameObject;
+shared_ptr<GameObject> GameObjectFactory::create(GameObjectType type, int x, int y) {
+    if (objectTypeToIndex.find(type) == objectTypeToIndex.end()) {
+        cerr << "Неизвестный тип игрового объекта!" << endl;
+        return nullptr;
     }
 
-    std::cerr << "Не удалось создать объект: отсутствуют меш или материал для типа." << std::endl;
-    return nullptr;
+    auto gameObject = make_shared<GameObject>();
+    GraphicObject graphicObject;
+    graphicObject.setMesh(meshes[objectTypeToIndex[type]]);
+    graphicObject.setMaterial(materials[objectTypeToIndex[type]]);
+
+    gameObject->setGraphicObject(graphicObject);
+    gameObject->setPosition(x, 0, y); // Установка позиции (можно изменить по необходимости)
+
+    return gameObject;
 }

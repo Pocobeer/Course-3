@@ -1,13 +1,19 @@
 #pragma once
-#include <iostream>
-#include <map>
-#include <memory>
+#ifdef GetObject
+#undef GetObject
+#endif
 #include <string>
+#include <memory>
+#include <vector>
+#include <unordered_map>
 #include <rapidjson/document.h>
+#include <rapidjson/error/en.h>
 #include "Mesh.h"
 #include "PhongMaterial.h"
 #include "GameObject.h"
 
+using namespace std;
+using namespace rapidjson;
 // ОПРЕДЕЛЕНИЕ ТИПОВ ИГРОВЫХ ОБЪЕКТОВ
 enum class GameObjectType {
 	LIGHT_OBJECT, // легкий игровой объект
@@ -24,12 +30,14 @@ class GameObjectFactory
 public:
 	// инициализация фабрики:
 	// загрузка мешей и установка параметров материала
-	bool init(std::string filename);
+	bool init(string filename);
 	// создание нового объекта заданного типа
-	std::shared_ptr<GameObject> create(GameObjectType type, int x, int y);
+	shared_ptr<GameObject> create(GameObjectType type, int x, int y);
 private:
 	// меши для каждого типа объекта
-	std::vector<std::shared_ptr<Mesh>> meshes;
+	vector<shared_ptr<Mesh>> meshes;
 	// материалы для каждого типа объекта
-	std::vector<std::shared_ptr<PhongMaterial>> materials;
+	vector<shared_ptr<PhongMaterial>> materials;
+	// Хранение описаний объектов
+	unordered_map<GameObjectType, int> objectTypeToIndex; // Для быстрого доступа к индексам
 };

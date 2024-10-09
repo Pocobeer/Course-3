@@ -4,11 +4,9 @@
 #include "GL/freeglut.h"
 #include <glm/glm.hpp>
 #include "GraphicObject.h"
-#include "PhongMaterial.h"
-#include "Mesh.h"
 #include "Light.h"
 #include "Camera.h"
-#include "GameObject.h"
+#include "GameObjectFactory.h"
 
 // список графических объектов
 extern vector<GraphicObject> graphicObjects;
@@ -18,9 +16,12 @@ extern vector<Light> lights;
 extern Camera camera;
 extern int passabilityMap[21][21];
 extern shared_ptr<GameObject> mapObjects[21][21];
+extern GameObjectFactory gameObjectFactory;
+extern shared_ptr<GameObject> player;
+extern GraphicObject planeGraphicObject;
 
 // используемая камера
 // функция для инициализации всех общих данных (камера, объекты и т.д.)
 void initData();
-void initializeMapObjects(int passabilityMap[21][21]);
+//void initializeMapObjects(int passabilityMap[21][21]);
 void renderScene();

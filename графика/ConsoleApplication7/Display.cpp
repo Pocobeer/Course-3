@@ -65,7 +65,7 @@ void display(void) {
         //cout << "mdksw" << endl;
     }
     else {
-        cout << "mesh not loaded" << endl;
+        //cout << "mesh not loaded" << endl;
     }
 
     // Меняем передний и задний буферы

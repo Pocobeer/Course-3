@@ -56,15 +56,16 @@ void GraphicObject::draw()
 		material->apply();
 	}
 
-	/*if (mesh) {
-		mesh->draw();
-	}*/
+	
 
 	glPushMatrix(); // Сохраняем текущее состояние матрицы
 	modelMatrix = glm::translate(glm::mat4(1.0f), position);
 	// Применяем матрицу модели
 	glMultMatrixf(value_ptr(modelMatrix));
-	mesh->draw();
+	if (mesh) {
+		mesh->draw();
+	}
+	//mesh->draw();
 	glPopMatrix(); // Восстанавливаем состояние матрицы
 	//cout << "Object drawn at position: " << position.x << ", " << position.y << ", " << position.z << endl;
 }

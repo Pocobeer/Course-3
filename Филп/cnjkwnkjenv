@@ -1,0 +1,4 @@
+reverse_([],[]).
+reverse_([H|T],Rev):- reverse_(T,S), append(S,[H], Rev).
+%?-reverse_([1,2,3], Rev), write(Rev).
+?-member(1,[1,2,3]).

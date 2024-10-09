@@ -9,6 +9,9 @@ shared_ptr<Mesh> mesh = nullptr; // ”казатель на Mesh
 vector<Light> lights;
 Camera camera;  // ќбъ€вл€ем камеру как глобальную переменную
 shared_ptr<GameObject> mapObjects[21][21];
+GameObjectFactory gameObjectFactory;
+shared_ptr<GameObject> player;
+GraphicObject planeGraphicObject;
 
 int passabilityMap[21][21] = {
 3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
@@ -34,7 +37,7 @@ int passabilityMap[21][21] = {
 3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3
 };
 
-void initData()
+/*void initData()
 {
     // »нициализаци€ одного источника света
     Light light1 = vec3(0.0f, 10.0f, 0.0f); // —вет сверху
@@ -135,6 +138,49 @@ void initializeMapObjects(int passabilityMap[21][21]) {
             //cout << "—оздан объект в €чейке (" << i << ", " << j << ") с типом: " << passabilityMap[i][j] << endl;
         }
     }
+}*/
+
+void initData()
+{
+    // »нициализаци€ одного источника света
+    Light light1 = vec3(0.0f, 10.0f, 0.0f); // —вет сверху
+    light1.setAmbient(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    light1.setDiffuse(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    light1.setSpecular(vec4(1.0f, 1.0f, 1.0f, 1.0f));
+    lights.push_back(light1);
+    // инициализаци€ фабрики (в дальнейшем на основе json-файла)
+    gameObjectFactory.init("GameObjectsDescription.json");
+    // инициализаци€ объектов сцены
+    for (int i = 0; i < 21; i++) {
+        for (int j = 0; j < 21; j++) {
+            switch (passabilityMap[i][j]) {
+            case 1:
+                mapObjects[i][j] = gameObjectFactory.create(GameObjectType::LIGHT_OBJECT, i-10, j-10);
+                break;
+            case 2:
+                mapObjects[i][j] = gameObjectFactory.create(GameObjectType::HEAVY_OBJECT, i-10, j-10);
+                break;
+            case 3:
+                mapObjects[i][j] = gameObjectFactory.create(GameObjectType::BORDER_OBJECT, i-10, j-10);
+                break;
+            default:
+                mapObjects[i][j] = nullptr;
+                break;
+            }
+        }
+    }
+    // инициализаци€ главного геро€
+    player = gameObjectFactory.create(GameObjectType::PLAYER, 19-10, 1-10);
+    
+    // инициализаци€ плоскости
+    planeGraphicObject.setPosition(vec3(0, -0.5, 0));
+    shared_ptr<Mesh> planeMesh = make_shared<Mesh>();
+    planeMesh->load("meshes/HighPolyPlane.obj");
+
+    planeGraphicObject.setMesh(planeMesh);
+    shared_ptr<PhongMaterial> planeMaterial = make_shared<PhongMaterial>();
+    planeMaterial->load("materials/PlaneMaterial.txt");
+    planeGraphicObject.setMaterial(planeMaterial);
 }
 
 
@@ -148,4 +194,6 @@ void renderScene() {
             }
         }
     }
+    player->draw();
+    planeGraphicObject.draw();
 }
