@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    10/04/24 08:53:39	    Page 1
+Turbo Assembler	 Version 4.1	    10/10/24 18:32:56	    Page 1
 laba.asm
 
 
@@ -60,7 +60,7 @@ laba.asm
      55	    0040  8A 14				 mov	 dl, [si]			    ; Загружаем байт из	    +
      56					 результирующего	массива
      57	    0042  CD 21				 int	 21h				    ; Вызов DOS
-Turbo Assembler	 Version 4.1	    10/04/24 08:53:39	    Page 2
+Turbo Assembler	 Version 4.1	    10/10/24 18:32:56	    Page 2
 laba.asm
 
 
@@ -82,7 +82,7 @@ laba.asm
      72	    005A				 my_int5 endp
      73	    005A			 code	 ends
      74					 end main
-Turbo Assembler	 Version 4.1	    10/04/24 08:53:39	    Page 3
+Turbo Assembler	 Version 4.1	    10/10/24 18:32:56	    Page 3
 Symbol Table
 
 
@@ -90,9 +90,9 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "10/04/24"
+??DATE				  Text	 "10/10/24"
 ??FILENAME			  Text	 "laba	  "
-??TIME				  Text	 "08:53:39"
+??TIME				  Text	 "18:32:56"
 ??VERSION			  Number 040A
 @CPU				  Text	 0F0FH
 @CURSEG				  Text	 CODE
