@@ -1,0 +1,550 @@
+Turbo Assembler	 Version 4.1	    10/08/24 12:13:45	    Page 1
+laba.asm
+
+
+
+      1					 ;Программа транслируется	в COM - файл:
+      2					 ; TASM	demo.asm
+      3					 ; Tlink demo.obj /t
+      4					 ; Demo.asm
+      5					 .386p				     ; Разрешение трансляции
+      6									     ; всех	инструкций 80386
+      7	00000000			 Gdt_Descriptor	 STRUC		     ; Шаблон дескриптора GDT
+      8	00000000  01*(0000)		  Seg_Limit	  dw   0	     ; Длина сегмента
+      9	00000002  01*(0000)		  Base_Lo_Word	  dw   0	     ; Младшие 16 бит	базового
+     10									     ; адреса
+     11	00000004  01*(00)		  Base_Hi_Byte	  db   0	     ; Биты	16..23 базового	адр.
+     12	00000005  01*(00)		  Acces_Rights	  db   0	     ; Байт	прав доступа
+     13	00000006  01*(00)		  Limit&Acces	  db   0	     ;					 +
+     14	00000007  01*(00)		  Base_Top_Byte	  db   0	     ; Биты	24..31 базового	адр.		 !
+     15	00000008			 Gdt_Descriptor	 ENDS
+     16	00000000			 Idt_Descriptor	 STRUC		      ;	Шаблон дескриптора IDT
+     17	00000000  01*(0000)		  Int_Offset	  dw   0	      ;	Точка входа в процедуру
+     18									      ;	 обработки прерывания
+     19	00000002  01*(0000)		  Int_Selector	  dw   0	      ;	Селектор сегмента в GDT
+     20	00000004  01*(00)				  db   0	      ;
+     21	00000005  01*(00)		  Access	  db   0	      ;	Права доступа
+     22	00000006  01*(0000)				  dw   0	      ;
+     23	00000008			 Idt_Descriptor	 ENDS
+     24
+     25		  =009B			 Code_Seg_Access  Equ  10011011b      ;	Байт прав  доступа деск-
+     26									      ;	риптора сегмента	кода
+     27		  =0093			 Data_Seg_Access  Equ  10010011b      ;	Байт прав  доступа деск-
+     28									      ;	риптора сегмента	данных
+     29		  =00DD			 Disable_Bit20	  Equ  11011101b      ;	Код команды 8042 для за-
+     30									      ;	крывания линии A20
+     31		  =00DF			 Enable_Bit20	  Equ  11011111b      ;	Код команды 8042 для от-
+     32									      ;	крывания линии A20
+     33		  =0060			 Port_A		  Equ  060h	      ;	Порт A 8042
+     34		  =0064			 Status_port	  Equ  064h	      ;	Порт состояния 8042
+     35		  =0070			 Cmos_Port	  Equ  070h	      ;	Адрес порта CMOS-памяти
+     36					 ; Макро для записи базового адреса	сегмента в	    +
+     37					 дескриптор
+     38					 FILLDESCR MACRO   Seg_Addr,Offset_Addr,Descr
+     39						    xor	    edx,edx		    ; EDX := 0
+     40						    xor	    ecx,ecx		    ; ECX := 0
+     41						    mov	    dx,Seg_Addr		    ; Сегментная часть
+     42						    mov	    cx,offset Offset_Addr   ; Смещение
+     43						    call    Form_32Bit_Address	    ; CX:DX := линейный
+     44										    ; адрес
+     45						    mov	    &Descr.Base_Lo_Word,dx  ; Занесение базового
+     46						    mov	    &Descr.Base_Hi_Byte,cl  ; адреса в дескрип-
+     47						    mov	    &Descr.Base_Top_Byte,ch ; тор			 !
+     48						   ENDM
+     49
+     50	    0000			 CSEG	    SEGMENT  Para USE16	public 'code'
+     51						    ASSUME  cs:Cseg,ds:Cseg
+     52						    ORG	    100h
+     53	    0100  E9 0197		 Start:	    jmp	    Main
+     54
+     55					 ; Глобальная	дескрипторная таблица GDT
+     56	    0103  90			  EVEN
+     57	    0104			  Gdt	 label	 word
+Turbo Assembler	 Version 4.1	    10/08/24 12:13:45	    Page 2
+laba.asm
+
+
+
+     58					 ;********** Дескриптор, описывающий саму таблицу GDT	    +
+     59					 **********
+     60		  =0000			  Gdt_Desc	 EQU $-gdt	      ;	Селектор дескриптора
+     61	    0104  002F 0000 00 93 00  +	  Gdt1		 Gdt_Descriptor	<gdt_leng-1,,,data_seg_access>;		 !
+     62		  00
+     63
+     64					 ;****** Дескриптор, описывающий сегмент Cseg как	    +
+     65					 кодовый	******
+     66		  =0008			  Cs_Code	 EQU $-gdt	      ;	Селектор дескриптора
+     67	    010C  FFFF 0000 00 9B 00  +	  Gdt2		 Gdt_Descriptor<0FFFFh,,,code_seg_access>;		 !
+     68		  00
+     69
+     70					 ;** Дескриптор, описывающий Cseg как сегмент данных с+
+     71					 пределом*
+     72					 ;** 0FFFEh. Он будет использоваться также в	роли	    +
+     73					 стекового. ***
+     74		  =0010			  Cs_Data	 EQU $-gdt	      ;	Селектор дескриптора
+     75	    0114  FFFF 0000 00 93 00  +	  Gdt3		 Gdt_Descriptor<0FFFFh,,,data_seg_access>;		 !
+     76		  00
+     77
+     78					 ;*************	Дескриптор, описывающий таблицу IDT	*************
+     79	    011C  013F 0000 00 93 00  +	  Idt_Pointer	 Gdt_Descriptor<idt_leng-1,,,data_seg_access>
+     80		  00
+     81
+     82					 ;** Дескриптор, описывающий таблицу IDT реального	    +
+     83					 режима *******
+     84	    0124  03FF 0000 00 93 00  +	  Idt_Real	 Gdt_Descriptor<3FFh,,,data_seg_access>
+     85		  00
+     86
+     87					 ;********* Дескриптор, описывающий сегмент			    +
+     88					 видеопамяти	*********
+     89		  =0028			  Video_Desc	 EQU $-gdt	      ;	Селектор дескриптора
+     90	    012C  0FFF 8000 0B 93 00  +	  GdtB800	 Gdt_Descriptor<0FFFh,8000h,0bh,data_seg_access>;	 !
+     91		  00
+     92
+     93		  =0030			 Gdt_Leng	 EQU $-gdt	      ;	Длина таблицы GDT
+     94
+     95					 ;Таблица дескрипторов прерываний IDT.
+     96					  EVEN
+     97	    0134			  Idt	label	word
+     98	    0134  0379r	0008 00	87    +	  ex0	  Idt_Descriptor<offset	ex0_proc,cs_code,0,10000111b,0>
+     99		  0000
+    100	    013C  037Ar	0008 00	87    +	  ex1	  Idt_Descriptor<offset	ex1_proc,cs_code,0,10000111b,0>
+    101		  0000
+    102	    0144  037Br	0008 00	86    +	  ex2	  Idt_Descriptor<offset	ex2_proc,cs_code,0,10000110b,0>
+    103		  0000
+    104	    014C  037Cr	0008 00	87    +	  ex3	  Idt_Descriptor<offset	ex3_proc,cs_code,0,10000111b,0>
+    105		  0000
+    106	    0154  037Dr	0008 00	87    +	  ex4	  Idt_Descriptor<offset	ex4_proc,cs_code,0,10000111b,0>
+    107		  0000
+    108	    015C  037Er	0008 00	87    +	  ex5	  Idt_Descriptor<offset	ex5_proc,cs_code,0,10000111b,0>
+    109		  0000
+    110	    0164  037Fr	0008 00	87    +	  ex6	  Idt_Descriptor<offset	ex6_proc,cs_code,0,10000111b,0>
+    111		  0000
+    112	    016C  0380r	0008 00	87    +	  ex7	  Idt_Descriptor<offset	ex7_proc,cs_code,0,10000111b,0>
+    113		  0000
+    114	    0174  0381r	0008 00	87    +	  ex8	  Idt_Descriptor<offset	ex8_proc,cs_code,0,10000111b,0>
+Turbo Assembler	 Version 4.1	    10/08/24 12:13:45	    Page 3
+laba.asm
+
+
+
+    115		  0000
+    116	    017C  0382r	0008 00	87    +	  ex9	  Idt_Descriptor<offset	ex9_proc,cs_code,0,10000111b,0>
+    117		  0000
+    118	    0184  0383r	0008 00	87    +	  ex10	  Idt_Descriptor<offset	ex10_proc,cs_code,0,10000111b,0>
+    119		  0000
+    120	    018C  0384r	0008 00	87    +	  ex11	  Idt_Descriptor<offset	ex11_proc,cs_code,0,10000111b,0>
+    121		  0000
+    122	    0194  0385r	0008 00	87    +	  ex12	  Idt_Descriptor<offset	ex12_proc,cs_code,0,10000111b,0>
+    123		  0000
+    124	    019C  0386r	0008 00	87    +	  ex13	  Idt_Descriptor<offset	ex13_proc,cs_code,0,10000111b,0>
+    125		  0000
+    126	    01A4  0387r	0008 00	87    +	  ex14	  Idt_Descriptor<offset	ex14_proc,cs_code,0,10000111b,0>
+    127		  0000
+    128	    01AC  0388r	0008 00	87    +	  ex15	  Idt_Descriptor<offset	ex15_proc,cs_code,0,10000111b,0>
+    129		  0000
+    130	    01B4  0389r	0008 00	87    +	  ex16	  Idt_Descriptor<offset	ex16_proc,cs_code,0,10000111b,0>
+    131		  0000
+    132	    01BC  16*(0000 0000	00 00 +		  Idt_Descriptor 22 dup(<>)
+    133		  0000)
+    134	    026C  03BFr	0008 00	86    +	  Int39	  Idt_Descriptor<offset	int10_proc,cs_code,0,10000110b,0>
+    135		  0000
+    136		  =0140			  Idt_Leng	 EQU $-Idt	      ;	Длина таблицы IDT
+    137
+    138	    0274  ????????		 Real_Jump	    dd	?	    ; Адрес межсегментного
+    139									    ; перехода в реальном режиме
+    140	    0278  ????????		 Protect_Jump	    dd	?	    ; Адрес межсегментного пере-
+    141									    ; хода в защищенном режиме
+    142	    027C  50 72	6F 74 65 63 74+	 Mess		    db	'Protected Mode$'
+    143		  65 64	20 4D 6F 64 65+
+    144		  24
+    145					 ;Len		     dw	 14d						 -
+    146	    028B  45 72	72 6F 72 20 6F+	 Gate_Failure	    db "Error open A20$"
+    147		  70 65	6E 20 41 32 30+
+    148		  24
+    149
+    150	    029A			 Main:	    FillDescr  cs,Gdt,Gdt1    ;	Формирование 32-разряд-
+1   151	    029A  66| 33 D2			    xor	    edx,edx		    ; EDX := 0
+1   152	    029D  66| 33 C9			    xor	    ecx,ecx		    ; ECX := 0
+1   153	    02A0  8C CA				    mov	    dx,cs	      ;	Сегментная часть
+1   154	    02A2  B9 0104r			    mov	    cx,offset Gdt   ; Смещение
+1   155	    02A5  E8 0108			    call    Form_32Bit_Address	    ; CX:DX := линейный
+1   156	    02A8  89 16	0106r			    mov	    Gdt1.Base_Lo_Word,dx  ; Занесение базового
+1   157	    02AC  88 0E	0108r			    mov	    Gdt1.Base_Hi_Byte,cl  ; адреса в дескрип-
+1   158	    02B0  88 2E	010Br			    mov	    Gdt1.Base_Top_Byte,ch ; тор			 !
+    159									      ;	ного адреса из CS:GDT и
+    160									      ;	запись его в дескриптор
+    161									      ;	с номером Gdt_Desc.
+    162						    FillDescr  cs,0,gdt2      ;	Дескриптор Cs_Code ука-
+1   163	    02B4  66| 33 D2			    xor	    edx,edx		    ; EDX := 0
+1   164	    02B7  66| 33 C9			    xor	    ecx,ecx		    ; ECX := 0
+1   165	    02BA  8C CA				    mov	    dx,cs	      ;	Сегментная часть
+1   166	    02BC  B9 0000			    mov	    cx,offset 0	  ; Смещение
+1   167	    02BF  E8 00EE			    call    Form_32Bit_Address	    ; CX:DX := линейный
+1   168	    02C2  89 16	010Er			    mov	    gdt2.Base_Lo_Word,dx  ; Занесение базового
+1   169	    02C6  88 0E	0110r			    mov	    gdt2.Base_Hi_Byte,cl  ; адреса в дескрип-
+1   170	    02CA  88 2E	0113r			    mov	    gdt2.Base_Top_Byte,ch ; тор			 !
+    171									      ;	зывает на CSEG как на
+Turbo Assembler	 Version 4.1	    10/08/24 12:13:45	    Page 4
+laba.asm
+
+
+
+    172									      ;	кодовый сегмент.
+    173						    FillDescr  cs,0,gdt3      ;	Дескриптор Cs_Data ука-
+1   174	    02CE  66| 33 D2			    xor	    edx,edx		    ; EDX := 0
+1   175	    02D1  66| 33 C9			    xor	    ecx,ecx		    ; ECX := 0
+1   176	    02D4  8C CA				    mov	    dx,cs	      ;	Сегментная часть
+1   177	    02D6  B9 0000			    mov	    cx,offset 0	  ; Смещение
+1   178	    02D9  E8 00D4			    call    Form_32Bit_Address	    ; CX:DX := линейный
+1   179	    02DC  89 16	0116r			    mov	    gdt3.Base_Lo_Word,dx  ; Занесение базового
+1   180	    02E0  88 0E	0118r			    mov	    gdt3.Base_Hi_Byte,cl  ; адреса в дескрип-
+1   181	    02E4  88 2E	011Br			    mov	    gdt3.Base_Top_Byte,ch ; тор			 !
+    182									      ;	зывает на CSEG как на
+    183									      ;	сегмент данных.
+    184						FillDescr  cs,Idt,Idt_Pointer ;	Дескриптор Idt_Pointer
+1   185	    02E8  66| 33 D2			    xor	    edx,edx		    ; EDX := 0
+1   186	    02EB  66| 33 C9			    xor	    ecx,ecx		    ; ECX := 0
+1   187	    02EE  8C CA				    mov	    dx,cs	      ;	Сегментная часть
+1   188	    02F0  B9 0134r			    mov	    cx,offset Idt   ; Смещение
+1   189	    02F3  E8 00BA			    call    Form_32Bit_Address	    ; CX:DX := линейный
+1   190	    02F6  89 16	011Er			    mov	    Idt_Pointer.Base_Lo_Word,dx	 ; Занесение базового
+1   191	    02FA  88 0E	0120r			    mov	    Idt_Pointer.Base_Hi_Byte,cl	 ; адреса	в дескрип-
+1   192	    02FE  88 2E	0123r			    mov	    Idt_Pointer.Base_Top_Byte,ch ; тор			 !
+    193									      ;	указывает на	IDT.
+    194	    0302  FA				    cli			      ;	Запрет прерываний
+    195	    0303  B0 8F				    mov	    al,8fh	      ;	Запрет немаскируемых
+    196	    0305  E6 70				    out	    cmos_port,al      ;	прерываний
+    197	    0307  EB 00				    jmp	    short $+2
+    198					 ;	     mov     al,5						 ?
+    199					 ;	     out cmos_port+1,al						 ?
+    200
+    201	    0309  B4 DF				    mov	    ah,Enable_Bit20	   ; Открываем	адрес-
+    202	    030B  E8 007C			    call    Gate_A20		   ; ную линию A20
+    203	    030E  0A C0				    or	    al,al		   ; Если произошла
+    204	    0310  74 0C	90 90			    jz	    A20_Opened		   ; ошибка, то
+    205	    0314  BA 028Br			    mov	    dx,offset Gate_Failure ; выдать сообщение
+    206	    0317  B4 09				    mov	    ah,9		   ; на экран, разре-
+    207	    0319  CD 21				    int	    21h			   ; шить прерывания и
+    208	    031B  FB				    sti				   ; вернуться	в DOS
+    209	    031C  CD 20				    int	    20h
+    210	    031E			 A20_Opened:
+    211	    031E  BF 0274r			    lea	    di,Real_Jump	   ; Формирование адреса
+    212	    0321  C7 05	0366r			    mov	    word ptr [di],offset Real ;	для перехода
+    213	    0325  8C 4D	02			    mov	    word ptr [di+2],cs	      ;	в реальный режим
+    214	    0328  BF 0278r			    lea	    di,Protect_Jump	   ; Формирование адреса
+    215	    032B  C7 05	034Cr			    mov	    word ptr [di], offset Protect ; для перехода
+    216	    032F  C7 45	02 0008			    mov	    word ptr [di+2],Cs_Code	  ; в защищенный
+    217											  ; режим
+    218	    0334  0F 01	16 0104r		    lgdt    Gdt1	      ;	Загрузка GDTR
+    219	    0339  0F 01	1E 011Cr		    lidt    Idt_Pointer	      ;	Загрузка IDTR
+    220	    033E  0F 20	C0			    mov	    eax,cr0	      ;	Переходим в защищенный
+    221	    0341  66| 83 C8 01			    or	    eax,1	      ;	режим, устанавливая
+    222	    0345  0F 22	C0			    mov	    cr0,eax	      ;	бит 0 в регистре CR0
+    223	    0348  FF 2E	0278r			    jmp	    dword ptr Protect_Jump ; Переход на метку
+    224										   ; Protect
+    225					 ; Работа	в защищенном	режиме.
+    226	    034C  B8 0010		 Protect:   mov	    ax,Cs_Data
+    227	    034F  8E D0				    mov	    ss,ax	      ;	Регистры DS, ES	и SS
+    228	    0351  8E D8				    mov	    ds,ax	      ;	содержат  селектор
+Turbo Assembler	 Version 4.1	    10/08/24 12:13:45	    Page 5
+laba.asm
+
+
+
+    229	    0353  8E C0				    mov	    es,ax	      ;	сегмента Cs_Data
+    230	    0355  E8 008B			    call    My_Proc	      ;	Вызов рабочей процедуры
+    231					 ;	     cli							 -
+    232	    0358  0F 20	C0			    mov	    eax,cr0	      ;	Переходим в реальный
+    233	    035B  66| 83 E0 FE			    and	    eax,0FFFFFFFEh    ;	режим, сбрасывая бит 0		 !
+    234	    035F  0F 22	C0			    mov	    cr0,eax	      ;	регистра CR0
+    235	    0362  FF 2E	0274r			    jmp	    dword ptr Real_Jump	; Косвенный межсегмент-
+    236									      ;	ный переход на метку
+    237									      ;	Real
+    238					 ; Работа	в реальном режиме.
+    239	    0366  0F 01	1E 0124r	 Real:	    lidt    Idt_Real	      ;	Загружаем регистр IDTR
+    240									      ;	для работы в реальном
+    241									      ;	режиме
+    242	    036B  8C CA				    mov	    dx,cs	      ;	Восстанавливаем
+    243	    036D  8E DA				    mov	    ds,dx	      ;	сегментные
+    244	    036F  8E D2				    mov	    ss,dx	      ;	регистры
+    245	    0371  B4 DD				    mov	    ah,Disable_Bit20  ;	Закрытие адресной
+    246	    0373  E8 0014			    call    Gate_A20	      ;	линии A20
+    247	    0376  FB				    sti			      ;	Разрешение прерываний
+    248					 ;									 ?
+    249	    0377  CD 20				    int	    20h		      ;	Выход в DOS
+    250
+    251	    0379  CF			 ex0_proc:  iret		      ;	Обработчики особых
+    252	    037A  CF			 ex1_proc:  iret		      ;	ситуаций
+    253	    037B  CF			 ex2_proc:  iret		      ;	Здесь установлены
+    254	    037C  CF			 ex3_proc:  iret		      ;	заглушки вместо
+    255	    037D  CF			 ex4_proc:  iret		      ;	обработчиков
+    256	    037E  CF			 ex5_proc:  iret
+    257	    037F  CF			 ex6_proc:  iret
+    258	    0380  CF			 ex7_proc:  iret
+    259	    0381  CF			 ex8_proc:  iret
+    260	    0382  CF			 ex9_proc:  iret
+    261	    0383  CF			 ex10_proc: iret
+    262	    0384  CF			 ex11_proc: iret
+    263	    0385  CF			 ex12_proc: iret
+    264	    0386  CF			 ex13_proc: iret
+    265	    0387  CF			 ex14_proc: iret
+    266	    0388  CF			 ex15_proc: iret
+    267	    0389  CF			 ex16_proc: iret
+    268
+    269					 ;**************************************************************
+    270					 ;Управление прохождением	сигнала A20
+    271					 ;ВХОД: (AH)=0DDH	установить A20 всегда равным нулю
+    272					 ;	(AH)=0DFh   открыть адресный разряд A20
+    273					 ;ВЫХОД: (AL)=0	 8042 принял команду
+    274					 ;	 (AH)=2	    сбой
+    275					 ;**************************************************************
+    276	    038A			 Gate_A20 PROC
+    277	    038A  FA				    cli			      ;	Запрет прерываний
+    278	    038B  E8 0017			    call    Empty_8042
+    279	    038E  75 14	90 90			    jnz	    Gate_1
+    280	    0392  B0 D1				    mov	    al,0d1h	      ;	Выдаем команду  8042 для
+    281	    0394  E6 64				    out	    Status_Port,al    ;	записи в	выходной порт
+    282	    0396  E8 000C			    call    Empty_8042
+    283	    0399  75 09	90 90			    jnz	    Gate_1
+    284	    039D  8A C4				    mov	    al,ah	      ;	Записываем в	порт A 8042
+    285	    039F  E6 60				    out	    Port_A,al	      ;	код команды
+Turbo Assembler	 Version 4.1	    10/08/24 12:13:45	    Page 6
+laba.asm
+
+
+
+    286	    03A1  E8 0001			    call    Empty_8042
+    287	    03A4  C3			 Gate_1:    ret
+    288	    03A5			 Gate_A20 ENDP
+    289					 ;**************************************************************
+    290					 ;Ждать пока буфер 8042 не опустеет
+    291					 ;Вход: нет
+    292					 ;Выход:(AL)=0   буфер пуст
+    293					 ;	(AL)=2	 не пуст
+    294					 ;**************************************************************
+    295	    03A5			 Empty_8042  PROC
+    296	    03A5  51				    push    cx
+    297	    03A6  33 C9				    xor	    cx,cx	      ;	CX = 0 (256 повторений)
+    298	    03A8  E4 64			 Empty_1:   in	    al,Status_Port    ;	Порт 8042
+    299	    03AA  24 02				    and	    al,00000010b      ;	Бит 2 очищен ?
+    300	    03AC  E0 FA				    loopnz  Empty_1
+    301	    03AE  59				    pop	    cx
+    302	    03AF  C3				    ret
+    303	    03B0			 Empty_8042  ENDP
+    304					 ;**************************************************************
+    305					 ; Формирование 32-разрядного адреса
+    306					 ; Вход : CX:DX - адрес в формате <сегмент:смещение>
+    307					 ; Выход: CX:DX - 32-разрядный линейный адрес
+    308	    03B0			 Form_32Bit_Address   PROC
+    309	    03B0  66| C1 E2 04			    shl	    edx,4
+    310	    03B4  66| 03 D1			    add	    edx,ecx
+    311	    03B7  66| 8B CA			    mov	    ecx,edx
+    312	    03BA  66| C1 E9 10			    shr	    ecx,16
+    313	    03BE  C3				    ret
+    314	    03BF			 Form_32Bit_Address   ENDP
+    315
+    316					 ;**************************************************************
+    317					 ;   Процедура	вывода строки на экран, работает в	    +
+    318					 качестве
+    319					 ;   обработчика прерывания.
+    320					 ; Вход : DS:BX - адрес сообщения
+    321					 ;	  DL - строка экрана
+    322					 ;	  DH - колонка экрана
+    323					 ;**************************************************************
+    324	    03BF			 Int10_Proc   Proc  Near	      ;	Обработчик прерывания
+    325	    03BF  60				    pusha		      ;	INT 39d
+    326	    03C0  33 C9				    xor	    cx,cx	      ;	Очистка CX
+    327	    03C2  8A CE				    mov	    cl,dh	      ;	CL = колонка
+    328	    03C4  D0 E1				    sal	    cl,1	      ;	CL = CL*2
+    329	    03C6  32 F6				    xor	    dh,dh	      ;	DX = строка
+    330	    03C8  69 D2	00A0			    imul    dx,160d    ; Умножаем на число байт в строке
+    331	    03CC  03 D1				    add	    dx,cx      ; Прибавляем смещение в строке
+    332								       ; Результат: DX	= смещение в
+    333								       ; видеопамяти
+    334					 ;	     push    Video_Desc						 -
+    335					 ;	     pop     es		; ES = сегмент видеопамяти		 -
+    336	    03CE  8B FA				    mov	    di,dx      ; DI = смещение в этом сегменте
+    337	    03D0  8B 07			 m:	    mov	    ax,[bx]    ; AL = очередной символ строки
+    338	    03D2  3C 24				    cmp	    al,'$'     ; Конец строки ?
+    339	    03D4  74 0B	90 90			    jz	    Ex	       ; Да -	выход
+    340	    03D8  26: 8B 0D			    mov	    cx,es:[di] ; Получить атрибут в CH
+    341	    03DB  8A E5				    mov	    ah,ch      ; AX = символ с атрибутом
+    342	    03DD  AB				    stosw	       ; Записать символ в видеопамять
+Turbo Assembler	 Version 4.1	    10/08/24 12:13:45	    Page 7
+laba.asm
+
+
+
+    343	    03DE  43				    inc	    bx	       ; Перейти	к следующему	символу
+    344	    03DF  EB EF				    jmp	    short   m
+    345	    03E1  61			 ex:	    popa
+    346	    03E2  CF				    iret	       ; Возврат	из прерывания
+    347	    03E3			 Int10_Proc Endp
+    348					 ;**************************************************************
+    349					 ;Процедура выполняющая какие-либо	действия в	    +
+    350					 защищенном режиме
+    351					 ;**************************************************************
+    352	    03E3			 MY_PROC    PROC
+    353	    03E3  60				    pusha
+    354	    03E4  06				    push    es
+    355	    03E5  6A 28				    push    Video_Desc	      ;	В регистр ES заносим се-
+    356	    03E7  07				    pop	    es		      ;	лектор сегмента видеопа-
+    357									      ;	мяти
+    358	    03E8  B6 0F				    mov	    dh,0fh	      ;	Очищаем экран
+    359	    03EA  E8 000B			    call    Paint_Screen
+    360					 ;	     mov     ax,Cs_Data						 -
+    361					 ;	     mov     ds,ax	       ; DS - сегмент данных		 -
+    362	    03ED  BB 027Cr			    lea	    bx,Mess	      ;	Адрес сообщения
+    363	    03F0  BA 200B			    mov	    dx,200Bh	      ;	Координаты вывода
+    364	    03F3  CD 27				    int	    39d		      ;	Вывод строки	на экран
+    365	    03F5  07				    pop	    es
+    366	    03F6  61				    popa
+    367	    03F7  C3				    ret
+    368	    03F8			 MY_PROC ENDP
+    369					 ;**************************************************************
+    370					 ; Процедура очищает экран	и устанавливает цвета в +
+    371					 соответствии
+    372					 ; с заданным атрибутом.
+    373					 ; Вход : ES - селектор дескриптора текстового		    +
+    374					 видеобуфера
+    375					 ;	  DH - атрибут.
+    376					 ;**************************************************************
+    377	    03F8			 PAINT_SCREEN  PROC
+    378	    03F8  51 56	57 06			    push    cx si di es
+    379	    03FC  B9 07D0			    mov	    cx,80*25	      ;	Размер видеопамяти (слов)
+    380	    03FF  33 F6				    xor	    si,si	      ;	SI и DI установим на
+    381	    0401  33 FF				    xor	    di,di	      ;	начало видеопамяти
+    382	    0403  AD			 Paint1:    lodsw		      ;	Увеличиваем смещение	в
+    383									      ;	видеопамяти
+    384	    0404  8A E6				    mov	    ah,dh	      ;	Байт атрибута символа
+    385	    0406  B0 20				    mov	    al,20h	      ;	Код символа "ПРОБЕЛ"
+    386	    0408  AB				    stosw		      ;	Записываем символ с ат-
+    387									      ;	рибутом в видеопамять
+    388	    0409  E2 F8				    loop    Paint1	      ;	Повторить для каждого
+    389									      ;	символа на экране
+    390	    040B  07 5F	5E 59			    pop	    es di si cx
+    391	    040F  C3				    RET
+    392	    0410			 PAINT_SCREEN ENDP
+    393					 ;Cseg_Leng  Equ     $		       ; Длина сегмента Cseg		 -
+    394	    0410			 Cseg	   Ends
+    395					 End	   Start
+Turbo Assembler	 Version 4.1	    10/08/24 12:13:45	    Page 8
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "10/08/24"
+??FILENAME			  Text	 "laba	  "
+??TIME				  Text	 "12:13:45"
+??VERSION			  Number 040A
+@CPU				  Text	 0F8FH
+@CURSEG				  Text	 CSEG
+@FILENAME			  Text	 LABA
+@WORDSIZE			  Text	 2
+A20_OPENED			  Near	 CSEG:031E
+CMOS_PORT			  Number 0070
+CODE_SEG_ACCESS			  Number 009B
+CS_CODE				  Number 0008
+CS_DATA				  Number 0010
+DATA_SEG_ACCESS			  Number 0093
+DISABLE_BIT20			  Number 00DD
+EMPTY_1				  Near	 CSEG:03A8
+EMPTY_8042			  Near	 CSEG:03A5
+ENABLE_BIT20			  Number 00DF
+EX				  Near	 CSEG:03E1
+EX0				  Struct CSEG:0134 IDT_DESCRIPTOR
+EX0_PROC			  Near	 CSEG:0379
+EX1				  Struct CSEG:013C IDT_DESCRIPTOR
+EX10				  Struct CSEG:0184 IDT_DESCRIPTOR
+EX10_PROC			  Near	 CSEG:0383
+EX11				  Struct CSEG:018C IDT_DESCRIPTOR
+EX11_PROC			  Near	 CSEG:0384
+EX12				  Struct CSEG:0194 IDT_DESCRIPTOR
+EX12_PROC			  Near	 CSEG:0385
+EX13				  Struct CSEG:019C IDT_DESCRIPTOR
+EX13_PROC			  Near	 CSEG:0386
+EX14				  Struct CSEG:01A4 IDT_DESCRIPTOR
+EX14_PROC			  Near	 CSEG:0387
+EX15				  Struct CSEG:01AC IDT_DESCRIPTOR
+EX15_PROC			  Near	 CSEG:0388
+EX16				  Struct CSEG:01B4 IDT_DESCRIPTOR
+EX16_PROC			  Near	 CSEG:0389
+EX1_PROC			  Near	 CSEG:037A
+EX2				  Struct CSEG:0144 IDT_DESCRIPTOR
+EX2_PROC			  Near	 CSEG:037B
+EX3				  Struct CSEG:014C IDT_DESCRIPTOR
+EX3_PROC			  Near	 CSEG:037C
+EX4				  Struct CSEG:0154 IDT_DESCRIPTOR
+EX4_PROC			  Near	 CSEG:037D
+EX5				  Struct CSEG:015C IDT_DESCRIPTOR
+EX5_PROC			  Near	 CSEG:037E
+EX6				  Struct CSEG:0164 IDT_DESCRIPTOR
+EX6_PROC			  Near	 CSEG:037F
+EX7				  Struct CSEG:016C IDT_DESCRIPTOR
+EX7_PROC			  Near	 CSEG:0380
+EX8				  Struct CSEG:0174 IDT_DESCRIPTOR
+EX8_PROC			  Near	 CSEG:0381
+EX9				  Struct CSEG:017C IDT_DESCRIPTOR
+EX9_PROC			  Near	 CSEG:0382
+FORM_32BIT_ADDRESS		  Near	 CSEG:03B0
+Turbo Assembler	 Version 4.1	    10/08/24 12:13:45	    Page 9
+Symbol Table
+
+
+
+GATE_1				  Near	 CSEG:03A4
+GATE_A20			  Near	 CSEG:038A
+GATE_FAILURE			  Byte	 CSEG:028B
+GDT				  Word	 CSEG:0104
+GDT1				  Struct CSEG:0104 GDT_DESCRIPTOR
+GDT2				  Struct CSEG:010C GDT_DESCRIPTOR
+GDT3				  Struct CSEG:0114 GDT_DESCRIPTOR
+GDTB800				  Struct CSEG:012C GDT_DESCRIPTOR
+GDT_DESC			  Number 0000
+GDT_LENG			  Number 0030
+IDT				  Word	 CSEG:0134
+IDT_LENG			  Number 0140
+IDT_POINTER			  Struct CSEG:011C GDT_DESCRIPTOR
+IDT_REAL			  Struct CSEG:0124 GDT_DESCRIPTOR
+INT10_PROC			  Near	 CSEG:03BF
+INT39				  Struct CSEG:026C IDT_DESCRIPTOR
+M				  Near	 CSEG:03D0
+MAIN				  Near	 CSEG:029A
+MESS				  Byte	 CSEG:027C
+MY_PROC				  Near	 CSEG:03E3
+PAINT1				  Near	 CSEG:0403
+PAINT_SCREEN			  Near	 CSEG:03F8
+PORT_A				  Number 0060
+PROTECT				  Near	 CSEG:034C
+PROTECT_JUMP			  Dword	 CSEG:0278
+REAL				  Near	 CSEG:0366
+REAL_JUMP			  Dword	 CSEG:0274
+START				  Near	 CSEG:0100
+STATUS_PORT			  Number 0064
+VIDEO_DESC			  Number 0028
+
+Macro Name
+
+FILLDESCR
+
+Structure Name			  Type	Offset
+
+GDT_DESCRIPTOR
+ SEG_LIMIT			  Word	 0000
+ BASE_LO_WORD			  Word	 0002
+ BASE_HI_BYTE			  Byte	 0004
+ ACCES_RIGHTS			  Byte	 0005
+ LIMIT&ACCES			  Byte	 0006
+ BASE_TOP_BYTE			  Byte	 0007
+IDT_DESCRIPTOR
+ INT_OFFSET			  Word	 0000
+ INT_SELECTOR			  Word	 0002
+ ACCESS				  Byte	 0005
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+CSEG				  16  0410 Para	  Public  CODE
+
