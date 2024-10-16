@@ -45,7 +45,7 @@
  db  26 dup(' ')
  db 'є                                                    є'
  db  26 dup(' ')
- db 'є   „«п а §Ў«®ЄЁа®ўЄЁ  ¦¬ЁвҐ ваЁ а §  LeftControl   є'
+ db 'є   „«п а §Ў«®ЄЁа®ўЄЁ  ¦¬ЁвҐ ваЁ а §  Q   є'
  db  26 dup(' ')
  db 'є                                                    є'
  db  26 dup(' ')
@@ -109,7 +109,7 @@
 
      in    AL,60h        ;Ї®«гзЁвм бЄ  Є®¤  ¦ в®© Є« ўЁиЁ
 
-     cmp   AL,26h        ;їЇа®ўҐаЁвм   бЄ -Є®¤ Є« ўЁиЁ
+     cmp   AL,2Dh        ;їЇа®ўҐаЁвм   бЄ -Є®¤ Є« ўЁиЁ
      jne   Exit_09       ;Щ<L> Ё ўл©вЁ, Ґб«Ё Ґ ®
 
      xor   AX,AX         ;ї
@@ -163,16 +163,16 @@
 
    SwLoop1:
      in    AL,60h        ;ў AL - Є®¤  ¦ в®© Є« ўЁиЁ
-     cmp   AL,1Dh        ;їҐб«Ё  ¦ в  Ctrl - в®  
+     cmp   AL, 10h        ;їҐб«Ё  ¦ в  Ctrl - в®  
      je    SwLoop2       ;ЩЇа®ўҐаЄг ®вЇгбЄ Ёп
-     cmp   AL,9Dh        ;їҐб«Ё Ўл«  ®вЇгйҐ  Ctrl, в®
+     cmp   AL,90h        ;їҐб«Ё Ўл«  ®вЇгйҐ  Ctrl, в®
      je    SwLoop1       ;Щ¤ «миҐ   ®Їа®б Є« ўЁ вгал
      mov   Sign,0        ;Ё зҐ бЎа®бЁвм Є®«-ў®  ¦ вЁ©
      jmp   short SwLoop1 ;Ё б®ў    ®Їа®б Є« ўЁ вгал
 
    SwLoop2:
      in    AL,60h        ;ў AL - бЄ  Є®¤ Є« ўЁиЁ
-     cmp   AL,9Dh        ;їҐб«Ё Ґ Є®¤ ®вЇгбЄ Ёп Ctrl, в®
+     cmp   AL,90h        ;їҐб«Ё Ґ Є®¤ ®вЇгбЄ Ёп Ctrl, в®
      jne   SwLoop2       ;Щ®¦Ё¤ вм ®вЇгбЄ Ёп Є« ўЁиЁ
      inc   Sign          ;гўҐ«ЁзЁвм Є®«-ў® ў¦ вЁ©   Ctrl
      cmp   Sign,3        ;їҐб«Ё ҐйҐ Ґ  ¦ «Ё 3-Ё а § ,в®
@@ -265,8 +265,8 @@
              db Bell,CR,LF,'$'
  InstMsg     db 'Џа®Ја ¬¬  LOCKER гбв ®ў«Ґ .„«п бпвЁп Ёб'
              db 'Ї®«м§г©вҐ Є«оз /u',CR,LF
-             db '„«п "§ ЇЁа Ёп"  ¦¬ЁвҐ <Ctrl+Alt+L>',CR,LF
-             db '„«п "®вЇЁа Ёп" ваЁ¦¤л  ¦¬ЁвҐ <Ctrl>'
+             db '„«п "§ ЇЁа Ёп"  ¦¬ЁвҐ <Ctrl+Alt+X>',CR,LF
+             db '„«п "®вЇЁа Ёп" ваЁ¦¤л  ¦¬ЁвҐ <Q>'
              db CR,LF,'$'
  AlreadyMsg  db 'ЋиЁЎЄ : LOCKER г¦Ґ аҐ§Ё¤Ґв  ў Ї ¬пвЁ'
              db Bell,CR,LF,'$'
