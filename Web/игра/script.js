@@ -124,18 +124,6 @@ function getItem(){
     }
 }
 
-// document.getElementById("closeModal").onclick = function() {
-//     document.getElementById("modal").style.display = "none";
-// }
-
-
-
-// window.onclick = function(event) {
-//     if (event.target == document.getElementById("modal")) {
-//         document.getElementById("modal").style.display = "none";
-//     }
-// } 
-
 function upperChild(parent, child) {
     parent.appendChild(child);
 }
@@ -146,11 +134,6 @@ function createModal(){
 
         const modalContent = document.createElement('div');
         modalContent.className = 'modal-content';
-
-        // const closeButton = document.createElement('span');
-        // closeButton.id = 'closeModal';
-        // closeButton.className = 'close';
-        // closeButton.innerHTML = '&times;';
 
         const message = document.createElement('p');
         message.id = 'gameOverMessage';
@@ -181,7 +164,4 @@ function createModal(){
 
         upperChild(document.getElementById('container'), modal);
 
-        // closeButton.onclick = function() {
-        //     modal.style.display = 'none';
-        // }
 }   
