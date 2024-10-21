@@ -1,4 +1,4 @@
-afffhhhhhh.
-u(0,1).
-u(1,1).
-?-u(X,Y), write(X),nl.
+and_(0,0,0).
+and_(0,1,0).
+and_(1,1,1).
+?-and_(X,Y,Z), write(X), write(Y), write(Z).
