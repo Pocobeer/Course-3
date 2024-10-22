@@ -1,5 +1,4 @@
-%1 ex
-parent("Sergey", "Vladimir").
+:-(mother(_0,_1),parent(_0,_1),woman(_0),write(_0)) .
 parent("Sergey","Alex").
 parent("Helen","Vladimir").
 parent("Helen","Alex").
@@ -11,19 +10,16 @@ married("Sergey", "Helen").
 father(X,Y):-
 parent(X,Y),man(X), write(X).
 
-mother(X,Y):-
-parent(X,Y),woman(X),write(X).
-
 brother(X,Y):-
 parent(A,X), parent(A,Y), X\=Y,man(X),write(X).
 
 son(X,Y):-
 parent(X,Y), man(Y),write(Y).
 
-?-parent(X, "Vladimir") = parent("Sergey","Vladimir"), write(X).
-?-X=Y, Y=5, write(X).
-?-X=bdfy, write(X).
-?-X=Y, write(X).
+?-retract_in(parent("Sergey", "Vladimir")).
+?-retract_in(mother(X,Y)).
+?-asserta_in(mother(X,Y):- parent(X,Y), woman(X), write(X)).
+
 
 %?-father(X, "Vladimir"), nl.
 %?-mother(X, "Alex"), nl.

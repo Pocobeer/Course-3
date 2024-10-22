@@ -1,0 +1,15 @@
+﻿  Camera.cpp
+  ConsoleApplication8.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication8\ConsoleApplication8.cpp(15,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  Data.cpp
+  Display.cpp
+  GameObject.cpp
+  GameObjectFactory.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\графика\ConsoleApplication8\GameObjectFactory.cpp(106,49): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+  GraphicObject.cpp
+  Light.cpp
+  Mesh.cpp
+  PhongMaterial.cpp
+  Simulation.cpp
+  Создание кода...
+LINK : fatal error LNK1104: не удается открыть файл "freeglut.lib"

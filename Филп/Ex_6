@@ -1,5 +1,40 @@
-%rab(FIO, birth year, sex, education, rank, date of starting work, shtraf).
-rab("Kozh Kir Yur", 2004, male, hight, "captain", date(2012,05,12), 0).
-rab("Me Me Me", 1912, male, mid,  "general", date(1955, 01, 56), 125).
-rab("Pu Pu Pu", 1986, male, mid, "general", date(2004, 04, 23),12).
-rab("Ma Ma Ma", 2000, male,hight, "sergeant", date( 
+rab("Pe Pe Pe",1977,male,mid,"general") .
+rab("A A A",2002,male,hight,"copter") .
+%rab(FIO, birth year, sex, education, rank).
+rab("Kozh Kir Yur", 2004, male, hight, "captain").
+rab("Me Me Me", 1912, male, mid,  "general").
+rab("Pu Pu Pu", 1986, male, mid, "general").
+rab("Ma Ma Ma", 2000, male,hight, "sergeant").
+%punishments
+punishment("Kozh Kir Yur", "abuse of authority").
+
+has_punishment(FIO) :-
+    punishment(FIO, _).
+
+rank_up(FIO, Birth, Sex, Education, Rank):-
+rab(FIO, Birth, Sex, Education, Rank),
+CurYear = 2024,
+ServYears is CurYear - Birth - 22,
+ServYears >2,
+0 is ServYears mod 2,
+not(has_punishment(FIO)).
+
+next_year_on_pensia(FIO, Birth, Sex, Education, Rank):-
+rab(FIO, Birth, Sex, Education, Rank),
+CurYear = 2024,
+ServYears is CurYear - Birth - 22,
+ServYears  >= 25.
+
+hired_in_year(FIO, Birth, Sex, Education, Rank):-
+rab(FIO, Birth, Sex, Education, Rank),
+CurYear = 2024,
+ServYears is Birth + 22,
+ServYears  =:= CurYear.
+
+
+
+?- hired_in_year(FIO, Birth, Sex, Education, Rank),write("Hired in year:"), nl, write(FIO), nl.
+?- rank_up(FIO, Birth, Sex, Education, Rank), write("Rank up:"), nl, write(FIO), nl.
+?-next_year_on_pensia(FIO, Birth, Sex, Education, Rank),  write("Next year on pensia:"), nl, write(FIO), nl.
+
+
