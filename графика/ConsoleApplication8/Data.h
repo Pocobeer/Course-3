@@ -1,9 +1,10 @@
 #pragma once
+#include "GraphicObject.h"
 #include <windows.h>
 #include <vector>
 #include "GL/freeglut.h"
 #include <glm/glm.hpp>
-#include "GraphicObject.h"
+
 #include "Light.h"
 #include "Camera.h"
 #include "GameObjectFactory.h"

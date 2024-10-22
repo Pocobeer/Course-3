@@ -2,7 +2,10 @@
 
 using namespace std;
 
-Mesh::Mesh() {}
+Mesh::Mesh() {
+    
+    glGenBuffers(2, bufferIds);// Генерация двух буферов: bufferIds[0] для вершин и bufferIds[1] для индексов
+}
 
 void Mesh::load(const string& filename) {
     ifstream file(filename);
@@ -76,9 +79,38 @@ void Mesh::load(const string& filename) {
             }
         }
     }
+    //Загрузка данных в VBO
+    glBindBuffer(GL_ARRAY_BUFFER, bufferIds[0]);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), 
+        vertices.data(), GL_STATIC_DRAW);
+
+    GLenum error = glGetError(); // Проверка на ошибки
+    if (error != GL_NO_ERROR) {
+        cerr << "Ошибка при загрузке вершин: " << error << endl;
+    }
+    else {
+        cout << "vetices good" << endl;
+    }
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferIds[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint),
+        indices.data(), GL_STATIC_DRAW);
+
+    error = glGetError(); // Проверка на ошибки
+    if (error != GL_NO_ERROR) {
+        cerr << "Ошибка при загрузке индексов: " << error << endl;
+    }
+    else {
+        cout << "indicies are good" << endl;
+    }
 
     cout << "Загружено вершин: " << vertices.size() << endl;
     cout << "Загружено индексов: " << indices.size() << endl;
+
+    //отвязка буферов
+    glBindBuffer(GL_ARRAY_BUFFER,0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
     file.close();
 }
 
@@ -88,6 +120,10 @@ void Mesh::draw() {
         cout << "Нет вершин или индексов для отрисовки!" << endl;
         return;
     }
+
+    // Привязываем буферы
+    glBindBuffer(GL_ARRAY_BUFFER, bufferIds[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferIds[1]);
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
@@ -104,4 +140,8 @@ void Mesh::draw() {
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    // Отвязываем буферы
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

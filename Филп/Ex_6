@@ -6,7 +6,7 @@ rab("Me Me Me", 1912, male, mid,  "general").
 rab("Pu Pu Pu", 1986, male, mid, "general").
 rab("Ma Ma Ma", 2000, male,hight, "sergeant").
 %punishments
-punishment("Kozh Kir Yur", "genocide").
+punishment("Kozh Kir Yur", "abuse of authority").
 
 has_punishment(FIO) :-
     punishment(FIO, _).

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "glew.h"
 #include <windows.h>
 #include <iostream>
 #include <fstream>
@@ -27,4 +27,6 @@ private:
     std::vector<Vertex> vertices; // Массив вершин полигональной сетки
 
     std::vector<GLuint> indices;//массив индексов
+    int indexCount;
+    GLuint bufferIds[2];
 };

@@ -1,4 +1,42 @@
-and_(0,0,0).
-and_(0,1,0).
-and_(1,1,1).
-?-and_(X,Y,Z), write(X), write(Y), write(Z).
+
+empty(nil).
+
+
+insert(Value, nil, node(Value, nil, nil)) :- !.
+
+insert(Value, node(RootValue, Left, Right), node(RootValue, NewLeft, Right)) :-
+Value < RootValue,
+insert(Value, Left, NewLeft).
+
+insert(Value, node(RootValue, Left, Right), node(RootValue, Left, NewRight)) :-
+Value > RootValue,
+insert(Value, Right, NewRight).
+
+search(Value, node(Value, _, _)) :- 
+write("Element"), write(" "), write(Value), write(" "), write("found"), !. 
+
+search(Value, node(RootValue, Left, _)) :- 
+Value < RootValue,
+search(Value, Left).
+
+search(Value, node(RootValue, _, Right)) :- 
+Value > RootValue,
+search(Value, Right).
+
+
+obxod(nil) :- !. 
+
+obxod(node(Value, Left, Right)) :-
+obxod(Left),  
+write(Value), write(" "), 
+obxod(Right).
+
+
+?- empty(Tree), 
+insert(5, Tree, Tree1), 
+insert(3, Tree1, Tree2), 
+insert(7, Tree2, Tree3), 
+insert(2, Tree3, Tree4), 
+insert(4, Tree4, Tree5), 
+obxod(Tree5),nl,
+search(4,Tree5).

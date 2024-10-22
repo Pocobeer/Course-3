@@ -1,8 +1,9 @@
 #pragma once
+#include "Data.h"
 #include <GL/glut.h> 
  
 #include "Camera.h"
-#include "Data.h"
+
 //#include "Light.h"
 #include <windows.h>
 #include <iostream>

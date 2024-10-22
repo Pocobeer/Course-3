@@ -1,14 +1,16 @@
-﻿#include <windows.h>
+﻿
+#include <windows.h>
 
 #include <iostream>
-#include "glew.h"
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include "GL/freeglut.h"
+
+
 #include "Data.h"
 #include "Simulation.h"
 #include "Display.h"
-// используем пространство имен стандартной библиотеки
+
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include "GL/freeglut.h"// используем пространство имен стандартной библиотеки
 using namespace std;
 
 void main(int argc, char** argv)
@@ -35,7 +37,11 @@ void main(int argc, char** argv)
 	printf("Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
 	if (GLEW_ARB_vertex_buffer_object) {
 		printf("VBO is supported");
+		cout << endl;
 	};
+	printf("GL_VENDOR = %s\n", glGetString(GL_VENDOR));
+	printf("GL_RENDERER = %s\n", glGetString(GL_RENDERER));
+	printf("GL_VERSION = %s\n\n", glGetString(GL_VERSION));
 	initData();
 	initSimulation();
 	camera.setPosition(vec3(10.0f, 15.0f, 17.5f));

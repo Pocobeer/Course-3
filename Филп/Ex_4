@@ -15,3 +15,40 @@ bubble_sort(LL,L1).
 bubble_sort(L,L).
 
 ?- bubble_sort([1,1,1,0,1,0],Result), write(Result).
+
+empty(nil).
+
+insert(Value, nil, node(Value,nil, nil)).
+
+insert(Value, node(RootValue, Left, Right), node(RootValue, NewLeft, Right)) :-
+Value < RootValue, 
+insert(Value, Left, NewLeft).
+
+insert(Value, node(RootValue, Left, Right), node(RootValue, Left, NewRight)) :-
+Value > RootValue, 
+insert(Value, Right, NewRight).
+
+search(Value, node(Value, _, _)).
+
+search(Value, node(RootValue, Left, _):-
+Value<RootValue,
+search(Value,Left).
+
+search(Value, node(RootValue, _, Right):-
+Value>RootValue,
+search(Value,Right).
+
+obxod(node(Value, Left, Right)):-
+obxod(Left),
+write(Value), write(" "),
+obxod(Right).
+
+?-empty(Tree).
+
+?- insert(5, Tree, Tree1).
+?- insert(3, Tree1, Tree2).
+?- insert(7, Tree2, Tree3).
+?- insert(2, Tree3, Tree4).
+?- insert(4, Tree4, Tree5).
+
+?- inorder(Tree5).
