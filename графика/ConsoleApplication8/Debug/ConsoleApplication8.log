@@ -1,2 +1,8 @@
-﻿  Mesh.cpp
+﻿  ConsoleApplication8.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication8\ConsoleApplication8.cpp(17,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  Data.cpp
+  Display.cpp
+  GameObject.cpp
+  GameObjectFactory.cpp
+  Создание кода...
   ConsoleApplication8.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\лабы\Course-3\графика\ConsoleApplication8\Debug\ConsoleApplication8.exe
