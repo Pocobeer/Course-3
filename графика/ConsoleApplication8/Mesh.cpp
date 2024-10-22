@@ -130,12 +130,12 @@ void Mesh::draw() {
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
     // Устанавливаем указатели на массивы
-    glVertexPointer(3, GL_FLOAT, sizeof(Vertex), &vertices[0].position);
-    glNormalPointer(GL_FLOAT, sizeof(Vertex), &vertices[0].normal);
-    glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].texCoord);
+    glVertexPointer(3, GL_FLOAT, sizeof(Vertex), (void*)offsetof(Vertex, position));
+    glNormalPointer(GL_FLOAT, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+    glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), (void*)offsetof(Vertex, texCoord));
 
     // Рисуем с использованием индексов
-    glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(indices.size()), GL_UNSIGNED_INT, indices.data());
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
