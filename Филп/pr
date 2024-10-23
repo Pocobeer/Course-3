@@ -1,7 +1,6 @@
 
 empty(nil).
 
-
 insert(Value, nil, node(Value, nil, nil)) :- !.
 
 insert(Value, node(RootValue, Left, Right), node(RootValue, NewLeft, Right)) :-
@@ -30,7 +29,6 @@ obxod(node(Value, Left, Right)) :-
 obxod(Left),  
 write(Value), write(" "), 
 obxod(Right).
-
 
 ?- empty(Tree), 
 insert(5, Tree, Tree1), 

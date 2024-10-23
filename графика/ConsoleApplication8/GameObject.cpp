@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+
+
 // Конструктор
 GameObject::GameObject() : position(0, 0), height(0.0f), sost(MoveDirection::STOP), progress(0.0f), speed(3.0f), moving(false) {}
 
@@ -28,12 +30,17 @@ ivec2 GameObject::getPosition(){
 }
 
 void GameObject::move(MoveDirection direction, float speed) {
-    if (!moving) {
-        this->sost = direction;
-        this->speed = speed;
-        moving = true;
-        progress = 0.0f; // Начинаем с нуля
-    }
+    sost = direction;
+    this->speed = speed;
+    moving = (direction != MoveDirection::STOP);
+}
+
+// Перемещение в новую позицию
+void GameObject::moveTo(int x, int y, float speed) {
+    // Установка новой позиции и скорости
+    position = ivec2(x, y);
+    this->speed = speed;
+    moving = true;
 }
 
 bool GameObject::isMoving() const {

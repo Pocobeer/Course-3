@@ -3,8 +3,6 @@
 
 #include <iostream>
 
-
-#include "Data.h"
 #include "Simulation.h"
 #include "Display.h"
 

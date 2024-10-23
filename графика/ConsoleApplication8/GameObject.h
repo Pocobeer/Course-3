@@ -1,10 +1,12 @@
 #pragma once
-#include <glm/vec2.hpp> // Не забудьте подключить библиотеку GLM
-#include "GraphicObject.h" // Подключите ваш класс GraphicObject
+#include <glm/vec2.hpp> 
+#include "GraphicObject.h" 
 
 using glm::ivec2; // Используемivec2 из GLM
 
 enum class MoveDirection { STOP, LEFT, RIGHT, UP, DOWN };
+
+extern int passabilityMap[21][21];
 
 class GameObject {
 public:
@@ -14,7 +16,7 @@ public:
     // Установка графического объекта
     void setGraphicObject(const GraphicObject& graphicObject);
 
-    // Установка логических координат (два перегруженных метода для удобства)
+    
     void setPosition(int x, int y);
     void setPosition(ivec2 position);
     void setPosition(int x, float height, int z);
@@ -22,7 +24,10 @@ public:
     ivec2 getPosition();
 
     // Установка состояния перемещения
-    void move(MoveDirection direction, float speed = 3.0f);
+    void move(MoveDirection direction, float speed);
+
+    // Перемещение в новую позицию
+    void moveTo(int x, int y, float speed);
 
     // Проверка на то, что объект в настоящий момент движется
     bool isMoving() const;

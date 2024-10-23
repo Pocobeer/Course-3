@@ -84,25 +84,25 @@ void Mesh::load(const string& filename) {
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), 
         vertices.data(), GL_STATIC_DRAW);
 
-    GLenum error = glGetError(); // Проверка на ошибки
-    if (error != GL_NO_ERROR) {
-        cerr << "Ошибка при загрузке вершин: " << error << endl;
-    }
-    else {
-        cout << "vetices good" << endl;
-    }
+    //GLenum error = glGetError(); // Проверка на ошибки
+    //if (error != GL_NO_ERROR) {
+    //    cerr << "Ошибка при загрузке вершин: " << error << endl;
+    //}
+    //else {
+    //    cout << "vetices good" << endl;
+    //}
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferIds[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint),
         indices.data(), GL_STATIC_DRAW);
 
-    error = glGetError(); // Проверка на ошибки
-    if (error != GL_NO_ERROR) {
-        cerr << "Ошибка при загрузке индексов: " << error << endl;
-    }
-    else {
-        cout << "indicies are good" << endl;
-    }
+    //error = glGetError(); // Проверка на ошибки
+    //if (error != GL_NO_ERROR) {
+    //    cerr << "Ошибка при загрузке индексов: " << error << endl;
+    //}
+    //else {
+    //    cout << "indicies are good" << endl;
+    //}
 
     cout << "Загружено вершин: " << vertices.size() << endl;
     cout << "Загружено индексов: " << indices.size() << endl;
