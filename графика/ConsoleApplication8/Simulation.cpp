@@ -63,16 +63,16 @@ void keyboardFunc(float deltaTime) {
         camera.zoomInOut(5.0f * deltaTime); // Отдаление камеры
     }
     if (GetAsyncKeyState('W')) { // Если нажата клавиша W
-        player->moveTo(player->getPosition().x, player->getPosition().y + 1, 0.05f); // Движение вверх
+        player->moveTo(player->getPosition().x, player->getPosition().y, -0.05f, 'y'); // Движение вверх
     }
     if (GetAsyncKeyState('S')) { // Если нажата клавиша S
-        player->moveTo(player->getPosition().x, player->getPosition().y - 1, 0.05f); // Движение вниз
+        player->moveTo(player->getPosition().x, player->getPosition().y, 0.05f, 'y'); // Движение вниз
     }
     if (GetAsyncKeyState('A')) { // Если нажата клавиша A
-        player->moveTo(player->getPosition().x - 1, player->getPosition().y, 0.05f); // Движение влево
+        player->moveTo(player->getPosition().x, player->getPosition().y, -0.05f, 'x'); // Движение влево
     }
     if (GetAsyncKeyState('D')) { // Если нажата клавиша D
-        player->moveTo(player->getPosition().x + 1, player->getPosition().y, 0.05f); // Движение вправо
+        player->moveTo(player->getPosition().x, player->getPosition().y, 0.05f, 'x'); // Движение вправо
     }
 }
 

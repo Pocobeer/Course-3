@@ -36,11 +36,21 @@ void GameObject::move(MoveDirection direction, float speed) {
 }
 
 // Перемещение в новую позицию
-void GameObject::moveTo(int x, int y, float speed) {
-    // Установка новой позиции и скорости
-    position = ivec2(x, y);
-    this->speed = speed;
-    moving = true;
+void GameObject::moveTo(int x, int y, float speed, char dir) {
+    //// Установка новой позиции и скорости
+    //position = ivec2(x, y);
+    //this->speed = speed;
+    //moving = true;
+    static float tempPosX = x;
+    static float tempPosY = y;
+    if (dir == 'x') {
+        tempPosX += speed;
+        position = ivec2(int(tempPosX), y);
+    }
+    if (dir == 'y') {
+        tempPosY += speed;
+        position = ivec2(x, int(tempPosY));
+    }
 }
 
 bool GameObject::isMoving() const {

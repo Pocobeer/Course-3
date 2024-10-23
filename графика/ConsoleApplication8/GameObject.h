@@ -27,7 +27,7 @@ public:
     void move(MoveDirection direction, float speed);
 
     // Перемещение в новую позицию
-    void moveTo(int x, int y, float speed);
+    void moveTo(int x, int y, float speed, char dir);
 
     // Проверка на то, что объект в настоящий момент движется
     bool isMoving() const;
