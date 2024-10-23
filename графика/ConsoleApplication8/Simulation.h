@@ -6,12 +6,13 @@
 #include <iostream>
 #include "Camera.h"
 
-
 // Функция для инициализации симуляции
 void initSimulation();
 
 // Функция симуляции
 void simulation();
+
+bool checkCollision(const ivec2& newPosition);
 
 // Функция для получения времени симуляции
 float getSimulationTime();

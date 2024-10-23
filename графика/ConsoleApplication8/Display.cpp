@@ -42,7 +42,7 @@ void display(void) {
 
     // Обновляем заголовок окна
     char title[50];
-    sprintf_s(title, "Laba_07 - FPS: %.2f", fps);
+    sprintf_s(title, "Laba_08 - FPS: %.2f", fps);
     glutSetWindowTitle(title);
 
     // Очищаем буферы

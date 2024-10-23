@@ -35,6 +35,20 @@ float getSimulationTime() {
     return deltaTime;
 }
 
+bool checkCollision(const ivec2& newPosition) {
+    // Проверка границ карты
+    //if (newPosition.x < -9 || newPosition.x >= 10 || newPosition.y < -9 || newPosition.y >= 10) {
+    //    cout << "Collision with boundary at: (" << newPosition.x << ", " << newPosition.y << ")" << endl;
+    //    return true; // Выход за пределы карты
+    //}
+    // Проверка на наличие объектов, с которыми нельзя пройти
+    if (passabilityMap[newPosition.y][newPosition.x] == 3) {
+        cout << "Collision with object at: (" << newPosition.x << ", " << newPosition.y << ")" << endl;
+        return true; // 3 - это граница
+    }
+    return false; // Нет коллизий
+}
+
 // Обработка ввода для камеры
 void keyboardFunc(float deltaTime) {
     // Используем GetAsyncKeyState для управления камерой
@@ -63,16 +77,32 @@ void keyboardFunc(float deltaTime) {
         camera.zoomInOut(5.0f * deltaTime); // Отдаление камеры
     }
     if (GetAsyncKeyState('W')) { // Если нажата клавиша W
-        player->moveTo(player->getPosition().x, player->getPosition().y, -0.05f, 'y'); // Движение вверх
+        ivec2 newPos = player->getPosition();
+        newPos.y -= 1; // Движение вверх
+        if (!checkCollision(newPos)) {
+            player->moveTo(newPos.x, newPos.y, -0.05f, 'y'); // Перемещение игрока
+        }
     }
     if (GetAsyncKeyState('S')) { // Если нажата клавиша S
-        player->moveTo(player->getPosition().x, player->getPosition().y, 0.05f, 'y'); // Движение вниз
+        ivec2 newPos = player->getPosition();
+        newPos.y += 1; // Движение вниз
+        if (!checkCollision(newPos)) {
+            player->moveTo(newPos.x, newPos.y, 0.05f, 'y'); // Перемещение игрока
+        }
     }
     if (GetAsyncKeyState('A')) { // Если нажата клавиша A
-        player->moveTo(player->getPosition().x, player->getPosition().y, -0.05f, 'x'); // Движение влево
+        ivec2 newPos = player->getPosition();
+        newPos.x -= 1; // Движение влево
+        if (!checkCollision(newPos)) {
+            player->moveTo(newPos.x, newPos.y, -0.05f, 'x'); // Перемещение игрока
+        }
     }
     if (GetAsyncKeyState('D')) { // Если нажата клавиша D
-        player->moveTo(player->getPosition().x, player->getPosition().y, 0.05f, 'x'); // Движение вправо
+        ivec2 newPos = player->getPosition();
+        newPos.x += 1; // Движение вправо
+        if (!checkCollision(newPos)) {
+            player->moveTo(newPos.x, newPos.y, 0.05f, 'x'); // Перемещение игрока
+        }
     }
 }
 

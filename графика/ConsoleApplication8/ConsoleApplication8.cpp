@@ -42,7 +42,7 @@ void main(int argc, char** argv)
 	printf("GL_VERSION = %s\n\n", glGetString(GL_VERSION));
 	initData();
 	initSimulation();
-	camera.setPosition(vec3(10.0f, 15.0f, 17.5f));
+	camera.setPosition(vec3(25.0f, 40.0f, 0.0f));
 	//initializeMapObjects(passabilityMap);
 
 	// УСТАНОВКА ФУНКЦИЙ ОБРАТНОГО ВЫЗОВА
