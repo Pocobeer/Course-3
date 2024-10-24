@@ -66,7 +66,7 @@ void Mesh::load(const string& filename) {
                         else {
                             // Создаем новую вершину и добавляем в массив
                             Vertex vertex;
-                            vertex.position = v[posIndex - 1]; // Индексы начинаются с 1
+                            vertex.position = v[posIndex - 1]; 
                             vertex.normal = n[normIndex - 1];
                             vertex.texCoord = t[texIndex - 1];
                             index = static_cast<GLuint>(vertices.size());
@@ -104,8 +104,8 @@ void Mesh::load(const string& filename) {
     //    cout << "indicies are good" << endl;
     //}
 
-    cout << "Загружено вершин: " << vertices.size() << endl;
-    cout << "Загружено индексов: " << indices.size() << endl;
+    //cout << "Загружено вершин: " << vertices.size() << endl;
+    //cout << "Загружено индексов: " << indices.size() << endl;
 
     //отвязка буферов
     glBindBuffer(GL_ARRAY_BUFFER,0);

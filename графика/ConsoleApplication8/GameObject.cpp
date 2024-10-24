@@ -83,5 +83,5 @@ void GameObject::simulate(float deltaTime) {
 void GameObject::draw(){
     graphicObject.setPosition(vec3(position.x, height, position.y));
 
-    graphicObject.draw(); // Предполагается, что метод draw не принимает аргументов
+    graphicObject.draw(); 
 }
