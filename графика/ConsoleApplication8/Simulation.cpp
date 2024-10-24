@@ -37,16 +37,35 @@ float getSimulationTime() {
 
 bool checkCollision(const ivec2& newPosition) {
     // Проверка границ карты
-    //if (newPosition.x < -9 || newPosition.x >= 10 || newPosition.y < -9 || newPosition.y >= 10) {
+    //if (newPosition.x <= 0 || newPosition.x >= 20 || newPosition.y <= 0 || newPosition.y >= 20) {
     //    cout << "Collision with boundary at: (" << newPosition.x << ", " << newPosition.y << ")" << endl;
     //    return true; // Выход за пределы карты
     //}
     // Проверка на наличие объектов, с которыми нельзя пройти
-    if (passabilityMap[newPosition.y][newPosition.x] == 3) {
+    if (passabilityMap[newPosition.x][newPosition.y] == 2) {
+        cout << "Collision with object at: (" << newPosition.x << ", " << newPosition.y << ")" << endl;
+        return true; // 2 - это граница
+    }
+    // Проверка на наличие объектов, с которыми нельзя пройти
+    if (passabilityMap[newPosition.x][newPosition.y] == 3) {
         cout << "Collision with object at: (" << newPosition.x << ", " << newPosition.y << ")" << endl;
         return true; // 3 - это граница
     }
+    if (passabilityMap[newPosition.x][newPosition.y] == 3) {
+        return false; // Позволяем движение
+    }
     return false; // Нет коллизий
+}
+
+void moveObject(const ivec2& newPosition, const ivec2& oldPosition) {
+    // Обновляем карту проходимости
+    passabilityMap[newPosition.y][newPosition.x] = 1; // Устанавливаем новое положение объекта
+    passabilityMap[oldPosition.y][oldPosition.x] = 0; // Освобождаем старое место
+
+    // Обновление позиции объекта в вашей игровой логике (например, в массиве объектов)
+    // Возможно, вам нужно будет обновить массив объектов, если он у вас есть
+     mapObjects[newPosition.y][newPosition.x] = mapObjects[oldPosition.y][oldPosition.x];
+     mapObjects[oldPosition.y][oldPosition.x] = nullptr; // Освобождаем старое место
 }
 
 // Обработка ввода для камеры
@@ -82,12 +101,20 @@ void keyboardFunc(float deltaTime) {
         if (!checkCollision(newPos)) {
             player->moveTo(newPos.x, newPos.y, -0.05f, 'y'); // Перемещение игрока
         }
+        else if (passabilityMap[newPos.y][newPos.x] == 1) {
+            // Если объект с ID 1, перемещаем его
+            moveObject(newPos, player->getPosition());
+        }
     }
     if (GetAsyncKeyState('S')) { // Если нажата клавиша S
         ivec2 newPos = player->getPosition();
         newPos.y += 1; // Движение вниз
         if (!checkCollision(newPos)) {
             player->moveTo(newPos.x, newPos.y, 0.05f, 'y'); // Перемещение игрока
+        }
+        else if (passabilityMap[newPos.y][newPos.x] == 1) {
+            // Если объект с ID 1, перемещаем его
+            moveObject(newPos, player->getPosition());
         }
     }
     if (GetAsyncKeyState('A')) { // Если нажата клавиша A
@@ -96,6 +123,10 @@ void keyboardFunc(float deltaTime) {
         if (!checkCollision(newPos)) {
             player->moveTo(newPos.x, newPos.y, -0.05f, 'x'); // Перемещение игрока
         }
+        else if (passabilityMap[newPos.y][newPos.x] == 1) {
+            // Если объект с ID 1, перемещаем его
+            moveObject(newPos, player->getPosition());
+        }
     }
     if (GetAsyncKeyState('D')) { // Если нажата клавиша D
         ivec2 newPos = player->getPosition();
@@ -103,7 +134,12 @@ void keyboardFunc(float deltaTime) {
         if (!checkCollision(newPos)) {
             player->moveTo(newPos.x, newPos.y, 0.05f, 'x'); // Перемещение игрока
         }
+        else if (passabilityMap[newPos.y][newPos.x] == 1) {
+            // Если объект с ID 1, перемещаем его
+            moveObject(newPos, player->getPosition());
+        }
     }
+
 }
 
 // Функция симуляции - вызывается максимально часто

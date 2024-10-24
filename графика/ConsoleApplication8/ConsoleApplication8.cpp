@@ -26,7 +26,7 @@ void main(int argc, char** argv)
 	// 2. устанавливаем размер окна
 	glutInitWindowSize(800, 600);
 	// 3. создаем окно
-	glutCreateWindow("Laba_06");
+	glutCreateWindow("Laba_08");
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{

@@ -52,13 +52,13 @@ void initData()
         for (int j = 0; j < 21; j++) {
             switch (passabilityMap[i][j]) {
             case 1:
-                mapObjects[i][j] = gameObjectFactory.create(GameObjectType::LIGHT_OBJECT, i-10, j-10);
+                mapObjects[i][j] = gameObjectFactory.create(GameObjectType::LIGHT_OBJECT, i, j);
                 break;
             case 2:
-                mapObjects[i][j] = gameObjectFactory.create(GameObjectType::HEAVY_OBJECT, i-10, j-10);
+                mapObjects[i][j] = gameObjectFactory.create(GameObjectType::HEAVY_OBJECT, i, j);
                 break;
             case 3:
-                mapObjects[i][j] = gameObjectFactory.create(GameObjectType::BORDER_OBJECT, i-10, j-10);
+                mapObjects[i][j] = gameObjectFactory.create(GameObjectType::BORDER_OBJECT, i, j);
                 break;
             default:
                 mapObjects[i][j] = nullptr;
@@ -67,10 +67,10 @@ void initData()
         }
     }
     // инициализация главного героя
-    player = gameObjectFactory.create(GameObjectType::PLAYER, 19-10, 1-10);
+    player = gameObjectFactory.create(GameObjectType::PLAYER, 19, 1);
     
     // инициализация плоскости
-    planeGraphicObject.setPosition(vec3(0, -0.5, 0));
+    planeGraphicObject.setPosition(vec3(10, -0.5, 10));
     shared_ptr<Mesh> planeMesh = make_shared<Mesh>();
     planeMesh->load("meshes/HighPolyPlane.obj");
 

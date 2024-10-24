@@ -58,7 +58,7 @@ void Camera::apply() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     gluLookAt(position.x, position.y, position.z,
-        0.0f, 0.0f, 0.0f, // Точка наблюдения
+        10.0f, 0.0f, 10.0f, // Точка наблюдения
         0.0f, 1.0f, 0.0f); // Вектор "вверх"
 }
 
