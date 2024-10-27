@@ -42,23 +42,24 @@ bool checkCollision(const ivec2& newPosition) {
     }
 
     //// Проверка столкновения с легким объектом
-    //if (passabilityMap[newPosition.x][newPosition.y] == 1) { 
-    //    // Вычисляем позицию, куда будет толкаться объект
-    //    ivec2 pushedPosition = newPosition + (newPosition - player->getPosition());
+    if (passabilityMap[newPosition.x][newPosition.y] == 1) { 
+        // Вычисляем позицию, куда будет толкаться объект
+        ivec2 pushedPosition = newPosition + (newPosition - player->getPosition());
 
-    //    // Проверяем, свободна ли ячейка за легким объектом
-    //    if (pushedPosition.x >= 0 && pushedPosition.x < 21 &&
-    //        pushedPosition.y >= 0 && pushedPosition.y < 21 &&
-    //        passabilityMap[pushedPosition.x][pushedPosition.y] == 0) {
-    //        // Перемещение легкого объекта
-    //        passabilityMap[pushedPosition.x][pushedPosition.y] = 1; // Устанавливаем объект на новую позицию
-    //        passabilityMap[newPosition.x][newPosition.y] = 0; // Убираем объект с текущей позиции
-    //        mapObjects[pushedPosition.x][pushedPosition.y] = mapObjects[newPosition.x][newPosition.y]; // Обновляем массив объектов
-    //        mapObjects[newPosition.x][newPosition.y] = nullptr; // Убираем объект с текущей позиции
-    //        return false; // Перемещение возможно
-    //    }
-    //    return true; // Столкновение с легким объектом, но перемещение невозможно
-    //}
+        // Проверяем, свободна ли ячейка за легким объектом
+        if (pushedPosition.x >= 0 && pushedPosition.x < 21 &&
+            pushedPosition.y >= 0 && pushedPosition.y < 21 &&
+            passabilityMap[pushedPosition.x][pushedPosition.y] == 0) {
+            // Перемещение легкого объекта
+            passabilityMap[pushedPosition.x][pushedPosition.y] = 1; // Устанавливаем объект на новую позицию
+
+            passabilityMap[newPosition.x][newPosition.y] = 0; // Убираем объект с текущей позиции
+            mapObjects[pushedPosition.x][pushedPosition.y] = mapObjects[newPosition.x][newPosition.y]; // Обновляем массив объектов
+            //mapObjects[newPosition.x][newPosition.y] = nullptr; // Убираем объект с текущей позиции
+            return false; // Перемещение возможно
+        }
+        return true; // Столкновение с легким объектом, но перемещение невозможно
+    }
     return false; // Нет коллизий
 }
 
