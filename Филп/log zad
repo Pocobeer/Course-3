@@ -1,0 +1,35 @@
+lies(lion, monday).
+lies(lion, tuesday).
+lies(lion, wednesday).
+lies(unicorn, thursday).
+lies(unicorn, friday).
+lies(unicorn, saturday).
+
+yesterday(monday, sunday).
+yesterday(tuesday, monday).
+yesterday(wednesday, tuesday).
+yesterday(thursday, wednesday).
+yesterday(friday, thursday).
+yesterday(saturday, friday).
+yesterday(sunday, saturday).
+
+member(X, [X|_]). 
+
+member(X, [_|Tail]) :- 
+    member(X, Tail).
+
+%true(lion, Day):- not(lies(lion,Day)).
+%true(unicorn,Day):-not(lies(unicorn,Day)).
+
+lion_request(Day):-
+yesterday(Day,Yesterday), not(lies(lion,Yesterday)).
+
+unicorn_request(Day):-
+yesterday(Day,Yesterday), not(lies(unicorn,Yesterday)).
+
+find(Day):-
+member(Day, [monday, tuesday, wednesday, thursday, friday, saturday, sunday]),
+lion_request(Day),
+unicorn_request(Day).
+
+?- find(Day), write(Day).
