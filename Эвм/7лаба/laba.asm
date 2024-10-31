@@ -162,22 +162,6 @@
                          ;нЄа  
      call  VideoXcg      ;Ё ўл§ў вм Їа®жҐ¤гаг Ј иҐЁп
 
-  ;  SwLoop1:
-  ;    in    AL,60h        ;ў AL - Є®¤  ¦ в®© Є« ўЁиЁ
-  ;    cmp   AL, 10h        ;їҐб«Ё  ¦ в  Ctrl - в®  
-  ;    je    SwLoop2       ;ЩЇа®ўҐаЄг ®вЇгбЄ Ёп
-  ;    cmp   AL,90h        ;їҐб«Ё Ўл«  ®вЇгйҐ  Ctrl, в®
-  ;    je    SwLoop1       ;Щ¤ «миҐ   ®Їа®б Є« ўЁ вгал
-  ;    mov   Sign,0        ;Ё зҐ бЎа®бЁвм Є®«-ў®  ¦ вЁ©
-  ;    jmp   short SwLoop1 ;Ё б®ў    ®Їа®б Є« ўЁ вгал
-
-  ;  SwLoop2:
-  ;    in    AL,60h        ;ў AL - бЄ  Є®¤ Є« ўЁиЁ
-  ;    cmp   AL,90h        ;їҐб«Ё Ґ Є®¤ ®вЇгбЄ Ёп Ctrl, в®
-  ;    jne   SwLoop2       ;Щ®¦Ё¤ вм ®вЇгбЄ Ёп Є« ўЁиЁ
-  ;    inc   Sign          ;гўҐ«ЁзЁвм Є®«-ў® ў¦ вЁ©   Ctrl
-  ;    cmp   Sign,3        ;їҐб«Ё ҐйҐ Ґ  ¦ «Ё 3-Ё а § ,в®
-  ;    jne   SwLoop1       ;ЩЇҐаҐ©вЁ   ®Їа®б Є« ўЁ вгал
   SWLoop1:
     in al, 60h
     cmp al, 2Fh
@@ -231,30 +215,7 @@
     cmp al, 9Eh 
     je Exit 
     jmp SWLoop41
-  ; SWLoop3:
-  ;   in al, 60h
-  ;   cmp al, 2Fh
-  ;   je SWLoop31
-  ;   jne SWLoop1
-  ; SWLoop31:
-  ;   in al,60h 
-  ;   cmp al, 0AFh 
-  ;   je SWLoop4
-  ;   cmp al, 2Fh
-  ;   je SWLoop31 
-  ;   jmp SWLoop1 
-  ; SWLoop4:
-  ;   in al, 60h
-  ;   cmp al, 1Eh
-  ;   je SWLoop41
-  ;   jne SWLoop1
-  ; SWLoop41:
-  ;   in al,60h 
-  ;   cmp al, 9Eh 
-  ;   je Exit
-  ;   cmp al, 1Eh
-  ;   je SWLoop41 
-  ;   jmp SWLoop1 
+  
 
 
 Exit:
