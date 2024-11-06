@@ -1,22 +1,42 @@
-maybe(tiger,tiger).
-maybe(princess,princess).
-maybe(princess,tiger).
-maybe(tiger,princess).
 
-room_1(X):-X=princess.
-room_1(X):- X=tiger.
-room_2(Y):- Y=princess.
-room_2(Y):- Y=tiger.
+room(1).
+room(2).
 
-tables(room_1(tiger),room_2(princess)).
-tables(room_1(princess),room_2(tiger)).
+occupies(tiger, 1).
+occupies(princess, 2).
 
-who_where(X,Y):-maybe(X,Y), 
-                               room_1(X),
-                               room_2(Y),
-		       tables(room_1(X),room_2(Y)).
+statement(1, both_rooms_tigers).
 
-%?-who_where(X,Y), write("In first room - "), write(X), nl, 
-                                 write("In second room - "), write(Y).
+statement(2, this_room_tiger).
 
 
+false_statement(both_rooms_tigers) :-
+    occupies(tiger, 1),
+    occupies(princess, 2).
+
+false_statement(this_room_tiger) :-
+    occupies(princess, 2).
+
+who_is_in_room(Room, Occupant) :-
+    occupies(Occupant, Room).
+
+solution :-
+    false_statement(both_rooms_tigers),
+    false_statement(this_room_tiger).
+
+print_solution :- 
+    room(R),
+    who_is_in_room(R, Occupant),
+    write('In room '), 
+    write(R), 
+    write(', there is a '), 
+    write(Occupant), 
+    write('.'), 
+    nl. 
+
+run :- 
+    solution,
+    print_solution.
+
+
+?-run.

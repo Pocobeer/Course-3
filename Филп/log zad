@@ -1,9 +1,12 @@
+
 lies(lion, monday).
 lies(lion, tuesday).
 lies(lion, wednesday).
+
 lies(unicorn, thursday).
 lies(unicorn, friday).
 lies(unicorn, saturday).
+
 
 yesterday(monday, sunday).
 yesterday(tuesday, monday).
@@ -13,23 +16,32 @@ yesterday(friday, thursday).
 yesterday(saturday, friday).
 yesterday(sunday, saturday).
 
-member(X, [X|_]). 
+lion_truthful(Day) :-
+    yesterday(Day, Yesterday),
+    (lies(lion, Yesterday) -> false ; true).
 
-member(X, [_|Tail]) :- 
-    member(X, Tail).
+unicorn_truthful(Day) :-
+    yesterday(Day, Yesterday),
+    (lies(unicorn, Yesterday) -> false ; true).
 
-%true(lion, Day):- not(lies(lion,Day)).
-%true(unicorn,Day):-not(lies(unicorn,Day)).
+lion_request(Day) :-
+    yesterday(Day, Yesterday),
+    lies(lion, Yesterday).
 
-lion_request(Day):-
-yesterday(Day,Yesterday), not(lies(lion,Yesterday)).
 
-unicorn_request(Day):-
-yesterday(Day,Yesterday), not(lies(unicorn,Yesterday)).
+unicorn_request(Day) :-
+    yesterday(Day, Yesterday),
+    lies(unicorn, Yesterday).
 
-find(Day):-
-member(Day, [monday, tuesday, wednesday, thursday, friday, saturday, sunday]),
-lion_request(Day),
-unicorn_request(Day).
 
-?- find(Day), write(Day).
+find(Day) :-
+    member(Day, [monday, tuesday, wednesday, thursday, friday, saturday, sunday]),
+    (lion_request(Day);lion_truthful(Day)) ,
+    (unicorn_request(Day);unicorn_truthful(Day)) .
+
+
+run :-
+    find(Day),
+    write("The day: "), write(Day), nl.
+
+?-run.
