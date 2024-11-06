@@ -2,6 +2,20 @@ import tkinter as tk
 import ctypes
 import os
 import subprocess
+from ctypes import wintypes
+
+# Определяем константы для работы с Windows API (для высокого контраста и цветных фильтров)
+SPI_SETHIGHCONTRAST = 0x0043
+SPI_GETHIGHCONTRAST = 0x0042
+SPIF_SENDCHANGE = 0x0002
+
+# Структура HIGHCONTRAST для Windows API
+class HIGHCONTRAST(ctypes.Structure):
+    _fields_ = [
+        ("cbSize", wintypes.UINT),
+        ("dwFlags", wintypes.DWORD),
+        ("lpszDefaultScheme", wintypes.LPWSTR)
+    ]
 
 def start_narrator():
     narrator_path = r"C:\Windows\System32\Narrator.exe"
@@ -15,53 +29,57 @@ def start_on_screen_keyboard():
     osk_path = r"C:\Windows\System32\osk.exe"
     ctypes.windll.shell32.ShellExecuteW(None, "open", osk_path, None, None, 1)
 
-def start_color_filter():
-    command = 'Set-ItemProperty -Path "HKCU:\\Software\\Microsoft\\ColorFiltering" -Name "ColorFilterActive" -Value 1'
-    subprocess.run(["powershell", "-Command", command])
+# Функция для включения/выключения высокого контраста
+def toggle_high_contrast(enable):
+    hc = HIGHCONTRAST()
+    hc.cbSize = ctypes.sizeof(HIGHCONTRAST)
+    
+    # Получаем текущие параметры
+    ctypes.windll.user32.SystemParametersInfoW(SPI_GETHIGHCONTRAST, hc.cbSize, ctypes.byref(hc), 0)
+    
+    if enable:
+        # Устанавливаем флаг HCF_HIGHCONTRASTON для включения высокого контраста
+        hc.dwFlags |= 0x00000001
+    else:
+        # Снимаем флаг HCF_HIGHCONTRASTON для отключения высокого контраста
+        hc.dwFlags &= ~0x00000001
 
-def stop_color_filter():
-    command = 'Set-ItemProperty -Path "HKCU:\\Software\\Microsoft\\ColorFiltering" -Name "ColorFilterActive" -Value 0'
-    subprocess.run(["powershell", "-Command", command])
+    # Применяем изменения
+    ctypes.windll.user32.SystemParametersInfoW(SPI_SETHIGHCONTRAST, hc.cbSize, ctypes.byref(hc), SPIF_SENDCHANGE)
 
-def toggle_high_contrast():
-    command = 'Set-ItemProperty -Path "HKCU:\\Control Panel\\Accessibility\\HighContrast" -Name "HighContrast" -Value 1'
-    subprocess.run(["powershell", "-Command", command])
 
-def start_text_to_speech():
-    command = 'Add-Type –AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak("Hello, this is a text to speech test.")'
-    subprocess.run(["powershell", "-Command", command])
+def restart_computer():
+    # Перезагрузка компьютера
+    subprocess.run(["shutdown", "/r", "/t", "0"])
 
-# Создание основного окна
-root = tk.Tk()
-root.title("Специальные возможности Windows")
 
-# Кнопка для запуска экранного диктора
-narrator_button = tk.Button(root, text="Включить экранный диктор", command=start_narrator)
-narrator_button.pack(padx=10, pady=10)
+if __name__ == "__main__":
+    root = tk.Tk()
+    root.title("Специальные возможности Windows")
 
-# Кнопка для запуска увеличительного стекла
-magnifier_button = tk.Button(root, text="Включить увеличительное стекло", command=start_magnifier)
-magnifier_button.pack(padx=10, pady=10)
+    # Кнопка для запуска экранного диктора
+    narrator_button = tk.Button(root, text="Включить экранный диктор", command=start_narrator)
+    narrator_button.pack(padx=10, pady=10)
 
-# Кнопка для запуска экранной клавиатуры
-osk_button = tk.Button(root, text="Включить экранную клавиатуру", command=start_on_screen_keyboard)
-osk_button.pack(padx=10, pady=10)
+    # Кнопка для запуска увеличительного стекла
+    magnifier_button = tk.Button(root, text="Включить увеличительное стекло", command=start_magnifier)
+    magnifier_button.pack(padx=10, pady=10)
 
-# Кнопка для включения цветового фильтра
-color_filter_button = tk.Button(root, text="Включить цветовой фильтр", command=start_color_filter)
-color_filter_button.pack(padx=10, pady=10)
+    # Кнопка для запуска экранной клавиатуры
+    osk_button = tk.Button(root, text="Включить экранную клавиатуру", command=start_on_screen_keyboard)
+    osk_button.pack(padx=10, pady=10)
 
-# Кнопка для отключения цветового фильтра
-stop_color_filter_button = tk.Button(root, text="Отключить цветовой фильтр", command=stop_color_filter)
-stop_color_filter_button.pack(padx=10, pady=10)
+    # Кнопка для включения высокого контраста
+    enable_button = tk.Button(root, text="Включить высокий контраст", command=lambda: toggle_high_contrast(True))
+    enable_button.pack(pady=10)
 
-# Кнопка для включения высокого контраста
-high_contrast_button = tk.Button(root, text="Включить высокий контраст", command=toggle_high_contrast)
-high_contrast_button.pack(padx=10, pady=10)
+    # Кнопка для отключения высокого контраста
+    disable_button = tk.Button(root, text="Отключить высокий контраст", command=lambda: toggle_high_contrast(False))
+    disable_button.pack(pady=10)
 
-# Кнопка для запуска диктора текста
-text_to_speech_button = tk.Button(root, text="Запустить диктор текста", command=start_text_to_speech)
-text_to_speech_button.pack(padx=10, pady=10)
+    # Кнопка для перезагрузки компьютера
+    restart_button = tk.Button(root, text="Перезагрузить компьютер", command=restart_computer)
+    restart_button.pack(padx=10, pady=10)
 
-# Запуск главного цикла приложения
-root.mainloop()
+    # Запуск главного цикла приложения
+    root.mainloop()
