@@ -1,0 +1,166 @@
+Turbo Assembler	 Version 5.0	    11-06-24 21:34:16	    Page 1
+8lab.asm
+
+
+
+      1					 ; Консольное	приложение, выводящее на консоль
+      2					 ; файл
+      3					 include typefolder.inc
+1     4					 includelib import32.lib
+1     5					 ; ����� ������������ ������� �� kernel32.dll
+1     6					  extrn	ExitProcess:near
+1     7					  extrn	GetCommandLineA:near
+1     8					  extrn	CreateFileA:near
+1     9					  extrn	CloseHandle:near
+1    10					  extrn	ReadFile:near
+1    11					 extrn WriteFile:near
+1    12					 ; ������������	��� ���������� ���������� ����
+1    13					  GetCommandLine equ GetCommandLineA
+1    14					  CreateFile equ CreateFileA
+1    15					 ; ����������� ��������	� �����
+1    16		  =-000B		 STD_OUTPUT_HANDLE equ -11
+1    17		  = 80000000h		 GENERIC_READ equ 80000000h
+1    18		  = 40000000h		 GENERIC_WRITE equ 40000000h
+1    19		  =0003			 OPEN_EXISTING equ 3
+1    20
+     21					 .386
+     22	00000000			 .model	FLAT,STDCALL
+     23	00000000			 .data
+     24	00000000  ????????		 hcons dd ?
+     25	00000004  ????????		 hfile dd ?
+     26	00000008  64*(00)		 buf db	100 dup(0)
+     27	0000006C  012C*(00)		 bufer db 300 dup(0)
+     28	00000198  ????????		 numb dd ?
+     29	0000019C  ????????		 numw dd ?
+     30	000001A0  43 4F	4E 4F 55 54 24	 nameout db 'CONOUT$'
+     31	000001A7			 .code
+     32	00000000			 _start: call CreateFile,offset	nameout,\
+     33					 GENERIC_READ+GENERIC_WRITE,0,0,OPEN_EXISTING,\
+     34					 0,0
+1    35	00000000  6A 00				 PUSH	 0
+1    36	00000002  6A 00				 PUSH	 0
+1    37	00000004  6A 03				 PUSH	 OPEN_EXISTING
+1    38	00000006  6A 00				 PUSH	 0
+1    39	00000008  6A 00				 PUSH	 0
+1    40	0000000A  68 C0000000			 PUSH	 80000000H+40000000H
+1    41	0000000F  68 000001A0r			 PUSH	 offset	nameout
+1    42	00000014  E8 00000000e			 CALL	 CreateFileA
+     43	00000019  A3 00000000r		  mov hcons,eax; получение ссылки на консоль
+     44					 ; как на файл
+     45	0000001E  E8 00000000e		  call GetCommandLine; в EAX указатель на
+     46					 ; командную строку
+     47	00000023  8B F0			  mov esi,eax
+     48	00000025  33 C9			  xor ecx,ecx ;счетчик
+     49	00000027  BA 00000001		  mov edx,1 ;признак
+     50	0000002C  80 3E	00		 n1: cmp byte ptr [esi],0;конец строки
+     51	0000002F  0F 84	00000080	  je end_ ;нет параметра
+     52	00000035  80 3E	20		  cmp byte ptr [esi],32;пробел
+     53	00000038  74 16	90 90 90 90	  je n3
+     54	0000003E  03 CA			  add ecx,edx
+     55	00000040  83 F9	02		  cmp ecx,2;Первый параметр – имя программы.
+     56					 ; Второй	– имя файла.
+     57	00000043  74 11	90 90 90 90	  je n4
+Turbo Assembler	 Version 5.0	    11-06-24 21:34:16	    Page 2
+8lab.asm
+
+
+
+     58	00000049  33 D2			  xor edx,edx
+     59	0000004B  EB 06	90 90 90	  jmp n2
+     60	00000050  83 CA	01		 n3: or	edx,1
+     61	00000053  46			 n2: inc esi
+     62	00000054  EB D6			  jmp n1
+     63	00000056			 n4: call CreateFile, esi,\
+     64					 GENERIC_READ+GENERIC_WRITE,\
+     65					  0,0,OPEN_EXISTING,0,0
+1    66	00000056  6A 00				 PUSH	 0
+1    67	00000058  6A 00				 PUSH	 0
+1    68	0000005A  6A 03				 PUSH	 OPEN_EXISTING
+1    69	0000005C  6A 00				 PUSH	 0
+1    70	0000005E  6A 00				 PUSH	 0
+1    71	00000060  68 C0000000			 PUSH	 80000000H+40000000H
+1    72	00000065  56				 PUSH	 esi
+1    73	00000066  E8 00000000e			 CALL	 CreateFileA
+     74	0000006B  A3 00000004r		  mov hfile,eax;открытие файла, имя которого
+     75					 ; указано в командной	строке
+     76	00000070			 l0: call ReadFile, hfile,offset bufer,300,\
+     77					  offset numb,0	;чтение в буфер
+1    78	00000070  6A 00				 PUSH	 0
+1    79	00000072  68 00000198r			 PUSH	 offset	numb
+1    80	00000077  68 0000012C			 PUSH	 300
+1    81	0000007C  68 0000006Cr			 PUSH	 offset	bufer
+1    82	00000081  FF 35	00000004r		 PUSH	 hfile
+1    83	00000087  E8 00000000e			 CALL	 ReadFile
+     84					  call WriteFile,hcons,offset bufer,numb,\
+     85					  offset numw,0;вывод на	консоль как в файл
+1    86	0000008C  6A 00				 PUSH	 0
+1    87	0000008E  68 0000019Cr			 PUSH	 offset	numw
+1    88	00000093  FF 35	00000198r		 PUSH	 numb
+1    89	00000099  68 0000006Cr			 PUSH	 offset	bufer
+1    90	0000009E  FF 35	00000000r		 PUSH	 hcons
+1    91	000000A4  E8 00000000e			 CALL	 WriteFile
+     92	000000A9  81 3D	00000198r     +	  cmp numb,300;	numb<300 - файл закончился
+     93		  0000012C
+     94	000000B3  74 BB			  je l0
+     95	000000B5			 end_: call ExitProcess,0
+1    96	000000B5  6A 00				 PUSH	 0
+1    97	000000B7  E8 00000000e			 CALL	 ExitProcess
+     98					 end _start
+Turbo Assembler	 Version 5.0	    11-06-24 21:34:16	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??date				  Text	 "11-06-24"
+??filename			  Text	 "8lab	  "
+??time				  Text	 "21:34:16"
+??version			  Number 0500
+@32Bit				  Text	 1
+@CodeSize			  Text	 0
+@Cpu				  Text	 0F0FH
+@DataSize			  Text	 0
+@FileName			  Text	 8lab
+@Interface			  Text	 003h
+@Model				  Text	 1
+@WordSize			  Text	 4
+@code				  Text	 FLAT
+@curseg				  Text	 _TEXT
+@data				  Text	 FLAT
+@stack				  Text	 FLAT
+CloseHandle			  Near16 ----:---- Extern
+CreateFile			  Alias	 CreateFileA
+CreateFileA			  Near16 ----:---- Extern
+ExitProcess			  Near16 ----:---- Extern
+GENERIC_READ			  Text	 80000000h
+GENERIC_WRITE			  Text	 40000000h
+GetCommandLine			  Alias	 GetCommandLineA
+GetCommandLineA			  Near16 ----:---- Extern
+OPEN_EXISTING			  Number 0003
+ReadFile			  Near16 ----:---- Extern
+STD_OUTPUT_HANDLE		  Number -000B
+WriteFile			  Near16 ----:---- Extern
+_start				  Near32 FLAT:0000
+buf				  Byte	 FLAT:0008
+bufer				  Byte	 FLAT:006C
+end_				  Near32 FLAT:00B5
+hcons				  Dword	 FLAT:0000
+hfile				  Dword	 FLAT:0004
+l0				  Near32 FLAT:0070
+n1				  Near32 FLAT:002C
+n2				  Near32 FLAT:0053
+n3				  Near32 FLAT:0050
+n4				  Near32 FLAT:0056
+nameout				  Byte	 FLAT:01A0
+numb				  Dword	 FLAT:0198
+numw				  Dword	 FLAT:019C
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  _DATA				  32  01A7 Dword  Public  DATA
+FLAT				  Group
+_TEXT				  32  00BC Dword  Public  CODE
+

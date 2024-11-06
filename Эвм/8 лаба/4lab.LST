@@ -1,0 +1,123 @@
+Turbo Assembler	 Version 5.0	    09-20-24 09:29:34	    Page 1
+4lab.asm
+
+
+
+      1					 include include.inc
+1     2					 includelib import32.lib
+1     3					  extrn	MessageBoxA:near
+1     4					  extrn	ExitProcess:near
+1     5					  extrn	LoadLibraryA:near
+1     6					  extrn	FreeLibrary:near
+1     7					  extrn	GetProcAddress:near
+1     8					  MessageBox equ MessageBoxA
+1     9					  LoadLibrary equ LoadLibraryA
+1    10		  =0000			 MB_OK equ 0000H
+     11					 includelib 4_kab_d.lib
+     12					 extrn PadCh: near	   ; Объявление внешней подпрограммы
+     13
+     14					 .386
+     15	00000000			 .model	flat, stdcall
+     16
+     17	00000000			 .const
+     18	00000000  42 65	66 6F 72 65 20+	     title_S_before db 'Before neyav add:', 0
+     19		  6E 65	79 61 76 20 61+
+     20		  64 64	3A 00
+     21	00000012  41 66	74 65 72 20 61+	     title_S_after db 'After add:', 0
+     22		  64 64	3A 00
+     23
+     24	0000001D			 .data
+     25	00000000  05 71	77 65 72 74 00	     S db 5, 'qwert', 0	      ;	Исходная строка с длиной
+     26	00000007  FF*(00)		     Res db 255	dup(0)	      ;	Буфер для результата,			    +
+     27					 инициализированный нулями
+     28	00000106  41			     Ch1 db 'A'		      ;	Символ для добавления
+     29	00000107  0A			     Len1 db 10			; Длина строки (должна			    +
+     30					 соответствовать	фактической длине)
+     31
+     32	00000108			 .code
+     33	00000000			 start:
+     34					     ; Вывод сообщения перед	добавлением
+     35					     call MessageBox, 0, offset	S+1, offset title_S_before, MB_OK
+1    36	00000000  6A 00				 PUSH	 MB_OK
+1    37	00000002  68 00000000r			 PUSH	 offset	title_S_before
+1    38	00000007  68 00000001r			 PUSH	 offset	S+1
+1    39	0000000C  6A 00				 PUSH	 0
+1    40	0000000E  E8 00000000e			 CALL	 MessageBoxA
+     41
+     42					     ; Вызов подпрограммы PadCh
+     43	00000013  68 00000007r		     push    offset Res	       ; адрес результата
+     44	00000018  68 00000000r		     push    offset S	      ;	адрес строки	S
+     45	0000001D  A0 00000106r		     mov     al, [Ch1]	      ;	символ для добавления
+     46	00000022  50			     push    eax	      ;	символ
+     47	00000023  A0 00000107r		     mov     al, [Len1]	      ;	длина строки
+     48	00000028  50			     push    eax	      ;	длина
+     49	00000029  E8 00000000e		     call PadCh		    ; вызов вашей подпрограммы
+     50
+     51					     ; Вывод сообщения после	добавления
+     52					     call MessageBox, 0, offset	Res+1, offset title_S_after, MB_OK
+1    53	0000002E  6A 00				 PUSH	 MB_OK
+1    54	00000030  68 00000012r			 PUSH	 offset	title_S_after
+1    55	00000035  68 00000008r			 PUSH	 offset	Res+1
+1    56	0000003A  6A 00				 PUSH	 0
+1    57	0000003C  E8 00000000e			 CALL	 MessageBoxA
+Turbo Assembler	 Version 5.0	    09-20-24 09:29:34	    Page 2
+4lab.asm
+
+
+
+     58
+     59					     ; Завершение программы
+     60	00000041  6A 00			     push    0		      ;	код завершения
+     61	00000043  E8 00000000e		     call ExitProcess	      ;	завершение программы
+     62
+     63	00000048			 ends
+     64					 end start
+Turbo Assembler	 Version 5.0	    09-20-24 09:29:34	    Page 3
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??date				  Text	 "09-20-24"
+??filename			  Text	 "4lab	  "
+??time				  Text	 "09:29:34"
+??version			  Number 0500
+@32Bit				  Text	 1
+@CodeSize			  Text	 0
+@Cpu				  Text	 0F0FH
+@DataSize			  Text	 0
+@FileName			  Text	 4lab
+@Interface			  Text	 003h
+@Model				  Text	 1
+@WordSize			  Text	 4
+@code				  Text	 FLAT
+@curseg				  Text	 _TEXT
+@data				  Text	 FLAT
+@stack				  Text	 FLAT
+Ch1				  Byte	 FLAT:0106
+ExitProcess			  Near16 ----:---- Extern
+FreeLibrary			  Near16 ----:---- Extern
+GetProcAddress			  Near16 ----:---- Extern
+Len1				  Byte	 FLAT:0107
+LoadLibrary			  Alias	 LoadLibraryA
+LoadLibraryA			  Near16 ----:---- Extern
+MB_OK				  Number 0000
+MessageBox			  Alias	 MessageBoxA
+MessageBoxA			  Near16 ----:---- Extern
+PadCh				  Near16 ----:---- Extern
+Res				  Byte	 FLAT:0007
+S				  Byte	 FLAT:0000
+start				  Near32 FLAT:0000
+title_S_after			  Byte	 FLAT:0012
+title_S_before			  Byte	 FLAT:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  CONST				  32  001D Dword  Public  DATA
+  _DATA				  32  0108 Dword  Public  DATA
+FLAT				  Group
+_TEXT				  32  0048 Dword  Public  CODE
+
