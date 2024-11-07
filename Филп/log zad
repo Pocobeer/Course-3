@@ -7,6 +7,9 @@ lies(unicorn, thursday).
 lies(unicorn, friday).
 lies(unicorn, saturday).
 
+member(Elem, [Elem|_Tail]).
+member(Elem, [_Head|Tail]):-
+   member(Elem, Tail).
 
 yesterday(monday, sunday).
 yesterday(tuesday, monday).
@@ -17,12 +20,10 @@ yesterday(saturday, friday).
 yesterday(sunday, saturday).
 
 lion_truthful(Day) :-
-    yesterday(Day, Yesterday),
-    (lies(lion, Yesterday) -> false ; true).
+    not(lies(lion,Day)).
 
 unicorn_truthful(Day) :-
-    yesterday(Day, Yesterday),
-    (lies(unicorn, Yesterday) -> false ; true).
+    not(lies(unicorn, Day)).
 
 lion_request(Day) :-
     yesterday(Day, Yesterday),
@@ -36,8 +37,10 @@ unicorn_request(Day) :-
 
 find(Day) :-
     member(Day, [monday, tuesday, wednesday, thursday, friday, saturday, sunday]),
-    (lion_request(Day);lion_truthful(Day)) ,
-    (unicorn_request(Day);unicorn_truthful(Day)) .
+  lion_truthful(Day),
+    not(unicorn_truthful(Day)).
+    lion_request(Day),
+    unicorn_request(Day).
 
 
 run :-
