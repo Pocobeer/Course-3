@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch Example</title>
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 42px;
+            height: 22px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: not-allowed; /* Указывает, что переключатель неактивен */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc; /* Цвет по умолчанию */
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        /* Цвет для отмеченного и отключенного состояния */
+        input:checked:disabled + .slider {
+            background-color: red; /* Красный цвет для включенного состояния */
+        }
+
+        input:checked:disabled + .slider:before {
+            background-color: white; /* Цвет для ползунка */
+            transform: translateX(18px); /* Сдвигаем в положение включенного состояния */
+        }
+
+        /* Если чекбокс отключен, не менять цвет */
+        input:disabled + .slider {
+            background-color: #ccc; /* Серый цвет для отключенного состояния */
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 22px;
+        }
+
+        .slider.round:before {
+            border-radius: 38px;
+        }
+    </style>
+</head>
+<body>
+
+<div style="text-align: center;">
+    <label class="switch">
+        <input type="checkbox" id="check1" name="check" value="1" data-interval="8:00 - 9:00"  />
+        <span class="slider round"></span>
+    </label>
+    <span>8:00 - 9:00</span>
+</div>
+
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const checkbox = document.getElementById('check1');
+        // checkbox.checked = true; // Установить чекбокс как отмеченный, если необходимо
+    });
+</script> -->
+
+</body>
+</html>
