@@ -3,8 +3,9 @@ import ctypes #Для работы с Windows API
 import os #Для работы с операционной системой
 import subprocess #Для работы с оболочками
 from ctypes import wintypes #содержит определения типов данных Windows
+from tkinter import font  # Импортируем модуль для работы со шрифтами
 
-# Определяем константы для работы с Windows API (для высокого контраста и цветных фильтров)
+# Определяем константы для работы с Windows API (для высокого контраста)
 SPI_SETHIGHCONTRAST = 0x0043
 SPI_GETHIGHCONTRAST = 0x0042
 SPIF_SENDCHANGE = 0x0002 # Отправить изменения на устройство
@@ -71,30 +72,45 @@ def restart_computer():
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Специальные возможности Windows")
+    
+    # Получаем разрешение экрана
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
 
-    # Кнопка для запуска экранного диктора
-    narrator_button = tk.Button(root, text="Включить экранный диктор", command=start_narrator)
-    narrator_button.pack(padx=10, pady=10)
+    # Устанавливаем размеры окна
+    window_width = int(screen_width * 0.4)
+    window_height = int(screen_height * 0.4)
+    root.geometry(f"{window_width}x{window_height}")
 
-    # Кнопка для запуска увеличительного стекла
-    magnifier_button = tk.Button(root, text="Включить увеличительное стекло", command=start_magnifier)
-    magnifier_button.pack(padx=10, pady=10)
+    # Создаем кнопки и размещаем их в сетке
+    button_width = int(window_width * 0.8) 
 
-    # Кнопка для запуска экранной клавиатуры
-    osk_button = tk.Button(root, text="Включить экранную клавиатуру", command=start_on_screen_keyboard)
-    osk_button.pack(padx=10, pady=10)
+ # Настройка строк и столбцов для растяжения
+    for i in range(6):
+        root.grid_rowconfigure(i, weight=1)  # Увеличиваем вес каждой строки
+    root.grid_columnconfigure(0, weight=1)  # Увеличиваем вес первого столбца
 
-    # Кнопка для переключения высокого контраста
-    high_contrast_button = tk.Button(root, text="Включить высокий контраст", command=toggle_high_contrast)
-    high_contrast_button.pack(pady=10)
+    # Устанавливаем шрифт для кнопок
+    button_font = font.Font(size=14)  # Устанавливаем размер шрифта на 12
 
-    # Кнопка для переключения цветного фильтра
-    color_filter_button = tk.Button(root, text="Включить цветной фильтр", command=toggle_color_filter)
-    color_filter_button.pack(pady=10)
+    # Создаем кнопки и размещаем их в сетке
+    narrator_button = tk.Button(root, text="Включить экранный диктор", font=button_font, command=start_narrator)
+    narrator_button.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
 
-    # Кнопка для перезагрузки компьютера
-    restart_button = tk.Button(root, text="Перезагрузить компьютер", command=restart_computer)
-    restart_button.pack(padx=10, pady=10)
+    magnifier_button = tk.Button(root, text="Включить увеличительное стекло", font=button_font, command=start_magnifier)
+    magnifier_button.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
-    # Запуск главного цикла приложения
+    osk_button = tk.Button(root, text="Включить экранную клавиатуру", font=button_font, command=start_on_screen_keyboard)
+    osk_button.grid(row=2, column=0, sticky="nsew", padx=10, pady=10)
+
+    high_contrast_button = tk.Button(root, text="Включить высокий контраст", font=button_font, command=toggle_high_contrast)
+    high_contrast_button.grid(row=3, column=0, sticky="nsew", padx=10, pady=10)
+
+    color_filter_button = tk.Button(root, text="Включить цветной фильтр", font=button_font, command=toggle_color_filter)
+    color_filter_button.grid(row=4, column=0, sticky="nsew", padx=10, pady=10)
+
+    restart_button = tk.Button(root, text="Перезагрузить компьютер", font=button_font, command=restart_computer)
+    restart_button.grid(row=5, column=0, sticky="nsew", padx=10, pady=10)
+
+    # Запуск основного цикла приложения
     root.mainloop()
