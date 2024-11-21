@@ -1,16 +1,12 @@
 includelib import32.lib
-; имена используемых функций из kernel32.dll
- extrn ExitProcess:near
- extrn GetCommandLineA:near
- extrn CreateFileA:near
- extrn CloseHandle:near
- extrn ReadFile:near
+extrn GetCommandLineA:near
+extrn CreateDirectoryA:near
+extrn ExitProcess:near
 extrn WriteFile:near
-; присваивания для облегчения читаемости кода
- GetCommandLine equ GetCommandLineA
- CreateFile equ CreateFileA
-; определения констант и типов
+extrn lstrlenA:near
+extrn GetStdHandle:near
+
+GetCommandLine equ GetCommandLineA
+CreateDirectory equ CreateDirectoryA
+lstrlen equ lstrlenA
 STD_OUTPUT_HANDLE equ -11
-GENERIC_READ equ 80000000h
-GENERIC_WRITE equ 40000000h
-OPEN_EXISTING equ 3

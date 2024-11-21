@@ -1,44 +1,56 @@
-; Консольное приложение, выводящее на консоль
-; файл
-include typefolder.inc
 .386
-.model FLAT,STDCALL
+.model FLAT, STDCALL
+include typefolder.inc
+
 .data
-hcons dd ?
-hfile dd ?
-buf db 100 dup(0)
-bufer db 300 dup(0)
-numb dd ?
-numw dd ?
-nameout db 'CONOUT$'
+folderName db 260 dup(0)         ; Буфер для имени папки
+
 .code
-_start: call CreateFile,offset nameout,GENERIC_READ+GENERIC_WRITE,0,0,OPEN_EXISTING,0,0
- mov hcons,eax; получение ссылки на консоль
-; как на файл
- call GetCommandLine; в EAX указатель на
-; командную строку
- mov esi,eax
- xor ecx,ecx ;счетчик
- mov edx,1 ;признак
-n1: cmp byte ptr [esi],0;конец строки
- je end_ ;нет параметра
- cmp byte ptr [esi],32;пробел
- je n3
- add ecx,edx
- cmp ecx,2;Первый параметр – имя программы.
-; Второй – имя файла.
- je n4
- xor edx,edx
- jmp n2
-n3: or edx,1
-n2: inc esi
- jmp n1
-n4: call CreateFile, esi,GENERIC_READ+GENERIC_WRITE,0,0,OPEN_EXISTING,0,0
- mov hfile,eax;открытие файла, имя которого
-; указано в командной строке
-l0: call ReadFile, hfile,offset bufer,300, offset numb,0 ;чтение в буфер
- call WriteFile,hcons,offset bufer,numb,offset numw,0;вывод на консоль как в файл
- cmp numb,300; numb<300 - файл закончился
- je l0
-end_: call ExitProcess,0
+_start:
+    call GetStdHandle, STD_OUTPUT_HANDLE
+    call GetCommandLine          ; Получаем командную строку
+    mov esi, eax                 ; Сохраняем указатель на командную строку
+    xor ecx, ecx                 ; Счетчик
+    xor edx, edx                 ; Признак
+
+parse_args:
+    cmp byte ptr [esi], 0        ; Конец строки
+    je no_folder_name            ; Если конец строки, имени папки нет
+    cmp byte ptr [esi], 32       ; Пробел
+    je found_arg
+    add ecx, 1
+    cmp ecx, 2                   ; Первый параметр - имя программы, второй - имя папки
+    je save_folder_name
+    inc esi
+    jmp parse_args
+
+found_arg:
+    inc esi
+    jmp parse_args
+
+save_folder_name:
+    lea edi, folderName          ; Указатель на буфер имени папки
+
+copy_name:
+    cmp byte ptr [esi], 0        ; Конец строки
+    je create_folder
+    cmp byte ptr [esi], 32       ; Пробел
+    je create_folder
+    mov al, [esi]                ; Копируем символ
+    mov [edi], al
+    inc esi
+    inc edi
+    jmp copy_name
+
+create_folder:
+    call CreateDirectory, offset folderName, 0 ; Создаем папку
+    test eax, eax
+    jmp end_
+
+no_folder_name:
+    call ExitProcess, 1          ; Завершаем программу с кодом ошибки
+
+end_:
+    call ExitProcess, 0          ; Завершаем программу успешно
+
 end _start
