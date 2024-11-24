@@ -26,3 +26,4 @@
 
 (defun predicat_list () (write(list '((father(Sergey 50))(mother(Helen 50))(son(Alex 24))(son(Vladimir 20))(cat(murz 5))))))
 
+(car '(a b c d))
