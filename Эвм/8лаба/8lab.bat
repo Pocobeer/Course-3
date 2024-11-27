@@ -4,4 +4,3 @@ tlink32 /Tpe /ap /x /c 8lab.obj
 pause
 8lab.exe aaaaa
 pause
-td32 8lab.exe
