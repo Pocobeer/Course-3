@@ -1,69 +1,61 @@
+; Консольное приложение, создающее папку
+include typefile.inc
 .386
-.model FLAT, STDCALL
-include typefolder.inc
-
+.model FLAT,STDCALL
 .data
-folderName db 260 dup(0)         ; Буфер для имени папки
-errorMsg db "Error creating folder.", 0
-
+hfile dd ?
+buf db 100 dup(0)
+nameout db 'CONOUT$'
+folderName db 100 dup(0) ; буфер для имени папки
 .code
-_start:
-    call GetCommandLine          ; Получаем командную строку
-    mov esi, eax                 ; Сохраняем указатель на командную строку
-    xor ecx, ecx                 ; Счетчик аргументов
-
-parse_args:
-    ; Пропускаем имя программы
-    cmp byte ptr [esi], 0        ; Конец строки
-    je no_folder_name            ; Если конец строки, имени папки нет
-    cmp byte ptr [esi], 32       ; Пробел
-    je found_arg
+_start: 
+    call GetCommandLine ; получить указатель на командную строку
+    mov esi, eax        ; сохранить указатель на строку
+    xor ecx, ecx       ; счетчик
+    mov edx, 1         ; признак
+    
+n1: 
+    cmp byte ptr [esi], 0 ; конец строки
+    je end_                ; нет параметра
+    cmp byte ptr [esi], 32 ; пробел
+    je n3
+    add ecx, edx
+    cmp ecx, 2             ; Первый параметр – имя программы.
+    je n4
+    xor edx, edx
+    jmp n2
+n3: 
+    or edx, 1
+n2: 
     inc esi
-    jmp parse_args
+    jmp n1
 
-found_arg:
-    inc esi                       ; Переход к следующему символу
-    cmp ecx, 0                    ; Если это первый аргумент (имя программы)
-    je skip_first_arg
-    inc ecx                       ; Увеличиваем счетчик аргументов
-    jmp parse_args
-
-skip_first_arg:
-    cmp ecx, 1                    ; Если это второй аргумент (имя папки)
-    je save_folder_name
-    jmp parse_args
-
-save_folder_name:
-    lea edi, folderName           ; Указатель на буфер имени папки
-    xor edx, edx                  ; Сбросим индекс для копирования
-
-copy_name:
-    cmp byte ptr [esi], 0         ; Конец строки
-    je create_folder
-    cmp byte ptr [esi], 32        ; Пробел
-    je create_folder
-    mov al, [esi]                 ; Копируем символ
-    mov [edi], al
+n4: 
+    ; Копируем имя папки в буфер folderName
+    mov edi, offset folderName
+    mov ecx, 100           ; максимальная длина
+copy_loop:
+    cmp byte ptr [esi], 0  ; конец строки
+    je create_directory
+    mov al, [esi]          ; копируем символ
+    stosb                  ; сохраняем в folderName
     inc esi
-    inc edi
-    jmp copy_name
+    jmp copy_loop
 
-create_folder:
-    mov byte ptr [edi], 0         ; Завершаем строку нулем
-    invoke CreateDirectoryA, offset folderName, 0 ; Создаем папку
-    test eax, eax
-    jz folder_creation_failed      ; Если результат 0, создание папки не удалось
+create_directory:
+    ; Создаем директорию
+    call CreateDirectory, offset folderName, 0
+    cmp eax, 0            ; проверка на успех
+    jne success
+
+    ; Если создание директории не удалось, получаем ошибку
+    call GetLastError
+    ; Здесь можно добавить обработку ошибки, например, вывести код ошибки на консоль
     jmp end_
 
-folder_creation_failed:
-    invoke MessageBoxA, 0, offset errorMsg, offset errorMsg, MB_OK
-    call ExitProcess, 1           ; Завершаем программу с кодом ошибки
+success:
+    ; Успешно создана папка (можно добавить сообщение об успехе)
 
-no_folder_name:
-    invoke MessageBoxA, 0, offset errorMsg, offset errorMsg, MB_OK
-    call ExitProcess, 1           ; Завершаем программу с кодом ошибки
-
-end_:
-    call ExitProcess, 0           ; Завершаем программу успешно
-
+end_: 
+    call ExitProcess, 0
 end _start
