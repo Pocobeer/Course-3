@@ -187,6 +187,8 @@ ex2_proc:  iret                      ; Здесь установлены
 ex3_proc:  iret                      ; заглушки вместо
 ex4_proc:  iret                      ; обработчиков
 ex5_proc:  iret
+
+
 ex6_proc:
 ;Вывести сообщение об ошибке
 lea     bx,Mess_Er          ; Адрес сообщения
