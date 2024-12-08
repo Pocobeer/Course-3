@@ -3,6 +3,30 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 from datetime import datetime 
+def validate_number(phone_number):
+    # Убираем все нецифровые символы, кроме +
+    digits = ''.join(filter(lambda x: x.isdigit() or x == '+', phone_number))
+    formatted_number = ""
+
+    if len(digits) > 0:
+        formatted_number += "+7 "
+    if len(digits) > 2:
+        formatted_number += "(" + digits[2:5]  # Код города
+    if len(digits) >= 5:
+        formatted_number += ") " + digits[5:8]  # Первая часть номера
+    if len(digits) >= 8:
+        formatted_number += "-" + digits[8:10]  # Вторая часть номера
+    if len(digits) >= 10:
+        formatted_number += "-" + digits[10:12]  # Третья часть номера
+
+    return formatted_number
+
+def key_release(event, phone_number_entry):
+    # Получаем текущее значение и форматируем его
+    current_value = phone_number_entry.get()
+    formatted_value = validate_number(current_value)
+    phone_number_entry.delete(0, END)
+    phone_number_entry.insert(0, formatted_value)
 
 def connect_to_access_db(db_file: str) -> pyodbc.Connection:
     """Устанавливает соединение с базой данных Access."""
@@ -24,6 +48,17 @@ def update_table(conn: pyodbc.Connection, user_id: int, field: str, new_value: s
     cursor.execute(sql, (new_value, user_id))
     conn.commit()
     cursor.close()
+
+def insert_table(conn: pyodbc.Connection, full_name: str, registration_date: datetime, email: str, phone_number: str):
+    """Добавляет данные пользователя в базу."""
+    cursor = conn.cursor()
+    sql = f'INSERT INTO Арендатор (ФИО, Дата_Регистрации, Email, Номер_Телефона) VALUES ( ?, ?, ?, ?)'
+    cursor.execute(sql, (full_name, registration_date, email, phone_number))
+    conn.commit()
+    cursor.close()
+
+# conn = connect_to_access_db('./Database1.accdb')
+# insert_table(conn, 'Иванов Иван Иванович', datetime.now().date(), 'e8o3Y@example.com', '123-456-7890')
 
 def delete_table(conn: pyodbc.Connection, user_id: int):
     cursor = conn.cursor()
@@ -104,7 +139,56 @@ def open_update_window():
     Button(update_window, text="Изменить", command=update_data).pack(pady=10)
     Button(update_window, text="Отмена", command=update_window.destroy).pack(pady=5)
 
+def open_insert_window():
+    insert_window = Toplevel(root)
+    insert_window.geometry("400x400")
+    insert_window.title("Добавление данных")
 
+    Label(insert_window, text="ФИО:").pack(pady=5)
+    full_name_entry = Entry(insert_window)
+    full_name_entry.pack(pady=5)
+
+    Label(insert_window, text="Дата Регистрации:").pack(pady=5)
+    registration_date_entry = Entry(insert_window)
+    registration_date_entry.pack(pady=5)
+
+    Label(insert_window, text="Email:").pack(pady=5)
+    email_entry = Entry(insert_window)
+    email_entry.pack(pady=5)
+
+    Label(insert_window, text="Номер Телефона:").pack(pady=5)
+    phone_number_entry = Entry(insert_window)
+    phone_number_entry.pack(pady=5)
+
+    # Привязываем обработчик события нажатия клавиши
+    phone_number_entry.bind("<KeyRelease>", lambda event: key_release(event, phone_number_entry))
+
+    def insert_field():
+        full_name = full_name_entry.get()
+        registration_date = registration_date_entry.get()
+        email = email_entry.get()
+        phone_number = phone_number_entry.get()  # Получаем значение из поля ввода
+        formatted_phone_number = validate_number(phone_number)
+
+        # Проверяем, корректен ли номер телефона
+        if formatted_phone_number != phone_number:
+            messagebox.showwarning("Ошибка", "Неверный формат номера телефона.")
+            return
+
+        conn = connect_to_access_db('./Database1.accdb')
+        if conn:
+            try:
+                insert_table(conn, full_name, registration_date, email, formatted_phone_number)
+                messagebox.showinfo("Успех", "Данные успешно добавлены.")
+                update_user_table()  # Обновляем таблицу после добавления
+                insert_window.destroy()  # Закрываем окно добавления
+            except Exception as e:
+                messagebox.showerror("Ошибка", f"Не удалось добавить данные: {e}")
+            finally:
+                conn.close()
+
+    Button(insert_window, text="Добавить", command=insert_field).pack(pady=10)
+    Button(insert_window, text="Отмена", command=insert_window.destroy).pack(pady=5)
 
 def delete_field():
     selected_item = userTable.selection()
@@ -144,6 +228,9 @@ Button(root, text="Обновить", command=update_user_table).pack(side=LEFT,
 
 # Кнопка "Изменить данные"
 Button(root, text="Изменить данные", command=open_update_window).pack(side=LEFT, padx=10)
+
+# Кнопка "Добавить пользователя"
+Button(root, text="Добавить пользователя", command=open_insert_window).pack(side=LEFT, padx=10)
 
 # Кнопка "Закрыть"
 Button(root, text="Закрыть", command=root.quit).pack(side=RIGHT, padx=10)
