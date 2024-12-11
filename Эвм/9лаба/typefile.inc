@@ -1,5 +1,5 @@
-;includelib kernel32.lib
-includelib user32.lib
+;includelib "C:\9lab\kernel32.lib"
+;includelib User32.Lib
 includelib winmm.lib ; Библиотека для воспроизведения звуков
 
 ; Импортируем функции из kernel32.dll
