@@ -1,16 +1,16 @@
-includelib import32.lib
+;includelib "C:\9lab\kernel32.lib"
+;includelib User32.Lib
+includelib winmm.lib ; Библиотека для воспроизведения звуков
 
-; Импортируем функции из kernel32.dll и user32.dll
+; Импортируем функции из kernel32.dll
 extrn ExitProcess:near
+
+; Импортируем функции из user32.dll
 extrn GetAsyncKeyState:near
-extrn MessageBeep:near
-extrn Sleep:near  ; Импортируем функцию Sleep
-extrn OutputDebugStringA:near  ; Импортируем функцию OutputDebugStringA
-extrn WriteConsoleA:near  ; Импортируем функцию WriteConsoleA
-extrn GetStdHandle:near
+extrn MessageBoxA:near
+
+; Импортируем функции для воспроизведения звуков
+extrn PlaySoundA:near
 
 ; Определения констант
-STD_OUTPUT_HANDLE equ -11
-VK_NUMLOCK equ 144
-VK_CAPITAL equ 20h
-VK_SCROLL equ 91h
+MB_OK equ 0
