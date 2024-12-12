@@ -1,16 +1,21 @@
-;includelib "C:\9lab\kernel32.lib"
-;includelib User32.Lib
-includelib winmm.lib ; Библиотека для воспроизведения звуков
+includelib import32.lib
 
 ; Импортируем функции из kernel32.dll
 extrn ExitProcess:near
+extrn GetStdHandle:near
+extrn WriteConsoleA:near
+extrn Sleep:near
 
 ; Импортируем функции из user32.dll
 extrn GetAsyncKeyState:near
-extrn MessageBoxA:near
+
 
 ; Импортируем функции для воспроизведения звуков
 extrn PlaySoundA:near
 
 ; Определения констант
-MB_OK equ 0
+STD_OUTPUT_HANDLE equ -11
+VK_NUMLOCK equ 90h
+VK_CAPITAL equ 14h
+VK_SCROLL equ 91h
+VK_ESCAPE equ 1Bh    ; Код виртуальной клавиши для ESC

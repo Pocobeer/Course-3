@@ -1,4 +1,3 @@
-; Программа для проверки нажатия клавиш
 .386
 .model flat, stdcall
 option casemap:none
@@ -6,11 +5,11 @@ option casemap:none
 include typefile.inc
 
 .data
-    msgStart db "Start.", 0
-    msgStartLen equ $ - msgStart
-    msgPressed db "Button pressed: ", 0
+    msgStart db "Program started.", 0
+    msgNumLock db "NumLock is pressed.", 0
+    msgCapsLock db "CapsLock is pressed.", 0
+    msgScrollLock db "ScrollLock is pressed.", 0
     msgEscPressed db "ESC pressed. Exiting...", 0
-    msgNoKeyPressed db "No key pressed.", 0
     buffer db 256 dup(0)
 
 .code
@@ -18,69 +17,67 @@ start:
     ; Получаем стандартный вывод
     push STD_OUTPUT_HANDLE
     call GetStdHandle
+    mov esi, eax
 
     ; Отправляем сообщение о запуске программы
-    push msgStartLen
+    push 0
+    push 17                 ; Длина строки msgStart
     push offset msgStart
-    push eax
+    push esi
     call WriteConsoleA
 
-    ; Основной цикл программы
 main_loop:
-    ; Проверяем состояние клавиш от 0 до 255
-    mov ecx, 256      ; Устанавливаем счетчик на 256
-    xor ebx, ebx      ; Счетчик клавиш
-
-check_keys:
-    push ebx          ; Сохраняем индекс клавиши
-    call GetAsyncKeyState ; Получаем состояние клавиши
-    test eax, 8000h   ; Проверяем, нажата ли клавиша
-    jz next_key       ; Если не нажата, переходим к следующей клавише
-
-    ; Если клавиша нажата, выводим сообщение
-    push ebx          ; Копируем индекс клавиши для вывода
-    call KeyToString  ; Преобразуем код клавиши в строку
-    push eax          ; Строка с кодом клавиши в стеке
-    push offset msgPressed
+    ; Проверяем состояние клавиш
+    push VK_NUMLOCK
+    call GetAsyncKeyState
+    test eax, 8000h
+    jz check_capslock
+    push 0
+    push 20                 ; Длина строки msgNumLock
+    push offset msgNumLock
+    push esi
     call WriteConsoleA
 
-    ; Проверяем, нажата ли клавиша ESC (код 27)
-    cmp ebx, 1Bh      ; Код клавиши ESC
-    je exit_program    ; Если нажата ESC, выходим
-
-next_key:
-    pop ebx           ; Восстанавливаем индекс клавиши
-    inc ebx           ; Переходим к следующей клавише
-    loop check_keys   ; Цикл по всем клавишам
-
-    ; Если ни одна клавиша не нажата, выводим сообщение
-    push offset msgNoKeyPressed
+check_capslock:
+    push VK_CAPITAL
+    call GetAsyncKeyState
+    test eax, 8000h
+    jz check_scrolllock
+    push 0
+    push 21                 ; Длина строки msgCapsLock
+    push offset msgCapsLock
+    push esi
     call WriteConsoleA
 
-    ; Задержка перед следующей проверкой
-    push 100          ; Задержка 100 миллисекунд
+check_scrolllock:
+    push VK_SCROLL
+    call GetAsyncKeyState
+    test eax, 8000h
+    jz check_esc
+    push 0
+    push 22                 ; Длина строки msgScrollLock
+    push offset msgScrollLock
+    push esi
+    call WriteConsoleA
+
+check_esc:
+    push VK_ESCAPE
+    call GetAsyncKeyState
+    test eax, 8000h
+    jnz exit_program
+
+    ; Небольшая задержка для снижения нагрузки на процессор
+    push 100
     call Sleep
-
-    ; Возвращаемся к началу цикла
     jmp main_loop
 
 exit_program:
+    push 0
+    push 27                 ; Длина строки msgEscPressed
     push offset msgEscPressed
-    call WriteConsoleA  ; Выводим сообщение о выходе
-    push 0            ; Код выхода
-    call ExitProcess   ; Завершение программы
-
-KeyToString:
-    ; Преобразование кода клавиши в строку
-    ; Для простоты просто возвращаем код в строковом формате
-    mov eax, ebx      ; Копируем индекс клавиши в eax
-    call itoa         ; Преобразуем число в строку
-    ret
-
-itoa:
-    ; Преобразование числа в строку
-    ; Реализуйте свою логику преобразования
-    lea eax, buffer   ; Возвращаем адрес буфера
-    ret
+    push esi
+    call WriteConsoleA
+    push 0
+    call ExitProcess
 
 end start
