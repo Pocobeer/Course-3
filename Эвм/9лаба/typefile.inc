@@ -5,13 +5,11 @@ extrn ExitProcess:near
 extrn GetStdHandle:near
 extrn WriteConsoleA:near
 extrn Sleep:near
-
+extrn SetConsoleCursorPosition:near
+extrn Beep:near
+extrn GetKeyState:near
 ; Импортируем функции из user32.dll
 extrn GetAsyncKeyState:near
-
-
-; Импортируем функции для воспроизведения звуков
-extrn PlaySoundA:near
 
 ; Определения констант
 STD_OUTPUT_HANDLE equ -11
