@@ -12,6 +12,8 @@
 (terpri)
 (write ((lambda (a b fn)(* 0.5 (funcall fn a b))) 2 3 '*))
 (terpri)
+(write ((lambda (func a b) (apply func (a b))) 'area 3 4))
+(terpri)
 ;4
 (write (mapcar 'cons '(1 2 3) '(a b c)))
 (terpri)
