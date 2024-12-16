@@ -7,7 +7,6 @@
     )
 )
 
-
 ;взаимная рекурсия
 (defun replace_elem_vz (lst index val)
     (cond
