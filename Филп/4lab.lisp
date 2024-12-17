@@ -1,9 +1,12 @@
 
 ;прямая рекурсия
-(defun replace_elem (lst index val)
-    (cond ((null lst) nil)
-        ((= index 0) (cons val (cdr lst)))
-        (t (cons (car lst) (replace_elem (cdr lst) (1- index) val)))
+(defun replace_elem (lst old_val new_val)
+  (cond ((null lst) nil) 
+        ((eql old_val (car lst)) 
+         (cons new_val (replace_elem (cdr lst) old_val new_val)))  
+        (t  
+            (cons (car lst) (replace_elem (cdr lst) old_val new_val))
+        )
     )
 )
 
@@ -17,9 +20,9 @@
 )
 
 (setq my_lst '(1 2 3 4 5))
-(write (replace_elem my_lst 2 '11))
+;(write (replace_elem my_lst 2 11))
 (terpri)
-(write (replace_elem_vz my_lst 0 '22))
+;(write (replace_elem_vz my_lst 0 22))
 
 (defun sum (lst)
     (cond 
@@ -43,3 +46,16 @@
 	  	        (t (ackerman (- m 1)
 				(ackerman m (- n 1)))
 ))) 
+
+
+(defun lst_set (lst)
+    (cond
+        ((null lst) nil) 
+        ((member (car lst) (lst_set (cdr lst))) 
+        (lst_set (cdr lst)))  
+        (t (cons (car lst) (lst_set (cdr lst))))
+    )
+)
+
+(terpri)
+(write (lst_set '(1 2 1 3 1 4 5 2 6)))
