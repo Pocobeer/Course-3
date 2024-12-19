@@ -38,7 +38,7 @@
         (t (check_atom lst))
     )
 )
-;(write(check_atom my_lst))
+(write(check_atom my_lst))
 
 (defun ackerman (m n)
 	   (cond ((= m 0) (+ n 1))
