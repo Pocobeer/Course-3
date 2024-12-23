@@ -32,4 +32,4 @@
 )
 (terpri)
 ;7
-(write (every 'equal '(a b c) '(a b c)))
+(write (some 'equal '(a b c) '(a b d)))

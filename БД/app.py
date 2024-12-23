@@ -89,7 +89,7 @@ def home():
                     <option value="Номер_Телефона">Номер телефона</option>
                 </select><br>
                 <label for="new_value">Новое значение:</label>
-                <input type="text" id="new_value" name="new_value" required pattern = ""><br>
+                <input type="text" id="new_value" name="new_value"><br>
                 <button type="submit">Обновить</button>
             </form>
                                         
