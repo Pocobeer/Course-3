@@ -1,0 +1,281 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Display.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:Display.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Display.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:Display.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\ConsoleApplication4.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:ConsoleApplication4.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Camera.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:Camera.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\PhongMaterial.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:PhongMaterial.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Data.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:Data.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:Light.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\GraphicObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:GraphicObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Simulation.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:Simulation.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Simulation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:Simulation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Data.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:Data.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\GraphicObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:GraphicObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\PhongMaterial.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:PhongMaterial.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Light.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:Light.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Camera.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{97ADE4B4-99EC-44BC-9935-D8B6B3BC42A0}|ConsoleApplication4.vcxproj|solutionrelative:Camera.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\lib.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:lib.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 10,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Display.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Display.cpp",
+              "RelativeDocumentMoniker": "Display.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Display.cpp",
+              "RelativeToolTip": "Display.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-16T10:09:33.991Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ConsoleApplication4.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\ConsoleApplication4.cpp",
+              "RelativeDocumentMoniker": "ConsoleApplication4.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\ConsoleApplication4.cpp",
+              "RelativeToolTip": "ConsoleApplication4.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-16T10:09:34.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Simulation.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Simulation.cpp",
+              "RelativeDocumentMoniker": "Simulation.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Simulation.cpp",
+              "RelativeToolTip": "Simulation.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-16T10:09:34.013Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Data.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Data.cpp",
+              "RelativeDocumentMoniker": "Data.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Data.cpp",
+              "RelativeToolTip": "Data.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-16T10:09:34.014Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Camera.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Camera.cpp",
+              "RelativeDocumentMoniker": "Camera.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Camera.cpp",
+              "RelativeToolTip": "Camera.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-16T10:09:34.015Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Light.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Light.cpp",
+              "RelativeDocumentMoniker": "Light.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Light.cpp",
+              "RelativeToolTip": "Light.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACUAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-16T10:09:34.017Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Light.h",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Light.h",
+              "RelativeDocumentMoniker": "Light.h",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Light.h",
+              "RelativeToolTip": "Light.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-16T10:09:34.017Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GraphicObject.h",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\GraphicObject.h",
+              "RelativeDocumentMoniker": "GraphicObject.h",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\GraphicObject.h",
+              "RelativeToolTip": "GraphicObject.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-16T10:09:34.018Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PhongMaterial.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\PhongMaterial.cpp",
+              "RelativeDocumentMoniker": "PhongMaterial.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\PhongMaterial.cpp",
+              "RelativeToolTip": "PhongMaterial.cpp",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAADkAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-16T10:09:34.074Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "PhongMaterial.h",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\PhongMaterial.h",
+              "RelativeDocumentMoniker": "PhongMaterial.h",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\PhongMaterial.h",
+              "RelativeToolTip": "PhongMaterial.h",
+              "ViewState": "AQIAACMAAAAAAAAAAAAswBEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-16T10:09:34.164Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Display.h",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Display.h",
+              "RelativeDocumentMoniker": "Display.h",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Display.h",
+              "RelativeToolTip": "Display.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-16T10:09:34.165Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Simulation.h",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Simulation.h",
+              "RelativeDocumentMoniker": "Simulation.h",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Simulation.h",
+              "RelativeToolTip": "Simulation.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-16T10:09:34.167Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Data.h",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Data.h",
+              "RelativeDocumentMoniker": "Data.h",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Data.h",
+              "RelativeToolTip": "Data.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-16T10:09:34.168Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "GraphicObject.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\GraphicObject.cpp",
+              "RelativeDocumentMoniker": "GraphicObject.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\GraphicObject.cpp",
+              "RelativeToolTip": "GraphicObject.cpp",
+              "ViewState": "AQIAABgAAAAAAAAAAAA0wCQAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-02-16T10:09:34.169Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Camera.h",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Camera.h",
+              "RelativeDocumentMoniker": "Camera.h",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\Camera.h",
+              "RelativeToolTip": "Camera.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-16T10:09:34.171Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "lib.h",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\lib.h",
+              "RelativeDocumentMoniker": "lib.h",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication5\\lib.h",
+              "RelativeToolTip": "lib.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-16T10:09:34.2Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
