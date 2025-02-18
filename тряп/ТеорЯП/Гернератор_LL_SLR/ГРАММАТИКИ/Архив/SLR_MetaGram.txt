@@ -1,0 +1,12 @@
+S = LstProd "!".
+LstProd = Prod.
+LstProd = LstProd Prod.
+Prod = "ntm" M "=" Right  "." {A2}.
+M = {A1}.
+Right = {A3}.
+Right = "act" {A4}.
+Right = Right N TmOrNtm {A6}.
+Right = Right N TmOrNtm "act" {A7}.
+N = {A5}.
+TmOrNtm = "tm" {A8}.
+TmOrNtm = "ntm" {A9}.!

@@ -1,0 +1,8 @@
+S = "id" ":=" B "#".
+B = B "or" B.
+B = B "and" B.
+B = "not" B.
+B = "id""rel" "id".
+B = "(" B ")".
+B = "true".
+B = "false".!

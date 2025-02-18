@@ -1,3 +1,5 @@
 ﻿  ConsoleApplication1.cpp
-C:\Users\vallc\Desktop\лабы\Course-3\агс\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(86,6): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
-  ConsoleApplication1.vcxproj -> C:\Users\vallc\Desktop\лабы\Course-3\агс\ConsoleApplication1\Debug\ConsoleApplication1.exe
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\агс\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp(87,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  Shader.cpp
+  Создание кода...
+  ConsoleApplication1.vcxproj -> C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\агс\ConsoleApplication1\Debug\ConsoleApplication1.exe

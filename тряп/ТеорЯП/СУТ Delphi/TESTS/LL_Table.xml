@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<LL_Table>
+<Row NStr="1"  Jump="2"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="prog" />
+</Terminals>
+</Row>
+<Row NStr="2"  Jump="3"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="prog" />
+</Terminals>
+</Row>
+<Row NStr="3"  Jump="4"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="4"  Jump="5"  Accept="False"  Stack="False"  Action="A1"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="5"  Jump="6"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=";" />
+</Terminals>
+</Row>
+<Row NStr="6"  Jump="8"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="var" />
+</Terminals>
+</Row>
+<Row NStr="7"  Jump="0"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="eof" />
+</Terminals>
+</Row>
+<Row NStr="8"  Jump="9"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="var" />
+</Terminals>
+</Row>
+<Row NStr="9"  Jump="10"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="var" />
+</Terminals>
+</Row>
+<Row NStr="10"  Jump="14"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="11"  Jump="12"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="start" />
+</Terminals>
+</Row>
+<Row NStr="12"  Jump="37"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="13"  Jump="0"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="stop" />
+</Terminals>
+</Row>
+<Row NStr="14"  Jump="15"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="15"  Jump="22"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="16"  Jump="17"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=";" />
+</Terminals>
+</Row>
+<Row NStr="17"  Jump="18"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+<Terminal Lexeme="start" />
+</Terminals>
+</Row>
+<Row NStr="18"  Jump="20"  Accept="False"  Stack="False"  Action=""  Error="False" >
+<Terminals>
+<Terminal Lexeme="start" />
+</Terminals>
+</Row>
+<Row NStr="19"  Jump="21"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="20"  Jump="0"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="start" />
+</Terminals>
+</Row>
+<Row NStr="21"  Jump="14"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="22"  Jump="23"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="23"  Jump="24"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="24"  Jump="25"  Accept="False"  Stack="False"  Action="A2"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="25"  Jump="27"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="," />
+<Terminal Lexeme=":" />
+</Terminals>
+</Row>
+<Row NStr="26"  Jump="0"  Accept="False"  Stack="False"  Action="A3"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="27"  Jump="29"  Accept="False"  Stack="False"  Action=""  Error="False" >
+<Terminals>
+<Terminal Lexeme="," />
+</Terminals>
+</Row>
+<Row NStr="28"  Jump="34"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=":" />
+</Terminals>
+</Row>
+<Row NStr="29"  Jump="30"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="," />
+</Terminals>
+</Row>
+<Row NStr="30"  Jump="31"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="31"  Jump="32"  Accept="False"  Stack="False"  Action="A2"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="32"  Jump="27"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="," />
+<Terminal Lexeme=":" />
+</Terminals>
+</Row>
+<Row NStr="33"  Jump="0"  Accept="False"  Stack="False"  Action="A4"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="34"  Jump="35"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=":" />
+</Terminals>
+</Row>
+<Row NStr="35"  Jump="36"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="36"  Jump="0"  Accept="False"  Stack="False"  Action="A5"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="37"  Jump="38"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="38"  Jump="45"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="39"  Jump="40"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=";" />
+</Terminals>
+</Row>
+<Row NStr="40"  Jump="41"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+<Terminal Lexeme="stop" />
+</Terminals>
+</Row>
+<Row NStr="41"  Jump="43"  Accept="False"  Stack="False"  Action=""  Error="False" >
+<Terminals>
+<Terminal Lexeme="stop" />
+</Terminals>
+</Row>
+<Row NStr="42"  Jump="44"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="43"  Jump="0"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="stop" />
+</Terminals>
+</Row>
+<Row NStr="44"  Jump="37"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="45"  Jump="46"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="46"  Jump="47"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="47"  Jump="48"  Accept="False"  Stack="False"  Action="A6"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="48"  Jump="49"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="ass" />
+</Terminals>
+</Row>
+<Row NStr="49"  Jump="51"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+<Terminal Lexeme="num" />
+<Terminal Lexeme="(" />
+</Terminals>
+</Row>
+<Row NStr="50"  Jump="0"  Accept="False"  Stack="False"  Action="A7"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="51"  Jump="52"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+<Terminal Lexeme="num" />
+<Terminal Lexeme="(" />
+</Terminals>
+</Row>
+<Row NStr="52"  Jump="62"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+<Terminal Lexeme="num" />
+<Terminal Lexeme="(" />
+</Terminals>
+</Row>
+<Row NStr="53"  Jump="54"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=";" />
+<Terminal Lexeme="+" />
+<Terminal Lexeme=")" />
+</Terminals>
+</Row>
+<Row NStr="54"  Jump="56"  Accept="False"  Stack="False"  Action=""  Error="False" >
+<Terminals>
+<Terminal Lexeme=";" />
+<Terminal Lexeme=")" />
+</Terminals>
+</Row>
+<Row NStr="55"  Jump="57"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="+" />
+</Terminals>
+</Row>
+<Row NStr="56"  Jump="0"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=";" />
+<Terminal Lexeme=")" />
+</Terminals>
+</Row>
+<Row NStr="57"  Jump="58"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="+" />
+</Terminals>
+</Row>
+<Row NStr="58"  Jump="59"  Accept="False"  Stack="False"  Action="A8"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="59"  Jump="62"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+<Terminal Lexeme="num" />
+<Terminal Lexeme="(" />
+</Terminals>
+</Row>
+<Row NStr="60"  Jump="61"  Accept="False"  Stack="False"  Action="A9"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="61"  Jump="54"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=";" />
+<Terminal Lexeme="+" />
+<Terminal Lexeme=")" />
+</Terminals>
+</Row>
+<Row NStr="62"  Jump="63"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+<Terminal Lexeme="num" />
+<Terminal Lexeme="(" />
+</Terminals>
+</Row>
+<Row NStr="63"  Jump="73"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+<Terminal Lexeme="num" />
+<Terminal Lexeme="(" />
+</Terminals>
+</Row>
+<Row NStr="64"  Jump="65"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=";" />
+<Terminal Lexeme="+" />
+<Terminal Lexeme="*" />
+<Terminal Lexeme=")" />
+</Terminals>
+</Row>
+<Row NStr="65"  Jump="67"  Accept="False"  Stack="False"  Action=""  Error="False" >
+<Terminals>
+<Terminal Lexeme=";" />
+<Terminal Lexeme="+" />
+<Terminal Lexeme=")" />
+</Terminals>
+</Row>
+<Row NStr="66"  Jump="68"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="*" />
+</Terminals>
+</Row>
+<Row NStr="67"  Jump="0"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=";" />
+<Terminal Lexeme="+" />
+<Terminal Lexeme=")" />
+</Terminals>
+</Row>
+<Row NStr="68"  Jump="69"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="*" />
+</Terminals>
+</Row>
+<Row NStr="69"  Jump="70"  Accept="False"  Stack="False"  Action="A10"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="70"  Jump="73"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+<Terminal Lexeme="num" />
+<Terminal Lexeme="(" />
+</Terminals>
+</Row>
+<Row NStr="71"  Jump="72"  Accept="False"  Stack="False"  Action="A11"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="72"  Jump="65"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=";" />
+<Terminal Lexeme="+" />
+<Terminal Lexeme="*" />
+<Terminal Lexeme=")" />
+</Terminals>
+</Row>
+<Row NStr="73"  Jump="76"  Accept="False"  Stack="False"  Action=""  Error="False" >
+<Terminals>
+<Terminal Lexeme="num" />
+</Terminals>
+</Row>
+<Row NStr="74"  Jump="78"  Accept="False"  Stack="False"  Action=""  Error="False" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="75"  Jump="80"  Accept="False"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="(" />
+</Terminals>
+</Row>
+<Row NStr="76"  Jump="77"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="num" />
+</Terminals>
+</Row>
+<Row NStr="77"  Jump="0"  Accept="False"  Stack="False"  Action="A12"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="78"  Jump="79"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+</Terminals>
+</Row>
+<Row NStr="79"  Jump="0"  Accept="False"  Stack="False"  Action="A13"  Error="True" >
+<Terminals>
+</Terminals>
+</Row>
+<Row NStr="80"  Jump="81"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="(" />
+</Terminals>
+</Row>
+<Row NStr="81"  Jump="51"  Accept="False"  Stack="True"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme="id" />
+<Terminal Lexeme="num" />
+<Terminal Lexeme="(" />
+</Terminals>
+</Row>
+<Row NStr="82"  Jump="0"  Accept="True"  Stack="False"  Action=""  Error="True" >
+<Terminals>
+<Terminal Lexeme=")" />
+</Terminals>
+</Row>
+</LL_Table>

@@ -1,0 +1,9 @@
+prog Test1;
+var
+  i,j,k,l,min,n: integer;
+  x,y,z: real;
+start {комментарий}
+  k := i * (l + min) + n * j - 48;
+  x := (y - z) * 3.86 + x / 5.0;
+stop
+

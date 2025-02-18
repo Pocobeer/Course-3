@@ -1,0 +1,12 @@
+S = "id" ":=" B "#".
+B = B "or" T.
+B = T.
+B = "not" T.
+T = T "and" F.
+T = F.
+F = "(" B ")".
+F = E "rel" E.
+F = "id".
+F = "true".
+F = "false".
+E = "idb".!

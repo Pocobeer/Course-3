@@ -1,0 +1,18 @@
+S = "prog" "id" {A1} ";" Block "eof".
+Block = "var" LstVar "start" LstStmt "stop".
+LstVar = DeclVar ";" A.
+A =  | LstVar. 
+DeclVar = "id" {A2} LstId {A3}.
+LstId = "," "id" {A2} LstId {A4} | ":" "id" {A5}.
+LstStmt = Stmt ";" B.
+B =  | LstStmt.
+Stmt = "id" {A6} "ass" Expr {A7}.
+Expr = Term X.
+X =  | "+" {A8} Term {A9} X.
+Term = Factor Y.
+Y =  | "*" {A10} Factor {A11} Y.
+Factor = "num" {A12} | "id" {A13} | "(" Expr ")".!
+
+
+
+
