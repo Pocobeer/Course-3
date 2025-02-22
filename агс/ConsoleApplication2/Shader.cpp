@@ -73,12 +73,12 @@ void Shader::setUniform(std::string name, glm::vec4& value) {
 	glUniform4fv(getUniformLocation(name), 1, &value[0]);
 }
 
-void Shader::setUniform(std::string name, glm::mat4& value) {
+void Shader::setUniform(string name, glm::mat4& value) {
 	if (program != currentProgram) activate();
 	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]);
 }
 
-GLuint Shader::getUniformLocation(std::string name) {
+GLuint Shader::getUniformLocation(string name) {
 	auto obj = uniforms.find(name);
 	if (obj != uniforms.end()) {
 		return obj->second;
