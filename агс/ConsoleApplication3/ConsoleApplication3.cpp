@@ -3,53 +3,25 @@
 #include "GL/glew.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <vector>
+#include <iostream>
 #include "Shader.h"
+#include "Camera.h"
+#include "GraphicObject.h"
+
 // используемые пространства имен (для удобства)
 using namespace glm;
 using namespace std;
 
+bool rightMouseButtonPressed = false;
+int lastX = 0, lastY = 0;
+
 static float simulationTime = 0.0f;
 static float deltaTime = 0.0f;
 
-// функция для вывода квадрата с ребрами равными единице (от -0.5 до +0.5)
-void drawObject()
-{
-	// переменные для вывода объекта (прямоугольника из двух треугольников)
-	static bool init = true;
-	static GLuint VAO_Index = 0; // индекс VAO-буфера
-	static GLuint VBO_Index = 0; // индекс VBO-буфера
-	static int VertexCount = 0; // количество вершин
-	// при первом вызове инициализируем VBO и VAO
-	if (init) {
-		init = false;
-		// создание и заполнение VBO
-		glGenBuffers(1, &VBO_Index);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO_Index);
-		GLfloat Verteces[] = {
-		-0.5, +0.5,
-		-0.5, -0.5,
-		+0.5, +0.5,
-		+0.5, +0.5,
-		-0.5, -0.5,
-		+0.5, -0.5
-		};
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Verteces), Verteces, GL_STATIC_DRAW);
-		// создание VAO
-		glGenVertexArrays(1, &VAO_Index);
-		glBindVertexArray(VAO_Index);
-		// заполнение VAO
-		glBindBuffer(GL_ARRAY_BUFFER, VBO_Index);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(0);
-		// "отвязка" буфера VAO, чтоб случайно не испортить
-		glBindVertexArray(0);
-		// указание количество вершин
-		VertexCount = 6;
-	}
-	// выводим прямоугольник
-	glBindVertexArray(VAO_Index);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-}
+Camera camera;
+Shader shader;
+vector<GraphicObject> graphicObjects;
 
 // функция вывода кубика с ребрами единичной длины
 // каждая координата (x, y, z) меняется от -0.5 до +0.5
@@ -102,6 +74,10 @@ void drawBox()
 	// вывод модели кубика на экран
 	glBindVertexArray(VAO_Index);
 	glDrawArrays(GL_TRIANGLES, 0, VertexCount);
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR) {
+		cerr << "OpenGL error during drawBox(): " << err << endl;
+	}
 }
 
 // Функция получения времени симуляции
@@ -127,20 +103,8 @@ int getFps() {
 	return fps;
 }
 
-// используемый шейдер (пока только один)
-Shader shader;
-
 // ДАННЫЕ ДЛЯ ВЫВОДА ПРЯМОУГОЛЬНИКА
-// текущее смещение прямоугольника
-vec2 offset = vec2(0, 0);
-// скорость (направление) перемещения прямоугольника
-vec2 speed = vec2(+0.30, -0.25);
-// первый цвет (для градиентной заливки)
-vec4 color1 = vec4(1, 0, 0, 1);
-// второй цвет (для градиентной заливки)
-vec4 color2 = vec4(0, 1, 0, 1);
-// третий цвет (для градиентной заливки)
-vec4 color3 = vec4(0, 0, 1, 1);
+vec4 color = vec4(1, 0, 0, 1);
 
 void display()
 {
@@ -153,41 +117,25 @@ void display()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-
-	// формируем матрицу проекции
-	mat4 projectionMatrix;
-	projectionMatrix = perspective(radians(35.0), 800.0 / 600.0, 1.0, 100.0);
-	// генерирование матрицы камеры
-	mat4 viewMatrix;
-	// позиция камеры - (0, 3, 5)
-	vec3 eye = vec3(0.0, 3.0, 5.0);
-	// точка, в которую направлена камера - (0, 0, 0);
-	vec3 center = vec3(0, 0, 0);
-	// примерный вектор "вверх" (0, 1, 0)
-	vec3 up = vec3(0, 1, 0);
-	// матрица камеры
-	viewMatrix = lookAt(eye, center, up);
-	// матрица модели
-	mat4 modelMatrix;
-	// модель располагается в точке (1,0,0) без поворота
-	modelMatrix = mat4(
-		vec4(1, 0, 0, 0), // 1-ый столбец: направление оси X
-		vec4(0, 1, 0, 0), // 2-ой столбец: направление оси Y
-		vec4(0, 0, 1, 0), // 3-ий столбец: направление оси Z
-		vec4(1, 0, 0, 1)); // 4-ый столбец: позиция объекта (начала координат)
-	// вычисляем матрицу наблюдения модели
-	mat4 modelViewMatrix = viewMatrix * modelMatrix;
-	// активация шейдера
+	// активируем шейдер, используемый для вывода объекта
 	shader.activate();
-	// устанавливаем uniform-переменные для матриц проекции и наблюдения модели
+	// устанавливаем матрицу проекции
+	mat4& projectionMatrix = camera.getProjectionMatrix();
 	shader.setUniform("projectionMatrix", projectionMatrix);
-	shader.setUniform("modelViewMatrix", modelViewMatrix);
-	// устанавливаем значение uniform-переменной для цвета каждого фрагмента
-	vec4 color = vec4(0, 0, 1, 1);
 	shader.setUniform("color", color);
-	// выводим кубик
-	drawBox();
-	// смена переднего и заднего буферов
+	// получаем матрицу камеры
+	mat4& viewMatrix = camera.getViewMatrix();
+	// выводим все объекты
+	for (auto& grObj : graphicObjects) {
+		// устанавливаем матрицу наблюдения модели
+		mat4 modelViewMatrix = viewMatrix * grObj.getModelMatrix();
+		shader.setUniform("modelViewMatrix", modelViewMatrix);
+		// устанавливаем цвет
+		shader.setUniform("color", grObj.getColor());
+		// выводим модель кубика
+		drawBox();
+	}
+	// меняем передний и задний буферы цвета
 	glutSwapBuffers();
 	// вычисление FPS и его вывод в заголовок окна
 	char windowTitle[128];
@@ -195,15 +143,17 @@ void display()
 	sprintf_s(windowTitle, 128, "Laba_03 [%i FPS]", FPS);
 	glutSetWindowTitle(windowTitle);
 }
+
 // функция, вызываемая при изменении размеров окна
 void reshape(int w, int h)
 {
 	// установить новую область просмотра, равную всей области окна
 	glViewport(0, 0, w, h);
+	// устанавливаем матрицу проекции
+	camera.setProjectionMatrix(35.0f, (float)w / h, 1.0f, 500.0f);
 }
 // функция вызывается, когда процессор простаивает, т.е. максимально часто
-void simulation()
-{
+void simulation() {
 	static float lastTime = 0.0f;
 	float currentTime = getSimulationTime();
 
@@ -211,26 +161,92 @@ void simulation()
 	deltaTime = currentTime - lastTime;
 	lastTime = currentTime;
 
-	// Обновляем позицию с учетом времени
-	offset += speed * deltaTime;
+	float moveSpeed = 2.0f * deltaTime; // Скорость перемещения камеры
 
-	// Отскок от границ экрана [-0.5, 0.5]
-	if (offset.x > 0.5f || offset.x < -0.5f) {
-		speed.x *= -1;
-		offset.x = clamp(offset.x, -0.5f, 0.5f);
+	// Обработка перемещения камеры с клавиатуры
+	if (GetAsyncKeyState('W') & 0x8000) {
+		camera.moveOXZ(0.0f, moveSpeed); // Движение вперед
 	}
-	if (offset.y > 0.5f || offset.y < -0.5f) {
-		speed.y *= -1;
-		offset.y = clamp(offset.y, -0.5f, 0.5f);
+	if (GetAsyncKeyState('S') & 0x8000) {
+		camera.moveOXZ(0.0f, -moveSpeed); // Движение назад
+	}
+	if (GetAsyncKeyState('A') & 0x8000) {
+		camera.moveOXZ(-moveSpeed, 0.0f); // Движение влево
+	}
+	if (GetAsyncKeyState('D') & 0x8000) {
+		camera.moveOXZ(moveSpeed, 0.0f); // Движение вправо
 	}
 
-	// установка признака необходимости перерисовать окно
+	// Обработка вращения камеры при зажатой правой кнопке мыши
+	static POINT lastCursorPos = { 0, 0 }; // Объявляем lastCursorPos здесь
+	static bool isFirstPress = true;     // Флаг для отслеживания первого нажатия
+
+	if (GetAsyncKeyState(VK_RBUTTON) & 0x8000) {
+		// Получаем текущее положение курсора
+		POINT cursorPos;
+		GetCursorPos(&cursorPos);
+
+		// Если это первое нажатие, обновляем lastCursorPos
+		if (isFirstPress) {
+			lastCursorPos = cursorPos;
+			isFirstPress = false;
+		}
+
+		// Вычисляем смещение курсора
+		float dx = cursorPos.x - lastCursorPos.x;
+		float dy = cursorPos.y - lastCursorPos.y;
+
+		// Вращение камеры
+		float rotateSpeed = 0.1f; // Чувствительность вращения
+		camera.rotate(dx * rotateSpeed, dy * rotateSpeed);
+
+		// Обновляем предыдущее положение курсора
+		lastCursorPos = cursorPos;
+	}
+	else {
+		// Если правая кнопка мыши отпущена, сбрасываем флаг isFirstPress
+		isFirstPress = true;
+	}
+
+	// Установка признака необходимости перерисовать окно
 	glutPostRedisplay();
-};
+}
+
+
+void mouseWheel(int wheel, int direction, int x, int y)
+{
+	// Определяем, на сколько необходимо приблизить/удалить камеру
+	float delta = 0.1f; // Шаг изменения расстояния
+	if (direction > 0)
+	{
+		// Вращение колесика вверх (приближение)
+		camera.zoom(+delta); // Уменьшаем расстояние до цели
+	}
+	else
+	{
+		// Вращение колесика вниз (удаление)
+		camera.zoom(-delta); // Увеличиваем расстояние до цели
+	}
+}
 
 // основная функция
 void main(int argc, char** argv)
 {
+	GraphicObject obj1 = GraphicObject();
+	vec3 pos1 = vec3{ 0.0f, 0.0f, 0.0f };
+	obj1.setColor(color);
+	obj1.setPosition(pos1);
+	graphicObjects.emplace_back(obj1);
+	GraphicObject obj2 = GraphicObject();
+	vec3 pos2 = vec3{ 0.0f, 0.0f, 1.0f };
+	obj2.setColor(color);
+	obj2.setPosition(pos2);
+	graphicObjects.emplace_back(obj2);
+	GraphicObject obj3 = GraphicObject();
+	vec3 pos3 = vec3{ 0.0f, 1.0f, 0.5f };
+	obj3.setColor(color);
+	obj3.setPosition(pos3);
+	graphicObjects.emplace_back(obj3);
 	// инициализация библиотеки GLUT
 	glutInit(&argc, argv);
 	// инициализация дисплея (формат вывода)
@@ -239,12 +255,13 @@ void main(int argc, char** argv)
 	// требования к версии OpenGL (версия 3.3 без поддержки обратной совместимости)
 	glutInitContextVersion(3, 3);
 	glutInitContextProfile(GLUT_CORE_PROFILE);
+
 	// устанавливаем верхний левый угол окна
 	glutInitWindowPosition(300, 100);
 	// устанавливаем размер окна
 	glutInitWindowSize(800, 600);
 	// создание окна
-	glutCreateWindow("laba_02");
+	glutCreateWindow("laba_03");
 	// инициализация GLEW
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
@@ -256,12 +273,17 @@ void main(int argc, char** argv)
 	printf("OpenGL Version = %s\n\n", glGetString(GL_VERSION));
 	// загрузка шейдера
 	shader.load("SHADER\\Example.vsh", "SHADER\\Example.fsh");
+	if (!shader.load("SHADER\\Example.vsh", "SHADER\\Example.fsh")) {
+		fprintf(stderr, "Failed to load shaders\n");
+		return;
+	}
 	// устанавливаем функцию, которая будет вызываться для перерисовки окна
 	glutDisplayFunc(display);
 	// устанавливаем функцию, которая будет вызываться при изменении размеров окна
 	glutReshapeFunc(reshape);
 	// устанавливаем функцию, которая вызывается всякий раз, когда процессор простаивает
 	glutIdleFunc(simulation);
+	glutMouseWheelFunc(mouseWheel);
 	// основной цикл обработки сообщений ОС
 	glutMainLoop();
 }

@@ -1,14 +1,12 @@
 #version 330 core
 
-uniform vec2 offset;
+uniform mat4 projectionMatrix;
+uniform mat4 modelViewMatrix;
 
-in vec2 vPosition;
-
-out vec2 fragPosition;
+in vec3 vPosition;
 
 void main ()
 {
-	fragPosition = vPosition; 
-	
-	gl_Position = vec4 (vPosition + offset, 0, 1);
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(vPosition, 1);
+
 }

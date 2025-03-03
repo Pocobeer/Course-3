@@ -1,0 +1,86 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{05A48BCD-3F95-412D-85FC-7E6693DE9A59}|ConsoleApplication2.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication3\\ConsoleApplication2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{05A48BCD-3F95-412D-85FC-7E6693DE9A59}|ConsoleApplication2.vcxproj|solutionrelative:ConsoleApplication2.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05A48BCD-3F95-412D-85FC-7E6693DE9A59}|ConsoleApplication2.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication3\\GraphicObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{05A48BCD-3F95-412D-85FC-7E6693DE9A59}|ConsoleApplication2.vcxproj|solutionrelative:GraphicObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{05A48BCD-3F95-412D-85FC-7E6693DE9A59}|ConsoleApplication2.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication3\\GraphicObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{05A48BCD-3F95-412D-85FC-7E6693DE9A59}|ConsoleApplication2.vcxproj|solutionrelative:GraphicObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\vallc\\Downloads\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GraphicObject.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication3\\GraphicObject.cpp",
+              "RelativeDocumentMoniker": "GraphicObject.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication3\\GraphicObject.cpp",
+              "RelativeToolTip": "GraphicObject.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-01T11:40:02.635Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GraphicObject.h",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication3\\GraphicObject.h",
+              "RelativeDocumentMoniker": "GraphicObject.h",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication3\\GraphicObject.h",
+              "RelativeToolTip": "GraphicObject.h",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACgAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-01T11:40:02.718Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ConsoleApplication2.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication3\\ConsoleApplication2.cpp",
+              "RelativeDocumentMoniker": "ConsoleApplication2.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0433\u0440\u0430\u0444\u0438\u043A\u0430\\ConsoleApplication3\\ConsoleApplication2.cpp",
+              "RelativeToolTip": "ConsoleApplication2.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-01T11:40:02.719Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\vallc\\Downloads\\main.cpp",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Downloads\\main.cpp",
+              "ToolTip": "C:\\Users\\vallc\\Downloads\\main.cpp",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Downloads\\main.cpp",
+              "ViewState": "AQIAADkAAAAAAAAAAAAAAAQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-13T17:52:18.863Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

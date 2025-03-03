@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsoleApplication3.cpp" />
     <ClCompile Include="GraphicObject.h" />
     <ClCompile Include="GraphicObject.cpp" />

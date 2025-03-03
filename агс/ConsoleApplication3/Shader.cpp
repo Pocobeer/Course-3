@@ -54,27 +54,27 @@ void Shader::deactivate() {
 }
 
 void Shader::setUniform(std::string name, int value) {
-	if (program != currentProgram) activate();
+	//if (program != currentProgram) activate();
 	glUniform1i(getUniformLocation(name), value);
 }
 
 void Shader::setUniform(std::string name, float value) {
-	if (program != currentProgram) activate();
+	//if (program != currentProgram) activate();
 	glUniform1f(getUniformLocation(name), value);
 }
 
 void Shader::setUniform(std::string name, glm::vec2& value) {
-	if (program != currentProgram) activate();
+	//if (program != currentProgram) activate();
 	glUniform2fv(getUniformLocation(name), 1, &value[0]);
 }
 
 void Shader::setUniform(std::string name, glm::vec4& value) {
-	if (program != currentProgram) activate();
+	//if (program != currentProgram) activate();
 	glUniform4fv(getUniformLocation(name), 1, &value[0]);
 }
 
 void Shader::setUniform(string name, glm::mat4& value) {
-	if (program != currentProgram) activate();
+	//if (program != currentProgram) activate();
 	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]);
 }
 
