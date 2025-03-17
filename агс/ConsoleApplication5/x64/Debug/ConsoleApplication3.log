@@ -1,0 +1,5 @@
+﻿  ConsoleApplication3.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\агс\ConsoleApplication3\ConsoleApplication3.cpp(3,10): fatal  error C1083: Не удается открыть файл включение: GL/glew.h: No such file or directory,
+  Shader.cpp
+C:\Users\vallc\OneDrive\Рабочий стол\Лабы\Course-3\агс\ConsoleApplication3\Shader.cpp(1,10): fatal  error C1083: Не удается открыть файл включение: GL/glew.h: No such file or directory,
+  Создание кода...

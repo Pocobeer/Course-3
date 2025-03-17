@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "ConsoleA.ab5e8d97\\Debug\\GraphicObject.h.obj",
+            "outputs": [
+                "C:\\Users\\vallc\\Desktop\\лабы\\Course-3\\агс\\ConsoleApplication5\\ConsoleA.ab5e8d97\\Debug\\vc143.pdb",
+                "ConsoleA.ab5e8d97\\Debug\\",
+                "C:\\Users\\vallc\\Desktop\\лабы\\Course-3\\агс\\ConsoleApplication5\\ConsoleA.ab5e8d97\\Debug\\GraphicObject.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "GraphicObject.h",
+                    "source-path": "c:\\users\\vallc\\desktop\\лабы\\course-3\\агс\\consoleapplication5\\graphicobject.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}
