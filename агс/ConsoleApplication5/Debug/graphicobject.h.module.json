@@ -5,14 +5,14 @@
         {
             "primary-output": "Debug\\GraphicObject.h.obj",
             "outputs": [
-                "C:\\Users\\vallc\\OneDrive\\Рабочий стол\\Лабы\\Course-3\\агс\\ConsoleApplication3\\Debug\\vc143.pdb",
+                "C:\\Users\\vallc\\OneDrive\\Рабочий стол\\Лабы\\Course-3\\агс\\ConsoleApplication5\\Debug\\vc143.pdb",
                 "Debug\\",
-                "C:\\Users\\vallc\\OneDrive\\Рабочий стол\\Лабы\\Course-3\\агс\\ConsoleApplication3\\Debug\\GraphicObject.h.ifc"
+                "C:\\Users\\vallc\\OneDrive\\Рабочий стол\\Лабы\\Course-3\\агс\\ConsoleApplication5\\Debug\\GraphicObject.h.ifc"
             ],
             "provides": [
                 {
                     "logical-name": "GraphicObject.h",
-                    "source-path": "c:\\users\\vallc\\onedrive\\рабочий стол\\лабы\\course-3\\агс\\consoleapplication3\\graphicobject.h",
+                    "source-path": "c:\\users\\vallc\\onedrive\\рабочий стол\\лабы\\course-3\\агс\\consoleapplication5\\graphicobject.h",
                     "lookup-method": "absolute"
                 }
             ],
