@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AB5E8D97-4E9B-4FF6-9705-9D17A3566309}|ConsoleApplication3.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\ConsoleApplication3.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AB5E8D97-4E9B-4FF6-9705-9D17A3566309}|ConsoleApplication3.vcxproj|solutionrelative:ConsoleApplication3.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\SHADER\\Example.vsh||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SHADER\\Example.vsh||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AB5E8D97-4E9B-4FF6-9705-9D17A3566309}|ConsoleApplication3.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\Mesh.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{AB5E8D97-4E9B-4FF6-9705-9D17A3566309}|ConsoleApplication3.vcxproj|solutionrelative:Mesh.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -17,14 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{AB5E8D97-4E9B-4FF6-9705-9D17A3566309}|ConsoleApplication3.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\RenderManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{AB5E8D97-4E9B-4FF6-9705-9D17A3566309}|ConsoleApplication3.vcxproj|solutionrelative:RenderManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AB5E8D97-4E9B-4FF6-9705-9D17A3566309}|ConsoleApplication3.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\ConsoleApplication3.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{AB5E8D97-4E9B-4FF6-9705-9D17A3566309}|ConsoleApplication3.vcxproj|solutionrelative:ConsoleApplication3.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\SHADER\\Example.vsh||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:SHADER\\Example.vsh||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AB5E8D97-4E9B-4FF6-9705-9D17A3566309}|ConsoleApplication3.vcxproj|C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\Texture.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -62,11 +62,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Mesh.h",
               "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\Mesh.h",
               "RelativeDocumentMoniker": "Mesh.h",
@@ -74,12 +74,11 @@
               "RelativeToolTip": "Mesh.h",
               "ViewState": "AgIAAAQAAAAAAAAAAAAEwBoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-17T07:41:16.493Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-17T07:41:16.493Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "GraphicObject.cpp",
               "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\GraphicObject.cpp",
               "RelativeDocumentMoniker": "GraphicObject.cpp",
@@ -87,8 +86,7 @@
               "RelativeToolTip": "GraphicObject.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-17T07:36:59.797Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-17T07:36:59.797Z"
             },
             {
               "$type": "Document",
@@ -100,8 +98,7 @@
               "RelativeToolTip": "Texture.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-17T07:30:31.536Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-17T07:30:31.536Z"
             },
             {
               "$type": "Document",
@@ -113,8 +110,7 @@
               "RelativeToolTip": "Texture.cpp",
               "ViewState": "AgIAACsAAAAAAAAAAAAmwEMAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-15T08:41:40.621Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T08:41:40.621Z"
             },
             {
               "$type": "Document",
@@ -126,8 +122,7 @@
               "RelativeToolTip": "ResourceManager.cpp",
               "ViewState": "AgIAACcAAAAAAAAAAAAWwEUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-15T06:09:17.776Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T06:09:17.776Z"
             },
             {
               "$type": "Document",
@@ -139,12 +134,11 @@
               "RelativeToolTip": "ResourceManager.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-15T06:09:03.93Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T06:09:03.93Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Mesh.cpp",
               "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\Mesh.cpp",
               "RelativeDocumentMoniker": "Mesh.cpp",
@@ -152,12 +146,11 @@
               "RelativeToolTip": "Mesh.cpp",
               "ViewState": "AgIAAGsAAAAAAAAAAAAmwIQAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-14T18:47:29.524Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-14T18:47:29.524Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "ConsoleApplication3.cpp",
               "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\ConsoleApplication3.cpp",
               "RelativeDocumentMoniker": "ConsoleApplication3.cpp",
@@ -170,7 +163,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "RenderManager.cpp",
               "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\RenderManager.cpp",
               "RelativeDocumentMoniker": "RenderManager.cpp",
@@ -178,8 +171,7 @@
               "RelativeToolTip": "RenderManager.cpp",
               "ViewState": "AgIAAEYAAAAAAAAAAAAUwGAAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-15T09:37:55.038Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-15T09:37:55.038Z"
             },
             {
               "$type": "Document",
@@ -191,8 +183,7 @@
               "RelativeToolTip": "Shader.cpp",
               "ViewState": "AgIAAEoAAAAAAAAAAAAWwGkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-02-28T13:27:08.967Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-28T13:27:08.967Z"
             },
             {
               "$type": "Document",
@@ -220,13 +211,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "Example.vsh",
               "DocumentMoniker": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\SHADER\\Example.vsh",
               "RelativeDocumentMoniker": "SHADER\\Example.vsh",
               "ToolTip": "C:\\Users\\vallc\\Desktop\\\u043B\u0430\u0431\u044B\\Course-3\\\u0430\u0433\u0441\\ConsoleApplication5\\SHADER\\Example.vsh",
               "RelativeToolTip": "SHADER\\Example.vsh",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-03-01T11:52:17.341Z",
               "EditorCaption": ""
