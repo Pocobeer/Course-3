@@ -1,0 +1,6 @@
+
+Model Name: trpo
+Time Frame: (AS-IS)
+Status: WORKING
+Author Name: Vlsdimir
+Creation Date: 24.03.2025
