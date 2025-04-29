@@ -2,177 +2,223 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import signal
 
-# Коэффициенты фильтра
-b = np.array([0.1517, 1.3619, 6.2526, 19.0533, 42.6848, 73.9640, 
-              101.9159, 113.2440, 101.9159, 73.9640, 42.6848, 
-              19.0533, 6.2526, 1.3619, 0.1517])
+# Заданные коэффициенты фильтра
+b_float = np.array([0.1517, 1.3619, 6.2526, 19.0533, 42.6848, 73.9640, 
+                  101.9159, 113.2440, 101.9159, 73.9640, 42.6848, 
+                  19.0533, 6.2526, 1.3619, 0.1517])
 
-a = np.array([1.0000, 6.7022, 22.7081, 51.3303, 86.0246, 112.2148,
-              116.6174, 97.2611, 64.5141, 32.9031, 11.7852, 2.0495,
-              -0.5390, -0.4585, -0.1004])
+a_float = np.array([1.0000, 6.7022, 22.7081, 51.3303, 86.0246, 112.2148,
+                  116.6174, 97.2611, 64.5141, 32.9031, 11.7852, 2.0495,
+                  -0.5390, -0.4585, -0.1004])
 
-# Параметры фиксированной точки
-FRACTIONAL_BITS = 14  # 16 бит: 1 знак + 1 целый + 14 дробных
+# Преобразование коэффициентов в формат с фиксированной точкой (16 бит)
+def float_to_fixed(x, n_bits=16):
+    max_val = 2**(n_bits-1) - 1
+    scale = max_val / np.max(np.abs(x))
+    return np.round(x * scale).astype(np.int32)
 
-def to_fixed(x):
-    return np.round(x * (1 << FRACTIONAL_BITS)).astype(np.int32)
+b_fixed = float_to_fixed(b_float)
+a_fixed = float_to_fixed(a_float)
 
-def from_fixed(x):
-    return x.astype(float) / (1 << FRACTIONAL_BITS)
+# Масштабный коэффициент для фиксированной точки
+scale_factor = 2**15 - 1 / np.max(np.abs(np.concatenate((b_float, a_float))))
 
-# 1. Прямая форма (Direct Form I)
-def direct_form1(x, b, a, fixed_point=False):
+# Реализация фильтра в прямой форме
+def direct_form_filter(b, a, x, floating_point=True):
     y = np.zeros_like(x)
-    x_buf = np.zeros(len(b))
-    y_buf = np.zeros(len(a))
+    N = len(b) - 1
+    M = len(a) - 1
     
-    for n in range(len(x)):
-        x_buf = np.roll(x_buf, 1)
-        x_buf[0] = x[n]
-        
-        if fixed_point:
-            b_fixed = to_fixed(b)
-            a_fixed = to_fixed(a)
-            x_fixed = to_fixed(x_buf)
-            y_fixed = to_fixed(y_buf)
+    if floating_point:
+        for n in range(len(x)):
+            # Входная часть
+            x_part = x[max(0, n-N):n+1][::-1]  # Берем последние N+1 отсчетов
+            x_part_padded = np.pad(x_part, (0, max(0, N+1 - len(x_part))))[:N+1]
+            y[n] = np.sum(b * x_part_padded)
             
-            acc = np.sum(b_fixed * x_fixed) - np.sum(a_fixed[1:] * y_fixed[1:])
-            y[n] = from_fixed(acc // a_fixed[0])
-        else:
-            y[n] = (np.sum(b * x_buf) - np.sum(a[1:] * y_buf[1:])) / a[0]
-        
-        y_buf = np.roll(y_buf, 1)
-        y_buf[0] = y[n]
+            # Обратная связь
+            if n >= 1:
+                y_part = y[max(0, n-M):n][::-1]  # Берем последние M отсчетов
+                y_part_padded = np.pad(y_part, (0, max(0, M - len(y_part))))[:M]
+                y[n] -= np.sum(a[1:1+len(y_part_padded)] * y_part_padded)
+    else:
+        for n in range(len(x)):
+            # Входная часть (фиксированная точка)
+            x_part = x[max(0, n-N):n+1][::-1]
+            x_part_padded = np.pad(x_part, (0, max(0, N+1 - len(x_part))))[:N+1]
+            y[n] = np.sum((b[:len(x_part_padded)] * x_part_padded) // scale_factor)
+            
+            # Обратная связь (фиксированная точка)
+            if n >= 1:
+                y_part = y[max(0, n-M):n][::-1]
+                y_part_padded = np.pad(y_part, (0, max(0, M - len(y_part))))[:M]
+                y[n] -= np.sum((a[1:1+len(y_part_padded)] * y_part_padded) // scale_factor)
+            
+            # Ограничение диапазона
+            y[n] = np.clip(y[n], -2**15, 2**15-1)
     
     return y
 
-# 2. Каноническая форма (Direct Form II)
-def direct_form2(x, b, a, fixed_point=False):
+# Реализация фильтра в канонической форме
+def canonical_form_filter(b, a, x, floating_point=True):
     y = np.zeros_like(x)
-    w_buf = np.zeros(max(len(a), len(b)))
+    N = len(b) - 1
+    M = len(a) - 1
+    w = np.zeros(max(N, M))  # Состояния фильтра
     
-    for n in range(len(x)):
-        if fixed_point:
-            b_fixed = to_fixed(b)
-            a_fixed = to_fixed(a)
-            w = (to_fixed(x[n]) << FRACTIONAL_BITS) - np.sum(a_fixed[1:] * to_fixed(w_buf[1:]))
-            w = w // a_fixed[0]
-            y[n] = from_fixed(np.sum(b_fixed * to_fixed(w_buf)) >> FRACTIONAL_BITS)
-        else:
-            w = (x[n] - np.sum(a[1:] * w_buf[1:])) / a[0]
-            y[n] = np.sum(b * w_buf)
-        
-        w_buf = np.roll(w_buf, 1)
-        w_buf[0] = w if not fixed_point else from_fixed(w)
-    
-    return y
-
-# 3. Последовательная форма (SOS)
-def sos_form(x, sos, fixed_point=False):
-    y = x.copy()
-    for section in sos:
-        b = section[:3]
-        a = section[3:]
-        y = direct_form2(y, b, a, fixed_point)
-    return y
-
-# 4. Параллельная форма
-def parallel_form(x, r, p, k, fixed_point=False):
-    y = np.zeros_like(x, dtype=complex if np.iscomplexobj(r) else float)
-    
-    if np.any(k != 0):
-        y += k * x
-    
-    for i in range(0, len(p), 2):
-        if i+1 >= len(p):
-            break
+    if floating_point:
+        for n in range(len(x)):
+            # Вычисление состояния
+            w_current = x[n] - np.sum(a[1:M+1] * w[:M])
             
-        b = [np.real(r[i] + r[i+1]), -np.real(r[i]*p[i+1] + r[i+1]*p[i])]
-        a = [1, -np.real(p[i] + p[i+1]), np.real(p[i]*p[i+1])]
-        y += direct_form2(x, b, a, fixed_point)
+            # Выход
+            y[n] = b[0] * w_current + np.sum(b[1:N+1] * w[:N])
+            
+            # Обновление состояний
+            w[1:] = w[:-1]
+            w[0] = w_current
+    else:
+        for n in range(len(x)):
+            # Вычисление состояния (фиксированная точка)
+            w_current = x[n] - np.sum((a[1:M+1] * w[:M]) // scale_factor)
+            w_current = np.clip(w_current, -2**15, 2**15-1)
+            
+            # Выход (фиксированная точка)
+            y[n] = (b[0] * w_current) // scale_factor + np.sum((b[1:N+1] * w[:N]) // scale_factor)
+            y[n] = np.clip(y[n], -2**15, 2**15-1)
+            
+            # Обновление состояний
+            w[1:] = w[:-1]
+            w[0] = w_current
     
-    return np.real(y)
+    return y
 
-# Генерация тестовых сигналов
-def generate_signals(length=100):
-    impulse = np.zeros(length)
-    impulse[0] = 1
-    
-    step = np.ones(length)
-    
-    t = np.arange(length)
-    sine = np.sin(2 * np.pi * 700 * t / 2000)
-    
-    return impulse, step, sine
-
-# Основная функция
-def main():
-    # Преобразование в разные формы
+# Разложение на секции второго порядка (для последовательной и параллельной форм)
+def get_sos(b, a):
+    # Используем scipy для разложения на биквадратные секции
     sos = signal.tf2sos(b, a)
+    return sos
+
+# Реализация последовательной формы
+def serial_form_filter(b, a, x, floating_point=True):
+    sos = get_sos(b, a)
+    y = x.copy()
+    
+    for section in sos:
+        b_section = section[:3]
+        a_section = section[3:]
+        
+        if floating_point:
+            y = signal.lfilter(b_section, a_section, y)
+        else:
+            # Преобразуем коэффициенты секции в фиксированную точку
+            b_fixed = float_to_fixed(b_section)
+            a_fixed = float_to_fixed(a_section)
+            y = canonical_form_filter(b_fixed, a_fixed, y, floating_point=False)
+    
+    return y
+
+# Реализация параллельной формы
+def parallel_form_filter(b, a, x, floating_point=True):
+    # Разложение на параллельную форму (используем scipy)
     r, p, k = signal.residuez(b, a)
     
-    # Генерация сигналов
-    impulse, step, sine = generate_signals()
+    # Группировка комплексно-сопряженных пар
+    sos = signal.residuez_to_sos(r, p)
     
-    # Обработка сигналов
-    results = {
-        'Прямая форма (float)': direct_form1(impulse, b, a),
-        'Прямая форма (fixed)': direct_form1(impulse, b, a, True),
-        'Каноническая форма (float)': direct_form2(step, b, a),
-        'Каноническая форма (fixed)': direct_form2(step, b, a, True),
-        'Последовательная форма (float)': sos_form(sine, sos),
-        'Последовательная форма (fixed)': sos_form(sine, sos, True),
-        'Параллельная форма (float)': parallel_form(impulse, r, p, k),
-        'Параллельная форма (fixed)': parallel_form(impulse, r, p, k, True)
-    }
+    y = np.zeros_like(x)
     
-    # Визуализация
-    plt.figure(figsize=(15, 10))
+    for section in sos:
+        b_section = section[:3]
+        a_section = section[3:]
+        
+        if floating_point:
+            y += signal.lfilter(b_section, a_section, x)
+        else:
+            # Преобразуем коэффициенты секции в фиксированную точку
+            b_fixed = float_to_fixed(b_section)
+            a_fixed = float_to_fixed(a_section)
+            y += canonical_form_filter(b_fixed, a_fixed, x, floating_point=False)
+            y = np.clip(y, -2**15, 2**15-1)
     
-    # Импульсная характеристика
-    plt.subplot(3, 1, 1)
-    markerline, stemlines, baseline = plt.stem(results['Прямая форма (float)'], label='Прямая (float)')
-    plt.setp(stemlines, 'linewidth', 0.5)
-    plt.setp(markerline, 'markersize', 2)
-    markerline, stemlines, baseline = plt.stem(results['Прямая форма (fixed)'], label='Прямая (fixed)', linefmt='r-', markerfmt='ro')
-    plt.setp(stemlines, 'linewidth', 0.5)
-    plt.setp(markerline, 'markersize', 2)
-    plt.title('Импульсная характеристика')
-    plt.legend()
-    plt.grid(True)
-    
-    # Ступенчатая характеристика
-    plt.subplot(3, 1, 2)
-    plt.plot(results['Каноническая форма (float)'], label='Каноническая (float)')
-    plt.plot(results['Каноническая форма (fixed)'], 'r--', label='Каноническая (fixed)')
-    plt.title('Ступенчатая характеристика')
-    plt.legend()
-    plt.grid(True)
-    
-    # Реакция на синус
-    plt.subplot(3, 1, 3)
-    plt.plot(results['Последовательная форма (float)'], label='Последовательная (float)')
-    plt.plot(results['Последовательная форма (fixed)'], 'r--', label='Последовательная (fixed)')
-    plt.plot(sine, 'g:', label='Исходный сигнал')
-    plt.title('Реакция на синус 700 Гц')
-    plt.legend()
-    plt.grid(True)
-    
-    plt.tight_layout()
-    plt.show()
-    
-    # Вывод коэффициентов
-    print("\nКоэффициенты передаточной функции:")
-    print("b =", b)
-    print("a =", a)
-    
-    print("\nКоэффициенты последовательной формы (SOS):")
-    print(sos)
-    
-    print("\nПараллельная форма:")
-    print("Вычеты (r) =", r)
-    print("Полюса (p) =", p)
-    print("Прямой путь (k) =", k)
+    return y
 
-if __name__ == "__main__":
-    main()
+# Генерация тестовых сигналов
+def generate_signals(length=1000):
+    # Единичный импульс
+    unit_impulse = np.zeros(length)
+    unit_impulse[0] = 1
+    
+    # Единичный ступенчатый сигнал
+    step_signal = np.ones(length)
+    
+    # Синусоидальный сигнал (700 Гц - в центре режекторной полосы)
+    t = np.arange(length) / 2000  # fd = 2000 Гц
+    sine_signal = np.sin(2 * np.pi * 700 * t)
+    
+    return unit_impulse, step_signal, sine_signal
+
+# Тестирование фильтров
+def test_filters():
+    signals = generate_signals()
+    signal_names = ["Единичный импульс", "Единичный ступенчатый", "Синусоидальный (700 Гц)"]
+    
+    for signal_data, name in zip(signals, signal_names):
+        print(f"\nОбработка сигнала: {name}")
+        
+        # Плавающая точка
+        y_direct_float = direct_form_filter(b_float, a_float, signal_data)
+        y_canonical_float = canonical_form_filter(b_float, a_float, signal_data)
+        y_serial_float = serial_form_filter(b_float, a_float, signal_data)
+        y_parallel_float = parallel_form_filter(b_float, a_float, signal_data)
+        
+        # Фиксированная точка
+        y_direct_fixed = direct_form_filter(b_fixed, a_fixed, (signal_data * scale_factor).astype(np.int32), False)
+        y_canonical_fixed = canonical_form_filter(b_fixed, a_fixed, (signal_data * scale_factor).astype(np.int32), False)
+        y_serial_fixed = serial_form_filter(b_fixed, a_fixed, (signal_data * scale_factor).astype(np.int32), False)
+        y_parallel_fixed = parallel_form_filter(b_fixed, a_fixed, (signal_data * scale_factor).astype(np.int32), False)
+        
+        # Визуализация результатов
+        plt.figure(figsize=(14, 8))
+        
+        # Плавающая точка
+        plt.subplot(2, 1, 1)
+        plt.title(f"{name} (плавающая точка)")
+        plt.plot(y_direct_float, label='Прямая форма')
+        plt.plot(y_canonical_float, '--', label='Каноническая форма')
+        plt.plot(y_serial_float, '-.', label='Последовательная форма')
+        plt.plot(y_parallel_float, ':', label='Параллельная форма')
+        plt.legend()
+        plt.grid()
+        
+        # Фиксированная точка
+        plt.subplot(2, 1, 2)
+        plt.title(f"{name} (фиксированная точка)")
+        plt.plot(y_direct_fixed, label='Прямая форма')
+        plt.plot(y_canonical_fixed, '--', label='Каноническая форма')
+        plt.plot(y_serial_fixed, '-.', label='Последовательная форма')
+        plt.plot(y_parallel_fixed, ':', label='Параллельная форма')
+        plt.legend()
+        plt.grid()
+        
+        plt.tight_layout()
+        plt.show()
+
+# Запуск тестирования
+test_filters()
+
+# Дополнительно: построение АЧХ фильтра
+def plot_frequency_response():
+    w, h = signal.freqz(b_float, a_float, fs=2000)
+    plt.figure()
+    plt.title('АЧХ режекторного фильтра')
+    plt.plot(w, 20 * np.log10(np.abs(h)))
+    plt.xlabel('Частота (Гц)')
+    plt.ylabel('Амплитуда (дБ)')
+    plt.grid()
+    plt.axvspan(650, 800, color='red', alpha=0.1, label='Режекторная полоса')
+    plt.axvspan(600, 850, color='green', alpha=0.1, label='Переходная полоса')
+    plt.legend()
+    plt.show()
+
+plot_frequency_response()
