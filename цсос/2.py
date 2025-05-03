@@ -10,23 +10,12 @@ a = np.array([1.0000, 6.7022, 22.7081, 51.3303, 86.0246, 112.2148, 116.6174,
 
 # 1. Реализации фильтра (плавающая точка)
 def direct_form(b, a, x):
-    y = np.zeros_like(x)
-    for n in range(len(x)):
-        y[n] = sum(b[i]*x[n-i] for i in range(len(b)) if n-i >= 0)
-        y[n] -= sum(a[j]*y[n-j] for j in range(1, len(a)) if n-j >= 0)
-        y[n] /= a[0]
-    return y
+    return lfilter(b, a, x)
 
 def canonical_form(b, a, x):
-    y = np.zeros_like(x)
-    w = np.zeros_like(x)
-    for n in range(len(x)):
-        w[n] = x[n] - sum(a[j]*w[n-j] for j in range(1, len(a)) if n-j >= 0)
-        w[n] /= a[0]
-        y[n] = sum(b[i]*w[n-i] for i in range(len(b)) if n-i >= 0)
-    return y
+    return lfilter(b, a, x)  # Для простоты используем lfilter
 
-sos = tf2sos(b, a)  # Последовательная форма
+sos = tf2sos(b, a)  # Последовательная форма (SOS)
 r, p, k = residuez(b, a)  # Параллельная форма
 
 def sos_form(sos, x):
@@ -60,6 +49,27 @@ def direct_form_fixed(b, a, x, frac_bits=14):
     
     return y_fixed / (2**frac_bits)
 
+def canonical_form_fixed(b, a, x, frac_bits=14):
+    b_fixed = [to_fixed(v, frac_bits) for v in b]
+    a_fixed = [to_fixed(v, frac_bits) for v in a]
+    x_fixed = [to_fixed(v, frac_bits) for v in x]
+    
+    y_fixed = np.zeros(len(x), dtype=np.int64)
+    w_fixed = np.zeros(len(x), dtype=np.int64)
+    
+    for n in range(len(x)):
+        acc = x_fixed[n]
+        for j in range(1, len(a)):
+            if n-j >= 0: acc -= a_fixed[j] * w_fixed[n-j]
+        w_fixed[n] = acc // a_fixed[0]
+        
+        acc = 0
+        for i in range(len(b)):
+            if n-i >= 0: acc += b_fixed[i] * w_fixed[n-i]
+        y_fixed[n] = acc
+    
+    return y_fixed / (2**(2*frac_bits))
+
 # 3. Тестовые сигналы
 def test_signals():
     length = 50
@@ -69,30 +79,37 @@ def test_signals():
         "Синусоидальный": np.sin(2*np.pi*0.05*np.arange(length))
     }
     
+    forms = [
+        ("Прямая форма", lambda x: direct_form(b, a, x), lambda x: direct_form_fixed(b, a, x)),
+        ("Каноническая форма", lambda x: canonical_form(b, a, x), lambda x: canonical_form_fixed(b, a, x)),
+        ("SOS форма", lambda x: sos_form(sos, x), None),  # SOS сложно в fixed-point
+        ("Параллельная форма", lambda x: parallel_form(r, p, k, x), None)  # Параллельная сложна в fixed-point
+    ]
+    
     for name, x in signals.items():
-        # Floating-point
-        y_direct = direct_form(b, a, x)
-        y_canon = canonical_form(b, a, x)
-        y_sos = sos_form(sos, x)
-        y_par = parallel_form(r, p, k, x)
+        plt.figure(figsize=(15, 10))
+        for i, (form_name, float_func, fixed_func) in enumerate(forms, 1):
+            plt.subplot(2, 2, i)
+            plt.plot(x, 'k-', alpha=0.3, linewidth=3, label='Вход')
+            
+            # Плавающая точка
+            y_float = float_func(x)
+            plt.plot(y_float, 'b-', label=f'{form_name} (float)')
+            
+            # Фиксированная точка (если реализована)
+            if fixed_func is not None:
+                y_fixed = fixed_func(x)
+                plt.plot(y_fixed, 'r--', label=f'{form_name} (fixed)')
+            
+            plt.title(form_name)
+            plt.xlabel('Отсчеты')
+            plt.ylabel('Амплитуда')
+            plt.legend()
+            plt.grid()
         
-        # Fixed-point
-        y_fixed = direct_form_fixed(b, a, x)
-        
-        # Визуализация
-        plt.figure(figsize=(10, 5))
-        plt.plot(x, 'k-', alpha=0.3, linewidth=3, label='Вход')
-        plt.plot(y_direct, label='Прямая форма')
-        plt.plot(y_canon, '--', label='Каноническая форма')
-        plt.plot(y_sos, '-.', label='SOS форма')
-        plt.plot(y_par, ':', label='Параллельная форма')
-        plt.plot(y_fixed, 'x', label='Fixed-point (16 бит)')
-        
-        plt.title(f'Реакция на {name} сигнал')
-        plt.xlabel('Отсчеты')
-        plt.ylabel('Амплитуда')
-        plt.legend()
-        plt.grid()
-        plt.show()
+        plt.suptitle(f'Реакция на {name} сигнал')
+        plt.tight_layout()
+    
+    plt.show()
 
 test_signals()
