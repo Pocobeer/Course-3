@@ -1,0 +1,21 @@
+Program Test;
+//a
+real x, a, b, c;
+real [3] array;
+integer i;
+string s;
+bool m;
+begin
+    x = 1.5;
+    c = 1.0;
+    s = "aaaa";
+    m = False;
+    i = 0;
+
+    repeat
+        array[i] = c / (i + 1) * x + i;  
+        i = i + 1;
+    until (i > 2 || i >= 100);
+
+end
+endProg

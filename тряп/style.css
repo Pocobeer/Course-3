@@ -1,0 +1,193 @@
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 400;
+  src: url(assets/materialsymbolsoutlined.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Fira Code';
+  src: url('assets/FiraCode-Regular.woff2') format('woff2'),
+    url('assets/FiraCode-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-size: 23px;
+  line-height: 1;
+}
+
+:root.light {
+  color-scheme: light;
+  --background: #fff;
+  --background-hover: #e6eaf0;
+  --on-background: #363648;
+  --border: #d3dede;
+  --btn-primary: #29768b;
+  --on-btn-primary: #fff;
+  --btn-secondary: #e8f4f4;
+  --on-btn-secondary: #2d5e5e;
+  --scrollbar: #edf0f3;
+  --scrollbar-hover: var(--border);
+  --form-check-input: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%232d5e5e'/%3e%3c/svg%3e");
+}
+
+:root.dark {
+  color-scheme: dark;
+  --background: #11111b;
+  --background-hover: #313244;
+  --on-background: #cdd6f4;
+  --border: #313244;
+  --btn-primary: #b4befe;
+  --on-btn-primary: #181825;
+  --btn-secondary: #cdd6f4;
+  --on-btn-secondary: #181825;
+  --scrollbar: #45475a;
+  --scrollbar-hover: var(--btn-primary);
+  --form-check-input: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23cdd6f4'/%3e%3c/svg%3e");
+}
+
+.CodeMirror {
+  border: 1px solid var(--border);
+  border-radius: .375rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9rem;
+  height: calc(100vh - 107px);
+}
+
+.CodeMirror pre.CodeMirror-line {
+  font-variant-ligatures: none;
+  color: var(--on-background) !important;
+}
+
+.CodeMirror-line::selection,
+.CodeMirror-line>span::selection,
+.CodeMirror-line>span>span::selection {
+  background: #00000000;
+}
+
+body {
+  background-color: var(--background) !important;
+  color: var(--on-background) !important;
+}
+
+fieldset {
+  border: 1px solid var(--border) !important;
+  border-radius: .375rem;
+}
+
+legend {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+button {
+  color: var(--on-background) !important;
+}
+
+input {
+  color: var(--on-background) !important;
+  background-color: var(--background) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+input::file-selector-button {
+  color: var(--on-background) !important;
+  background-color: transparent !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 5px !important;
+}
+
+.border {
+  border: 1px solid var(--border) !important;
+}
+
+.dropdown .btn:nth-child(1) {
+  border: none !important;
+}
+
+.dropdown-menu {
+  background-color: var(--background) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.dropdown-menu li a {
+  color: var(--on-background) !important;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+  background-color: var(--background-hover) !important;
+}
+
+.modal {
+  --bs-modal-bg: var(--background) !important;
+  --bs-modal-border-color: var(--border) !important;
+  --bs-modal-color: var(--on-background) !important;
+  --bs-modal-header-border-color: var(--border) !important;
+  --bs-modal-footer-border-color: var(--border) !important;
+}
+
+.btn-secondary {
+  background-color: var(--btn-secondary) !important;
+  color: var(--on-btn-secondary) !important;
+  font-weight: 500;
+  border: 1px solid var(--border) !important;
+}
+
+.btn-primary {
+  background-color: var(--btn-primary) !important;
+  color: var(--on-btn-primary) !important;
+  font-weight: 500;
+  border: 1px solid var(--border) !important;
+}
+
+.form-check-input {
+  background-color: var(--background) !important;
+  border: 2px solid var(--on-background) !important;
+}
+
+.form-check-input:checked[type="radio"] {
+  background-image: var(--form-check-input) !important;
+}
+
+/** Скроллбары редакторов **/
+
+.CodeMirror-overlayscroll-horizontal div,
+.CodeMirror-overlayscroll-vertical div {
+  position: absolute;
+  background: var(--scrollbar);
+  border-radius: 3px;
+}
+
+.CodeMirror-overlayscroll-horizontal,
+.CodeMirror-overlayscroll-vertical {
+  position: absolute;
+  z-index: 6;
+}
+
+.CodeMirror-overlayscroll-horizontal {
+  bottom: 0;
+  left: 0;
+  height: 6px;
+}
+
+.CodeMirror-overlayscroll-horizontal div {
+  bottom: 0;
+  height: 100%;
+}
+
+.CodeMirror-overlayscroll-vertical {
+  right: 3px;
+  top: 5px;
+  width: 6px;
+}
+
+.CodeMirror-overlayscroll-vertical div {
+  right: 0;
+  width: 100%;
+}

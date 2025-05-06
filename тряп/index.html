@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Сканер </title>
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="libraries/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="libraries/codemirror/codemirror.min.css" />
+    <link rel="stylesheet" href="libraries/codemirror/ctp-mocha.css" />
+    <link rel="stylesheet" href="libraries/codemirror/simplescrollbars.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="libraries/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="libraries/codemirror/codemirror.min.js"></script>
+    <script src="libraries/codemirror/javascript.js"></script>
+    <script src="libraries/codemirror/simplescrollbars.js"></script>
+    <script defer src="index.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid px-2 vh-100">
+        <div class="d-flex flex-column">
+            <div class="pt-2">
+                <div class="input-group">
+                    <input class="form-control" type="file" id="file-input">
+                    <!-- <button class="btn border-0 px-2 py-0" id="download" disabled>
+                        <span class="material-symbols-outlined align-text-top me-1">Сохранить</span></button> -->
+                    <button class="btn border-0 px-2 py-0" id="scan" disabled>
+                        <span class="material-symbols-outlined align-text-top me-1">Сканер</span></button>
+                    <!-- <div class="dropdown">
+                        <button class="btn dropdown-toggle px-2" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false" disabled id="dropdown">
+                            <span class="material-symbols-outlined align-text-top me-1">Вывести</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li role="button"><a class="dropdown-item" id="btn-buffer">Содержимое буфера</a></li>
+                            <li role="button"><a class="dropdown-item" id="btn-tokens">Список токенов</a></li>
+                            <li role="button"><a class="dropdown-item" id="btn-identifiers">Таблица идентификаторов</a></li>
+                            <li role="button"><a class="dropdown-item" id="btn-constants">Таблица констант</a></li>
+                        </ul>
+                    </div> -->
+                    <!-- <button class="btn border-0 px-2 py-0" type="button" class="btn border-0 px-2 py-0"
+                        data-bs-toggle="modal" data-bs-target="#settings">
+                        <span class="material-symbols-outlined align-text-top me-1">settings</span></button>
+                    <div class="modal fade" id="settings" tabindex="-1" aria-labelledby="settingsLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="settingsLabel">Настройки</h1>
+                                </div>
+                                <div class="modal-body">
+                                    <legend>Тема</legend>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="theme" id="system"
+                                            value="system">
+                                        <label class="form-check-label" for="system">Системная</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="theme" id="light"
+                                            value="light">
+                                        <label class="form-check-label" for="light">Светлая</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="theme" id="dark"
+                                            value="dark">
+                                        <label class="form-check-label" for="dark">Темная</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                    <button class="btn btn-primary" id="apply"
+                                        data-bs-dismiss="modal">Сохранить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <fieldset id="editor1" class="col me-1 px-2 pb-2 h-100 shadow-sm">
+                        <legend class="float-none w-auto fs-6 mb-1 px-1">Текст программы</legend>
+                        <textarea id="code-editor"></textarea>
+                    </fieldset>
+                    <fieldset id="editor3" class="col ms-1 px-2 pb-2 shadow-sm">
+                        <legend class="float-none w-auto fs-6 mb-1 px-1">Результаты</legend>
+                        <textarea id="result-area"></textarea>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="font-monospace ms-2" style="font-size: 0.9rem">Строка <span id="line">1</span>, столбец
+                <span id="column">1</span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
