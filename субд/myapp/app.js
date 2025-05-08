@@ -4,8 +4,21 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-const pgp = require('pg-promise')(/* options */)
-const db = pgp('postgres://postgres:63403@localhost:5432/laba2')
+const pgp = require('pg-promise')({
+  // Явно запрещаем непараметризованные запросы
+  noWarnings: true,
+  capSQL: true
+});
+
+const cn = {
+  host: 'localhost',
+  port: 5432,
+  database: 'laba2',
+  user: 'postgres',
+  password: '63403'
+};
+
+const db = pgp(cn);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -15,7 +28,7 @@ var paymentsRouter = require('./routes/payments');
 
 var app = express();
 
-session          = require("./session.js")
+session = require("./session.js")
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,7 +51,7 @@ app.use('/clients', clientsRouter);
 app.use('/orders', ordersRouter);
 app.use('/payments', paymentsRouter);
 
-var api      = require('./routes/api');
+var api = require('./routes/api');
 app.use('/api', api);
 var api_auth = require('./routes/api/auth');
 api.use('/auth', api_auth);
