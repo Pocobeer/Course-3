@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+    script(src='/javascripts/users.js')
+
+    h1= title
+    table#tbl_users
+        tr 
+            th id
+            th Имя
+            th Логин
+            th Роль

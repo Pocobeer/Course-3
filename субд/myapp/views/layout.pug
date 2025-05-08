@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+
+    script(src='/javascripts/jquery.min.js')
+    script(src='/javascripts/layout.js')
+    script(src='/javascripts/orders.js')
+  body
+    if user
+      div
+        span= user.fio
+    block content
+
+    div#login_popup.q-window
+      div.q-window-block(style="width:400px;height:220px;margin:-150px 0 0 -400px")
+        div.q-window-header Вход
+          a#login_popup_close(style="position: relative;left: 300px;") X
+        div.q-window-body.q-form
+          div.q-window-filters-form
+            div.q-form-data
+              label(for="inpLogin") Логин
+              input#inpLogin(type="text")
+            div.q-form-data
+              label(for="inpPassword") Пароль
+              input#inpPassword(type="password")
+        div.q-buttons
+          a#submit_login Войти

@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+    h1= title
+    table
+        tr 
+            th id
+            th Заказ
+            th Тип платежа
+            th Сумма платежа
+        each item in payments
+            tr
+                td= item.id
+                td= item.order_label
+                td= item.payment_type_label
+                td= item.amount

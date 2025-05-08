@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+    h1= title
+    div
+      form
+        fieldset
+          label Название
+          input(type='text', disabled=true, value=order.label)
+          br
+          label Клиент
+          input(type='text', disabled=true, value=order.client_label)
+          br
+          label Статус
+          input(type='text', disabled=true, value=order.order_status_label)
+          br
+          label Сумма
+          input(type='text', disabled=true, value=order.amount)

@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+    h1= title
+    table
+        tr 
+            th id
+            th Имя
+        each item in clients
+            tr
+                td= item.id
+                td= item.label
