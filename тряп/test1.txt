@@ -7,7 +7,7 @@ string s;
 bool m;
 begin
     x = 1.5;
-    c = 1.0;
+    c =3.14e-10;
     s = "aaaa";
     m = False;
     i = 0;
