@@ -1,100 +1,194 @@
-clc
-clear all
-global a;
-global m;
-a = 0;  % Счетчик сложений
-m = 0;  % Счетчик умножений
+global add_count;  % Счетчик сложений
+global mult_count; % Счетчик умножений
+add_count = 0;
+mult_count = 0;
+
 N = 960;
 N1 = 32;
 N2 = 30;
-Y = zeros(N1, N2);
-f = 100;
-Fd = 1000;
-n = 0:N-1;
+f = 100; % Частота сигнала (Гц)
+Fs = 1000; % Частота дискретизации (Гц)
+n = 0:N-1; % Вектор отсчетов времени
 
 % Исходный сигнал
-X = sin(2*pi*f*n/Fd);
+x = sin(2*pi*f*n/Fs);
 
+% 1. График исходного сигнала
 figure(1)
-plot(n, X, 'r');
+plot(n, x, 'r');
 title('Исходный сигнал');
+xlabel('Отсчеты');
+ylabel('Амплитуда');
 grid on;
 
-% Прямое БПФ (быстрое преобразование Фурье)
+% 2. Прямое БПФ (MATLAB)
 figure(2);
-Y1 = fft(X);
-plot(n, abs(Y1), 'b');
+Y_matlab = fft(x); % Быстрое преобразование Фурье
+plot(n, abs(Y_matlab), 'b');
+title('Прямое БПФ (MATLAB)');
+xlabel('Частота');
+ylabel('Амплитуда');
 grid on;
-title('Прямое БПФ');
 
-% Обратное БПФ
+% 3. Обратное БПФ (MATLAB)
 figure(3);
-Y2 = ifft(Y1);
-plot(n, Y2, 'b');
+Y_inv = ifft(Y_matlab); % Обратное преобразование
+plot(n, real(Y_inv), 'b');
+title('Обратное БПФ (MATLAB)');
+xlabel('Отсчеты');
+ylabel('Амплитуда');
 grid on;
-title('Обратное БПФ');
 
-% Сравнение с ДПФ (дискретным преобразованием Фурье)
+% 4. Прямое ДПФ (ручная реализация)
 figure(4);
-Fin = my_dft(X); % Реализация ДПФ
-plot(n, abs(Fin), 'b', n, abs(Y1), 'r--');
-title("Сравнение ДПФ и БПФ");
-legend('ДПФ', 'БПФ');
+Y_dft = my_dft(x); % Дискретное преобразование Фурье
+plot(n, abs(Y_dft), 'b', n, abs(Y_matlab), 'r--');
+title('Сравнение ДПФ и БПФ');
+xlabel('Частота');
+ylabel('Амплитуда');
+legend('ДПФ (ручной)', 'БПФ (MATLAB)');
 grid on;
 
-% Подсчет операций для алгоритма Кули-Тьюки
-a = 0; m = 0;
-Y_kt = my_cooley_tukey(X, N1, N2);
+% Вывод результатов для прямого ДПФ
+disp('=== Прямое ДПФ ===');
+disp(['Количество комплексных сложений: ', num2str(add_count)]);
+disp(['Количество комплексных умножений: ', num2str(mult_count)]);
 
-disp('Количество комплексных сложений:'); a
-disp('Количество комплексных умножений:'); m
+% Сброс счетчиков для алгоритма Кули-Тьюки
+add_count = 0;
+mult_count = 0;
+
+% 5. Реализация алгоритма Кули-Тьюки
+try
+    Y_ct = my_cooley_tukey(x, N1, N2); % Быстрое преобразование
+    
+    % Расчеты по этапам
+    disp('=== Алгоритм Кули-Тьюки ===');
+    
+    % 1. N1 ДПФ длиной N2 точек
+    A1 = N1 * N2*(N2-1);  % 32*30*29 = 27840
+    M1 = N1 * N2*N2;       % 32*30*30 = 28800
+    disp(['1. N1 ДПФ N2 точек: A=', num2str(A1), ', M=', num2str(M1)]);
+    
+    % 2. Умножение на поворачивающие множители
+    M_twiddle = N;         % 960
+    disp(['2. Твиды: M=', num2str(M_twiddle)]);
+    
+    % 3. N2 БПФ длиной N1 точек
+    A2 = N2 * N1*log2(N1); % 30*32*5 = 4800
+    M2 = N2 * (N1/2)*log2(N1); % 30*16*5 = 2400
+    disp(['3. N2 БПФ N1 точек: A=', num2str(A2), ', M=', num2str(M2)]);
+    
+    % Итого
+    A_total = A1 + A2;
+    M_total = M1 + M_twiddle + M2;
+    disp(['Итого: A=', num2str(A_total), ', M=', num2str(M_total)]);
+    
+    % Проверка счетчиков
+    disp(['Фактические счетчики: A=', num2str(add_count), ', M=', num2str(mult_count)]);
+    disp(['Ошибка между Кули-Тьюки и БПФ: ', num2str(max(abs(Y_ct - Y_matlab)))]);
+    
+    % 6. График сравнения Кули-Тьюки и БПФ MATLAB
+    figure(5);
+    plot(n, abs(Y_ct), 'b', n, abs(Y_matlab), 'r--');
+    title('Сравнение Кули-Тьюки и БПФ (MATLAB)');
+    xlabel('Частота');
+    ylabel('Амплитуда');
+    legend('Кули-Тьюки', 'БПФ (MATLAB)');
+    grid on;
+end
 
 % Реализация ДПФ (прямой метод)
 function X = my_dft(x)
+    global add_count; global mult_count;
     N = length(x);
-    X = zeros(1,N);
-    for k = 1:N
-        for n = 1:N
-            X(k) = X(k) + x(n)*exp(-1i*2*pi*(k-1)*(n-1)/N);
+    X = zeros(1, N);
+    
+    for k = 0:N-1
+        % Первый элемент (n=0)
+        X(k+1) = x(1);  % W^0 = 1, умножение не требуется
+        mult_count = mult_count + 1;
+        
+        for n = 1:N-1
+            W = exp(-2i * pi * n * k / N);
+            X(k+1) = X(k+1) + x(n+1) * W;
+            add_count = add_count + 1;  % Учёт сложения
+            mult_count = mult_count + 1; % Учёт умножения
         end
     end
 end
 
 % Реализация алгоритма Кули-Тьюки
 function X = my_cooley_tukey(x, N1, N2)
-    global a;
-    global m;
-    
+    global add_count; global mult_count;
     N = length(x);
-    if N ~= N1*N2
-        error('Размер массива должен быть равен N1*N2');
-    end
     
-    % 1. Переупорядочивание входных данных
-    x_reshaped = reshape(x, N1, N2);
+    % 1. Переупорядочивание в матрицу N2?N1
+    x_reshaped = reshape(x, N1, N2).';
     
-    % 2. N1-точечные ДПФ по строкам
-    X1 = zeros(N1, N2);
-    for n2 = 1:N2
-        X1(:,n2) = fft(x_reshaped(:,n2));
-        a = a + N1*log2(N1); % Примерная оценка сложений
-        m = m + N1*log2(N1)/2; % Примерная оценка умножений
+    % 2. N1 ДПФ длины N2 (по строкам)
+    X1 = zeros(N2, N1);
+    for n1 = 1:N1
+        X1(:, n1) = my_dft_30(x_reshaped(:, n1));
     end
     
     % 3. Умножение на поворачивающие множители
-    twiddle = exp(-2i*pi*(0:N1-1)'*(0:N2-1)/N);
-    X2 = X1 .* twiddle;
-    a = a + N1*N2; % Учет комплексных умножений
-    m = m + N1*N2;
-    
-    % 4. N2-точечные ДПФ по столбцам
-    X3 = zeros(N1, N2);
+    X2 = zeros(N2, N1);
     for n1 = 1:N1
-        X3(n1,:) = fft(X2(n1,:));
-        a = a + N2*log2(N2);
-        m = m + N2*log2(N2)/2;
+        for n2 = 1:N2
+            W = exp(-2i * pi * (n1-1)*(n2-1)/N);
+            X2(n2, n1) = X1(n2, n1) * W;
+            if (n1-1)*(n2-1) ~= 0  % Не считаем умножение на 1
+                mult_count = mult_count + 1;
+            end
+        end
     end
     
-    % 5. Переупорядочивание выходных данных
+    % 4. N2 БПФ длины N1 (по столбцам)
+    X3 = zeros(N2, N1);
+    for n2 = 1:N2
+        X3(n2, :) = my_fft_32(X2(n2, :));
+    end
+    
+    % 5. Переупорядочивание результата
     X = reshape(X3.', 1, N);
+end
+
+% ДПФ длины 30 (прямой метод)
+function X = my_dft_30(x)
+    global add_count; global mult_count;
+    N = length(x);
+    X = zeros(N, 1);
+    for k = 0:N-1
+        for n = 0:N-1
+            W = exp(-2i * pi * n * k / N);
+            X(k+1) = X(k+1) + x(n+1) * W;
+            add_count = add_count + 1;
+            mult_count = mult_count + 1;
+        end
+    end
+end
+
+% БПФ длины 32 (рекурсивный алгоритм)
+function X = my_fft_32(x)
+    global add_count; global mult_count;
+    x = x(:).'; % Преобразуем в строку
+    N = length(x);
+    
+    if N == 1
+        X = x;
+        return;
+    end
+    
+    % Рекурсивное разделение на четные и нечетные
+    X_even = my_fft_32(x(1:2:end));
+    X_odd = my_fft_32(x(2:2:end));
+    
+    % Комбинирование результатов
+    W = exp(-2i * pi * (0:N/2-1) / N);
+    X = [X_even + W .* X_odd, X_even - W .* X_odd];
+    
+    % Подсчет операций
+    add_count = add_count + N;
+    mult_count = mult_count + N/2;
 end
