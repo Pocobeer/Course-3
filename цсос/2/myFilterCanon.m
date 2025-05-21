@@ -3,14 +3,12 @@ function y = myFilterCanon(x)
     global b;
     global oldw;
     
-    [~, t] = size(b); % Получаем размер коэффициентов
+    [s t] = size(b);%t=11
     w = x;
     
     % Обработка обратной связи (знаменатель)
     for s = 2:t
-        if s <= length(oldw) && s <= length(a)
-            w = w - oldw(s) * a(s);
-        end
+        w = w - oldw(s) * a(s);
     end
     
     % Прямая часть (числитель)
@@ -18,15 +16,11 @@ function y = myFilterCanon(x)
     oldw(1) = w;
     
     for s = 1:min(t, length(b))
-        if s <= length(oldw)
-            y = y + oldw(s) * b(s);
-        end
+        y = y + oldw(s) * b(s);
     end
     
     % Обновление состояний
     for s = t:-1:2
-        if (s-1) <= length(oldw)
-            oldw(s) = oldw(s-1);
-        end
+        oldw(s) = oldw(s-1);
     end
 end

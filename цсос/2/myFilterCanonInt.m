@@ -19,10 +19,10 @@ for s=1:t
     y = y + round(oldw(s)*b(s)/m);
 end
 
-%oldx(1)=x;
-%oldy(1)=y;
+oldx(1)=x;
+oldy(1)=y;
 for s=t:-1:2
-    %oldx(s)=oldx(s-1);
-    %oldy(s)=oldy(s-1);
+    oldx(s)=oldx(s-1);
+    oldy(s)=oldy(s-1);
     oldw(s)=oldw(s-1);
 end

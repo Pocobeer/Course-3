@@ -72,7 +72,7 @@ try
     
     % 2. Умножение на поворачивающие множители
     M_twiddle = N;         % 960
-    disp(['2. Твиды: M=', num2str(M_twiddle)]);
+    disp(['2. M=', num2str(M_twiddle)]);
     
     % 3. N2 БПФ длиной N1 точек
     A2 = N2 * N1*log2(N1); % 30*32*5 = 4800
@@ -80,22 +80,22 @@ try
     disp(['3. N2 БПФ N1 точек: A=', num2str(A2), ', M=', num2str(M2)]);
     
     % Итого
-    A_total = A1 + A2;
+    A_total = A1 + A2;  
     M_total = M1 + M_twiddle + M2;
     disp(['Итого: A=', num2str(A_total), ', M=', num2str(M_total)]);
     
     % Проверка счетчиков
-    disp(['Фактические счетчики: A=', num2str(add_count), ', M=', num2str(mult_count)]);
-    disp(['Ошибка между Кули-Тьюки и БПФ: ', num2str(max(abs(Y_ct - Y_matlab)))]);
+    %disp(['Фактические счетчики: A=', num2str(add_count), ', M=', num2str(mult_count)]);
+    %disp(['Ошибка между Кули-Тьюки и БПФ: ', num2str(max(abs(Y_ct - Y_matlab)))]);
     
     % 6. График сравнения Кули-Тьюки и БПФ MATLAB
-    figure(5);
-    plot(n, abs(Y_ct), 'b', n, abs(Y_matlab), 'r--');
-    title('Сравнение Кули-Тьюки и БПФ (MATLAB)');
-    xlabel('Частота');
-    ylabel('Амплитуда');
-    legend('Кули-Тьюки', 'БПФ (MATLAB)');
-    grid on;
+    %figure(5);
+    %plot(n, abs(Y_ct), 'b', n, abs(Y_matlab), 'r--');
+    %%title('Сравнение Кули-Тьюки и БПФ (MATLAB)');
+    %xlabel('Частота');
+    %%ylabel('Амплитуда');
+    %legend('Кули-Тьюки', 'БПФ (MATLAB)');
+    %grid on;
 end
 
 % Реализация ДПФ (прямой метод)

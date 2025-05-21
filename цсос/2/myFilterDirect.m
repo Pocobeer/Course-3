@@ -9,7 +9,7 @@ for s=2:t
     y = y + oldx(s-1)*b(s);
     y = y - oldy(s-1)*a(s);
 end
-for s=t-1:-1:2
+for s=t:-1:2
     oldx(s)=oldx(s-1);
     oldy(s)=oldy(s-1);
 end
