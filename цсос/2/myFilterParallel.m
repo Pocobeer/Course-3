@@ -8,7 +8,7 @@ function y = myFilterParallel(x)
     y = k * x;
     
     % Определение количества секций
-    [t s] = size(Ai); %t=5
+    [t s] = size(Ai);
     
     % Обработка каждой секции
     for s = 1:t

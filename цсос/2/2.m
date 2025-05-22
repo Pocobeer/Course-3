@@ -130,7 +130,7 @@ title('Реакция на синусоидальный сигнал')
 
 % Параллельная форма (float)
 oldx = 0;
-oldy = zeros(1,t);
+oldy = zeros(1,2*t);
 yP = zeros(1,max);
 yP1 = zeros(1,max);
 yP2 = zeros(1,max);
@@ -138,12 +138,12 @@ for temp=1:max
     yP(temp) = myFilterParallel(x(temp));
 end
 oldx = 0;
-oldy=zeros(1,t);
+oldy=zeros(1,2*t);
 for temp=1:max
     yP1(temp) = myFilterParallel(x1(temp));
 end
 oldx = 0;
-oldy=zeros(1,t);
+oldy=zeros(1,2*t);
 for temp=1:max
     yP2(temp) = myFilterParallel(x2(temp));
 end
