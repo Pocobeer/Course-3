@@ -20,8 +20,8 @@ figure(1);
 plot(n, x);
 title('Исходный сигнал');
 
-total_mult = V * M; % 1. Умножение на окно
-
+%total_mult = V * M; % 1. Умножение на окно
+total_mult=0;
 logM = log2(M);
 % 2. БПФ:
 total_add = 2 * V * M * logM + 2 * V * (M/2) * logM; % Сложения

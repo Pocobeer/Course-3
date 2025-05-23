@@ -56,12 +56,6 @@ Bi = real(Bi)
 % Тестовые сигналы
 max = 100;
 nn = 0:max-1;
-testImp = impz(b,a,max);
-testStep = stepz(b,a,max);
-testXPass = sin(2*pi*(300/Fd)*nn);
-testXStop = sin(2*pi*(700/Fd)*nn);
-testSinPass = filter(b,a,testXPass);
-testSinStop = filter(b,a,testXStop);
 
 %% 1. Каноническая форма (прямая форма II)
 figure(1);
