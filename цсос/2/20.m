@@ -127,7 +127,6 @@ testXPass = sin(2*pi*(300/Fd)*nn);
 max = 100;
 nn=0:max-1;
 x = eye(1,100);
-%Прямая форма
 [s t] = size(b);
 oldw = zeros(1,t);
 y = zeros(1,max);
@@ -308,8 +307,8 @@ testSinPass = filter(b,a,testXPass);
 %testSinStop = filter(b,a,testXStop);
 
 %m=32;
-%m=1024
-m=65536;
+m=1024
+%m=65536;
 sos = round(m*sos);
 g = round(m*g);
 Ai = round(m*Ai);
